@@ -1,0 +1,22 @@
+{
+  "presets": ["es2015", "stage-2", "react"],
+  "env": {
+    "development" : {
+      "plugins": [
+        ["transform-define", "./config/application/application.dev.config.js"]
+      ]
+    },
+    "jest": {
+      "plugins": [
+        [
+          "babel-plugin-webpack-loaders",
+          {
+            "config": "./config/webpack/webpack.jest.config.js",
+            "verbose": false
+          }
+        ],
+        ["transform-define", "./config/application/application.jest.config.js"]
+      ]
+    }
+  }
+}

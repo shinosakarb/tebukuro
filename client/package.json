@@ -7,7 +7,8 @@
     "node": ">= 6.0"
   },
   "scripts": {
-    "test": "jest"
+    "start": "NODE_ENV=development webpack-dev-server -d --config config/webpack/webpack.dev.config.js --progress --colors --inline --hot",
+    "test": "BABEL_DISABLE_CACHE=1 NODE_ENV=jest jest"
   },
   "dependencies": {
     "immutable": "^3.8.1",
