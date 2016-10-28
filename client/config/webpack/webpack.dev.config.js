@@ -1,5 +1,5 @@
 var webpack = require('webpack')
-var postcssImport = require('postcss-import');
+var postcssImport = require('postcss-import')
 var autoprefixer = require('autoprefixer')
 var precss = require('precss')
 
