@@ -75,3 +75,9 @@ gem 'active_model_serializers', '~> 0.10.0'
 
 # configuration / settings
 gem 'settingslogic'
+
+# Background processing
+gem 'sidekiq'
+
+# State machine
+gem 'stateful_enum'
