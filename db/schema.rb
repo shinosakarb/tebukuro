@@ -21,4 +21,11 @@ ActiveRecord::Schema.define(version: 20161029082015) do
     t.index ["community_id"], name: "index_events_on_community_id"
   end
 
+  create_table "communities", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
 end
