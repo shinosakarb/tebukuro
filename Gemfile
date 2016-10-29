@@ -46,6 +46,11 @@ group :development, :test do
   # debug
   gem 'better_errors'
   gem 'binding_of_caller'
+
+  # rspec
+  gem 'rspec-rails', '~> 3.5'
+  gem 'shoulda-matchers'
+  gem 'rails-controller-testing', require: false
 end
 
 group :development do
@@ -60,11 +65,6 @@ end
 group :test do
   # generates fake data
   gem 'faker'
-
-  # rspec
-  gem 'rspec-rails', '~> 3.5'
-  gem 'shoulda-matchers'
-  gem 'rails-controller-testing', require: false
 
   # for build strategies
   gem 'factory_girl_rails'
