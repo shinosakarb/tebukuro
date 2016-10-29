@@ -42,6 +42,10 @@ group :development, :test do
 
   # automatically launch specs
   gem 'guard-rspec', require: false
+
+  # debug
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 group :development do
@@ -59,6 +63,8 @@ group :test do
 
   # rspec
   gem 'rspec-rails', '~> 3.5'
+  gem 'shoulda-matchers'
+  gem 'rails-controller-testing', require: false
 
   # for build strategies
   gem 'factory_girl_rails'
