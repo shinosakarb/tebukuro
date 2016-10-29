@@ -23,14 +23,61 @@ gem 'puma', '~> 3.0'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+
+  # load environment variables
+  gem 'dotenv-rails'
+
+  # pry
+  gem 'pry-rails'
+  gem 'pry-byebug'
+  gem 'pry-doc'
+  gem 'pry-rescue'
+  gem 'pry-stack_explorer'
+
+  # for security
+  gem 'brakeman', require: false
+
+  # Ruby static code analyzer
+  gem 'rubocop', require: false
+
+  # automatically launch specs
+  gem 'guard-rspec', require: false
 end
 
 group :development do
   gem 'listen', '~> 3.0.5'
+
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'spring-commands-rspec'
+end
+
+group :test do
+  # generates fake data
+  gem 'faker'
+
+  # rspec
+  gem 'rspec-rails', '~> 3.5'
+
+  # for build strategies
+  gem 'factory_girl_rails'
+
+  # database cleaner
+  gem 'database_rewinder'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# json genarator
+gem 'active_model_serializers', '~> 0.10.0'
+
+# configuration / settings
+gem 'settingslogic'
+
+# Background processing
+gem 'sidekiq'
+
+# State machine
+gem 'stateful_enum'
