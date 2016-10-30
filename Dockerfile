@@ -9,3 +9,5 @@ RUN bundle install -j4
 ADD . /app
 
 ENV DATABASE_HOST db
+ENV DATABASE_USERNAME postgres
+ENV DATABASE_PASSWORD ""
