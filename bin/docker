@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+case ${1} in
+  start|s)
+    docker-compose up
+  ;;
+
+  *)
+    docker-compose exec spring $@
+  ;;
+esac
