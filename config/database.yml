@@ -2,18 +2,17 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV['DATABASE_HOST'] %>
   username: postgres
   password:
 
 development:
   <<: *default
   database: tebukuro_development
-  host: db
 
 test:
   <<: *default
   database: tebukuro_test
-  host: db
 
 production:
   <<: *default
