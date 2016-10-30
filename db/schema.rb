@@ -12,13 +12,16 @@
 
 ActiveRecord::Schema.define(version: 20161029082015) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "events", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.integer  "community_id"
-    t.index ["community_id"], name: "index_events_on_community_id"
+    t.index ["community_id"], name: "index_events_on_community_id", using: :btree
   end
 
 end
