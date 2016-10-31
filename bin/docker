@@ -5,9 +5,12 @@ case ${1} in
     docker-compose up
   ;;
 
+  stop)
+    docker-compose stop
+  ;;
+
   setup)
     docker-compose build
-    docker-compose run --rm backend rails rake:db:setup
   ;;
 
   *)
