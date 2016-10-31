@@ -5,6 +5,11 @@ case ${1} in
     docker-compose up
   ;;
 
+  setup)
+    docker-compose build
+    docker-compose run --rm backend rails rake:db:setup
+  ;;
+
   *)
     docker-compose exec spring $@
   ;;
