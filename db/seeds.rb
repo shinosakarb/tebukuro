@@ -5,3 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Event.create(name: 'event1', description: 'description1')
+Event.create(name: 'event2', description: 'description2')
+Event.create(name: 'event3', description: 'description3')

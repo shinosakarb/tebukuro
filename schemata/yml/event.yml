@@ -1,0 +1,78 @@
+---
+"$schema": http://json-schema.org/draft-04/hyper-schema
+title: FIXME - Event
+description: FIXME
+stability: prototype
+strictProperties: true
+type:
+- object
+definitions:
+  id:
+    description: unique identifier of event
+    readOnly: true
+    format: uuid
+    type:
+    - string
+  name:
+    description: unique name of event
+    readOnly: true
+    type:
+    - string
+  identity:
+    anyOf:
+    - "$ref": "/schemata/event#/definitions/id"
+    - "$ref": "/schemata/event#/definitions/name"
+  created_at:
+    description: when event was created
+    format: date-time
+    type:
+    - string
+  updated_at:
+    description: when event was updated
+    format: date-time
+    type:
+    - string
+links:
+- description: Create a new event.
+  href: "/events"
+  method: POST
+  rel: create
+  schema:
+    properties: {}
+    type:
+    - object
+  title: Create
+- description: Delete an existing event.
+  href: "/events/{(%2Fschemata%2Fevent%23%2Fdefinitions%2Fidentity)}"
+  method: DELETE
+  rel: destroy
+  title: Delete
+- description: Info for existing event.
+  href: "/events/{(%2Fschemata%2Fevent%23%2Fdefinitions%2Fidentity)}"
+  method: GET
+  rel: self
+  title: Info
+- description: List existing events.
+  href: "/events"
+  method: GET
+  rel: instances
+  title: List
+- description: Update an existing event.
+  href: "/events/{(%2Fschemata%2Fevent%23%2Fdefinitions%2Fidentity)}"
+  method: PATCH
+  rel: update
+  schema:
+    properties: {}
+    type:
+    - object
+  title: Update
+properties:
+  created_at:
+    "$ref": "/schemata/event#/definitions/created_at"
+  id:
+    "$ref": "/schemata/event#/definitions/id"
+  name:
+    "$ref": "/schemata/event#/definitions/name"
+  updated_at:
+    "$ref": "/schemata/event#/definitions/updated_at"
+id: schemata/event
