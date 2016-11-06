@@ -93,10 +93,8 @@ group :development, :test do
   gem 'rails-erd'
 end
 
-# JSON shema
-gem 'prmd'
 
-# Error occurred while parsing request parametersを捕捉するためのgem
-gem 'committee', :git => 'git@github.com:interagent/committee.git'
+gem 'rb-readline'
+
 
 

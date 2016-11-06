@@ -97,12 +97,4 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 
-
-  # factory_girl
-  config.include FactoryGirl::Syntax::Methods
-
-  config.before(:suite) do
-    FactoryGirl.reload
-  end
-
 end
