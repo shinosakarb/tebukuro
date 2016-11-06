@@ -87,14 +87,3 @@ gem 'sidekiq'
 
 # State machine
 gem 'stateful_enum'
-
-# rials-erd
-group :development, :test do
-  gem 'rails-erd'
-end
-
-
-gem 'rb-readline'
-
-
-
