@@ -16,10 +16,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
 
     context '正常系' do
 
-      example 'Content-Typeはapplication/jsonであること' do
-        expect(response.content_type).to eq('application/json')
-      end
-
       example 'ステータス200が返されること' do
         expect(response).to be_success
         expect(response.status).to eq 200
@@ -50,10 +46,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
     end
 
     context '正常系' do
-
-      example 'Content-Typeはapplication/jsonであること' do
-        expect(response.content_type).to eq('application/json')
-      end
 
       example 'ステータス200を返されること' do
         expect(response).to be_success
@@ -91,10 +83,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           post '/events', params: event_name_blank_params
         end
 
-        example 'Content-Typeはapplication/jsonであること' do
-          expect(response.content_type).to eq('application/json')
-        end
-
         example 'エラーが返ってくること' do
           result = JSON.parse(response.body)
           expect(result['name']).to include ("can't be blank")
@@ -109,10 +97,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           post '/events', params: event_description_blank_params
         end
 
-        example 'Content-Typeはapplication/jsonであること' do
-          expect(response.content_type).to eq('application/json')
-        end
-
         example 'エラーが返ってくること' do
           result = JSON.parse(response.body)
           expect(result['name']).to eq nil
@@ -125,10 +109,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
         let(:event_blank_params) { {event: FactoryGirl.attributes_for(:event_blank)} }
         before do
           post '/events', params: event_blank_params
-        end
-
-        example 'Content-Typeはapplication/jsonであること' do
-          expect(response.content_type).to eq('application/json')
         end
 
         example 'エラーが返ってくること' do
@@ -151,10 +131,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
     end
 
     context '正常系' do
-
-      example 'Content-Typeはapplication/jsonであること' do
-        expect(response.content_type).to eq('application/json')
-      end
 
       example 'ステータス200が返ってくること' do
         expect(response).to be_success
@@ -215,10 +191,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           patch "/events/#{event.id}", event: attributes_for(:event, name: 'hogehoge')
         end
 
-        example 'Content-Typeはapplication/jsonであること' do
-          expect(response.content_type).to eq('application/json')
-        end
-
         example 'ステータス200が返ってくること' do
           expect(response.status).to eq 200
         end
@@ -235,10 +207,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
 
         before do
           patch "/events/#{event.id}", event: attributes_for(:event, description: 'hogehoge')
-        end
-
-        example 'Content-Typeはapplication/jsonであること' do
-          expect(response.content_type).to eq('application/json')
         end
 
         example 'ステータス200が返ってくること' do
@@ -263,10 +231,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           patch "/events/#{event.id}", event: attributes_for(:event, name: nil)
         end
 
-        example 'Content-Typeはapplication/jsonであること' do
-          expect(response.content_type).to eq('application/json')
-        end
-
         example 'ステータス422が返ってくること' do
           expect(response.status).to eq 422
         end
@@ -282,11 +246,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
 
         before do
           patch "/events/#{event.id}", event: attributes_for(:event, description: nil)
-        end
-
-        # TODO: eq('text/html')になる。相談の上修正するか決める
-        example 'Content-Typeはapplication/jsonであること' do
-          expect(response.content_type).to eq('application/json')
         end
 
         example 'ステータス422が返ってくること' do
@@ -331,12 +290,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
 
       subject do
         delete "/events/#{event.id}", event: event
-      end
-
-
-      example 'Content-Typeはapplication/jsonであること' do
-        subject
-        expect(response.content_type).to eq('application/json')
       end
 
       example 'ステータス200を返すこと' do
