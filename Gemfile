@@ -87,6 +87,3 @@ gem 'sidekiq'
 
 # State machine
 gem 'stateful_enum'
-
-
-
