@@ -22,7 +22,7 @@ class PrettyJsonResponse
 
   def pretty_print(json)
     obj = JSON.parse(json)
-    JSON.pretty_unparse(obj)
+    JSON.pretty_generate(obj)
   end
 
 end

@@ -2,7 +2,7 @@ require 'faker'
 
 10.times do |n|
   instrument = Faker::Music.instrument
-  name = instrument + ' practice'
+  name = "#{instrument} practice"
   description = "Let's practice the #{instrument} together"
   community_id = n + 1
 
