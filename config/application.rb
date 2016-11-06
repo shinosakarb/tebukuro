@@ -27,13 +27,5 @@ module Tebukuro
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
-    # Error occurred while parsing request parametersを捕捉するために必要な記述
-    schema_file = "#{Rails.root}/schemata/json/event.json"
-    if File.exists?(schema_file)
-      #config.middleware.use Committee::Middleware::RequestValidation, schema: JSON.parse(File.read(schema_file)), :prefix => '/events/:id'
-      #config.middleware.use Committee::Middleware::ResponseValidation, schema: JSON.parse(File.read(schema_file))
-    end
-
-
   end
 end

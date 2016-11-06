@@ -25,14 +25,10 @@ class EventsController < ApplicationController
   end
 
   def update
-    if @event.valid?
-      if @event.update!(event_params)
-        render json: @event
-      else
-        render json: @event.errors, status: :unprocessable_entity
-      end
+    if @event.update(event_params)
+      render json: @event
     else
-      render json: @event.errors
+      render json: @event.errors, status: :unprocessable_entity
     end
   end
 
@@ -46,10 +42,7 @@ class EventsController < ApplicationController
 
   private
   def event_params
-    params.require(:event).permit(
-        :name,
-        :description
-    )
+    params.require(:event).permit(:name, :description)
   end
 
   def set_event

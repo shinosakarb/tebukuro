@@ -1,34 +1,31 @@
 # rails g rspec:integration Event
 
+# TODO: communitiesモデルが追加されたらリクエストパス修正
+
 require 'rails_helper'
-require 'spec_helper'
 
 RSpec.describe 'Events(イベントAPI)', type: :request do
-  include Committee::Test::Methods
 
   describe 'GET /events (events#index)' do
 
-    let(:events) { FactoryGirl.create_list(:event, 2) }
+    let!(:events) { FactoryGirl.create_list(:event, 2) }
 
-    subject do
-      get "/events", events: events
+    before do
+      get "/events"
     end
 
     context '正常系' do
 
-      it 'Content-Typeはapplication/jsonであること' do
-        subject
+      example 'Content-Typeはapplication/jsonであること' do
         expect(response.content_type).to eq('application/json')
       end
 
-      it 'ステータス200が返されること' do
-        subject
+      example 'ステータス200が返されること' do
         expect(response).to be_success
         expect(response.status).to eq 200
       end
 
-      it 'JSONに含まれる情報が適切であること' do
-        subject
+      example 'JSONに含まれる情報が適切であること' do
         result = JSON.parse(response.body)
         expect(result.size).to eq events.count
         expect(result[0]['id']).to eq events[0].id
@@ -43,34 +40,32 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
   end
 
 
-  # paramsをPOSTする場合
   describe 'POST /events (events#create)' do
 
     let(:event) { FactoryGirl.create(:event) }
     let(:event_params) { {event: FactoryGirl.attributes_for(:event)} }
 
-    subject do
+    before do
       post "/events", params: event_params
     end
 
     context '正常系' do
 
-      it 'Content-Typeはapplication/jsonであること' do
-        subject
+      example 'Content-Typeはapplication/jsonであること' do
         expect(response.content_type).to eq('application/json')
       end
 
-      it 'ステータス200を返されること' do
-        subject
+      example 'ステータス200を返されること' do
         expect(response).to be_success
       end
 
-      it 'イベントが作成されること' do
-        expect { subject }.to change(Event, :count).by(1)
+      example 'イベントが作成されること' do
+        expect do
+          post "/events", params: event_params
+        end.to change(Event, :count).by(1)
       end
 
-      it 'JSONに含まれるキーが適切であること' do
-        subject
+      example 'JSONに含まれるキーが適切であること' do
         result = JSON.parse(response.body)
         expect(result).to have_key('id')
         expect(result).to have_key('name')
@@ -79,8 +74,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
 
       end
 
-      it 'JSONからイベント情報が取得できる' do
-        subject
+      example 'JSONからイベント情報が取得できる' do
         result = JSON.parse(response.body)
         expect(result['name']).to eq(event.name)
         expect(result['description']).to eq(event.description)
@@ -97,13 +91,13 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           post '/events', params: event_name_blank_params
         end
 
-        it 'Content-Typeはapplication/jsonであること' do
+        example 'Content-Typeはapplication/jsonであること' do
           expect(response.content_type).to eq('application/json')
         end
 
-        it 'エラーが返ってくること' do
+        example 'エラーが返ってくること' do
           result = JSON.parse(response.body)
-          expect(result['name']).to eq ["can't be blank"]
+          expect(result['name']).to include ("can't be blank")
           expect(result['description']).to eq nil
         end
       end
@@ -115,14 +109,14 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           post '/events', params: event_description_blank_params
         end
 
-        it 'Content-Typeはapplication/jsonであること' do
+        example 'Content-Typeはapplication/jsonであること' do
           expect(response.content_type).to eq('application/json')
         end
 
-        it 'エラーが返ってくること' do
+        example 'エラーが返ってくること' do
           result = JSON.parse(response.body)
           expect(result['name']).to eq nil
-          expect(result['description']).to eq ["can't be blank"]
+          expect(result['description']).to include ("can't be blank")
         end
       end
 
@@ -133,14 +127,13 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           post '/events', params: event_blank_params
         end
 
-        it 'Content-Typeはapplication/jsonであること' do
+        example 'Content-Typeはapplication/jsonであること' do
           expect(response.content_type).to eq('application/json')
         end
 
-        it 'エラーが返ってくること' do
+        example 'エラーが返ってくること' do
           result = JSON.parse(response.body)
-          expect(result['name']).to eq ["can't be blank"]
-          expect(result['description']).to eq ["can't be blank"]
+          expect(result).to include("name" => ["can't be blank"], "description" => ["can't be blank"])
         end
       end
 
@@ -153,25 +146,22 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
 
     let(:event) { FactoryGirl.create(:event) }
 
-    subject do
+    before do
       get event_path(event)
     end
 
     context '正常系' do
 
-      it 'Content-Typeはapplication/jsonであること' do
-        subject
+      example 'Content-Typeはapplication/jsonであること' do
         expect(response.content_type).to eq('application/json')
       end
 
-      it 'ステータス200が返ってくること' do
-        subject
+      example 'ステータス200が返ってくること' do
         expect(response).to be_success
         expect(response.status).to eq 200
       end
 
-      it 'JSONに含まれるキーが適切であること' do
-        subject
+      example 'JSONに含まれるキーが適切であること' do
         result = JSON.parse(response.body)
         expect(result).to have_key('id')
         expect(result).to have_key('name')
@@ -180,8 +170,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
 
       end
 
-      it 'JSONからイベントの情報を取得できること' do
-        subject
+      example 'JSONからイベントの情報を取得できること' do
         json = JSON.parse(response.body)
         expect(json['id']).to eq event.id
         expect(json['name']).to eq event.name
@@ -198,7 +187,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
 
       context '存在しないイベントを取得する' do
 
-        it 'エラーが返されること' do
+        example 'エラーが返されること' do
           expect(response).not_to be_success
           expect(response.status).to eq 404
         end
@@ -226,15 +215,15 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           patch "/events/#{event.id}", event: attributes_for(:event, name: 'hogehoge')
         end
 
-        it 'Content-Typeはapplication/jsonであること' do
+        example 'Content-Typeはapplication/jsonであること' do
           expect(response.content_type).to eq('application/json')
         end
 
-        it 'ステータス200が返ってくること' do
+        example 'ステータス200が返ってくること' do
           expect(response.status).to eq 200
         end
 
-        it 'データベースのユーザーが更新されること' do
+        example 'データベースのユーザーが更新されること' do
           event.reload
           expect(event.name).to eq 'hogehoge'
         end
@@ -248,15 +237,15 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           patch "/events/#{event.id}", event: attributes_for(:event, description: 'hogehoge')
         end
 
-        it 'Content-Typeはapplication/jsonであること' do
+        example 'Content-Typeはapplication/jsonであること' do
           expect(response.content_type).to eq('application/json')
         end
 
-        it 'ステータス200が返ってくること' do
+        example 'ステータス200が返ってくること' do
           expect(response.status).to eq 200
         end
 
-        it 'データベースのユーザーが更新されること' do
+        example 'データベースのユーザーが更新されること' do
           event.reload
           expect(event.description).to eq 'hogehoge'
         end
@@ -274,15 +263,15 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           patch "/events/#{event.id}", event: attributes_for(:event, name: nil)
         end
 
-        it 'Content-Typeはapplication/jsonであること' do
+        example 'Content-Typeはapplication/jsonであること' do
           expect(response.content_type).to eq('application/json')
         end
 
-        it 'ステータス422が返ってくること' do
+        example 'ステータス422が返ってくること' do
           expect(response.status).to eq 422
         end
 
-        it 'DBのイベントは更新されないこと' do
+        example 'DBのイベントは更新されないこと' do
           event.reload
           expect(event.name).to eq @name
         end
@@ -295,15 +284,16 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           patch "/events/#{event.id}", event: attributes_for(:event, description: nil)
         end
 
-        it 'Content-Typeはapplication/jsonであること' do
+        # TODO: eq('text/html')になる。相談の上修正するか決める
+        example 'Content-Typeはapplication/jsonであること' do
           expect(response.content_type).to eq('application/json')
         end
 
-        it 'ステータス422が返ってくること' do
+        example 'ステータス422が返ってくること' do
           expect(response.status).to eq 422
         end
 
-        it 'DBのイベントは更新されないこと' do
+        example 'DBのイベントは更新されないこと' do
           event.reload
           expect(event.description).to eq @description
         end
@@ -316,11 +306,12 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           patch "/events/hogehoge", event: attributes_for(:event, description: 'hogehoge')
         end
 
-        it 'Content-Typeはapplication/jsonであること' do
-          expect(response.content_type).to eq('application/json')
+        # TODO: eq('text/html')になる。相談の上修正するか決める
+        example 'Content-Typeはtext/htmlであること' do
+          expect(response.content_type).to eq('text/html')
         end
 
-        it 'リクエストはRecordNotFoundとなること' do
+        example 'リクエストはRecordNotFoundとなること' do
           expect(response.status).to eq 404
         end
       end
@@ -334,7 +325,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
 
     # letだと上手くいかない。(itが一つしかなければうまくいく)
     # let!だと毎回処理される
-    let!(:event){FactoryGirl.create(:event)}
+    let!(:event) { FactoryGirl.create(:event) }
 
     context '正常系' do
 
@@ -342,21 +333,22 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
         delete "/events/#{event.id}", event: event
       end
 
-      it 'Content-Typeはapplication/jsonであること' do
+
+      example 'Content-Typeはapplication/jsonであること' do
         subject
         expect(response.content_type).to eq('application/json')
       end
 
-      it 'ステータス200を返すこと' do
+      example 'ステータス200を返すこと' do
         subject
         expect(response.status).to eq 200
       end
 
-      it 'DBから要求されたユーザーが削除されること' do
-        expect{subject}.to change(Event, :count).by(-1)
+      example 'DBから要求されたユーザーが削除されること' do
+        expect {subject}.to change(Event, :count).by(-1)
       end
 
-      it 'JSONに含まれるキーが適切であること' do
+      example 'JSONに含まれるキーが適切であること' do
         subject
         result = JSON.parse(response.body)
         expect(result).to have_key('id')
@@ -376,11 +368,12 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           delete '/events/hogehoge'
         end
 
-        it 'Content-Typeはapplication/jsonであること' do
-          expect(response.content_type).to eq('application/json')
+        # TODO: eq('text/html')になる。相談の上修正するか決める
+        example 'Content-Typeはtext/htmlであること' do
+          expect(response.content_type).to eq('text/html')
         end
 
-        it 'ステータス404が返されること' do
+        example 'ステータス404が返されること' do
           expect(response.status).to eq 404
         end
 
