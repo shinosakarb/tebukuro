@@ -1,0 +1,6 @@
+.bundle
+.git
+log
+tmp
+vendor/bundle
+client
