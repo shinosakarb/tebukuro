@@ -3,14 +3,16 @@ class EventsController < ApplicationController
   before_action :set_event, only: [:show, :update, :destroy]
 
   def index
-    @events = Event.all
+    @community = Community.find(params[:community_id])
+    @events = @community.events.all
     render json: @events
   end
 
 
   # paramsハッシュデータをPOSTする場合
   def create
-    @event = Event.new(event_params)
+    @community = Community.find(params[:community_id])
+    @event = @community.events.build(event_params)
     if @event.save
       # resource毎に使うシリアライザーを変えたいときはeach_serializerで指定する
       render json: @event, status: :created, location: @event
