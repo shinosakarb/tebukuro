@@ -1,17 +1,16 @@
 # rails g rspec:integration Event
 
-# TODO: communitiesモデルが追加されたらリクエストパス修正
-
 require 'rails_helper'
 
 RSpec.describe 'Events(イベントAPI)', type: :request do
+  let(:community) { FactoryGirl.create(:community) }
 
-  describe 'GET /events (events#index)' do
+  describe 'GET community_events_path (events#index)' do
 
-    let!(:events) { FactoryGirl.create_list(:event, 2) }
+    let!(:events) { FactoryGirl.create_list(:event, 2, community: community) }
 
     before do
-      get "/events"
+      get community_events_path(community)
     end
 
     context '正常系' do
@@ -36,24 +35,22 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
   end
 
 
-  describe 'POST /events (events#create)' do
-
-    let(:event) { FactoryGirl.create(:event) }
-    let(:event_params) { {event: FactoryGirl.attributes_for(:event)} }
-
-    before do
-      post "/events", params: event_params
-    end
+  describe 'POST community_events_path (events#create)' do
 
     context '正常系' do
 
-      example 'ステータス200を返されること' do
-        expect(response).to be_success
+      let(:event_params) { {event: FactoryGirl.attributes_for(:event)} }
+      before do
+        post community_events_path(community), params: event_params
+      end
+
+      example 'ステータス201を返されること' do
+        expect(response).to have_http_status(:created)
       end
 
       example 'イベントが作成されること' do
         expect do
-          post "/events", params: event_params
+          post community_events_path(community), params: event_params
         end.to change(Event, :count).by(1)
       end
 
@@ -68,8 +65,8 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
 
       example 'JSONからイベント情報が取得できる' do
         result = JSON.parse(response.body)
-        expect(result['name']).to eq(event.name)
-        expect(result['description']).to eq(event.description)
+        expect(result['name']).to eq(event_params[:event][:name])
+        expect(result['description']).to eq(event_params[:event][:description])
       end
 
     end
@@ -77,10 +74,9 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
     context '異常系' do
 
       context 'nameが未記入' do
-        let(:event_name_blank) { FactoryGirl.build(:event_name_blank) }
         let(:event_name_blank_params) { {event: FactoryGirl.attributes_for(:event_name_blank)} }
         before do
-          post '/events', params: event_name_blank_params
+          post community_events_path(community), params: event_name_blank_params
         end
 
         example 'エラーが返ってくること' do
@@ -91,10 +87,9 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
       end
 
       context 'descriptionが未記入' do
-        let(:event_description_blank) { FactoryGirl.build(:event_description_blank) }
         let(:event_description_blank_params) { {event: FactoryGirl.attributes_for(:event_description_blank)} }
         before do
-          post '/events', params: event_description_blank_params
+          post community_events_path(community), params: event_description_blank_params
         end
 
         example 'エラーが返ってくること' do
@@ -105,10 +100,9 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
       end
 
       context 'name, descriptionが未記入' do
-        let(:event_blank) { FactoryGirl.build(:event_blank) }
         let(:event_blank_params) { {event: FactoryGirl.attributes_for(:event_blank)} }
         before do
-          post '/events', params: event_blank_params
+          post community_events_path(community), params: event_blank_params
         end
 
         example 'エラーが返ってくること' do
@@ -122,15 +116,13 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
   end
 
 
-  describe 'GET /events/:id (events#show)' do
-
-    let(:event) { FactoryGirl.create(:event) }
-
-    before do
-      get event_path(event)
-    end
+  describe 'GET community_event_path (events#show)' do
 
     context '正常系' do
+      let(:event) { FactoryGirl.create(:event, community: community) }
+      before do
+        get community_event_path(community, event)
+      end
 
       example 'ステータス200が返ってくること' do
         expect(response).to be_success
@@ -158,7 +150,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
     context '異常系' do
 
       before do
-        get '/events/0'
+        get community_event_path(community_id: community.id, id: 0)
       end
 
       context '存在しないイベントを取得する' do
@@ -175,9 +167,9 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
   end
 
 
-  describe 'PATCH /events/:id (events#update)' do
+  describe 'PATCH community_event_path (events#update)' do
 
-    let(:event) { FactoryGirl.create(:event) }
+    let(:event) { FactoryGirl.create(:event, community: community) }
     before do
       @name = event.name
       @description = event.description
@@ -188,7 +180,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
       context '有効なパラメータ(name)の場合' do
 
         before do
-          patch "/events/#{event.id}", event: attributes_for(:event, name: 'hogehoge')
+          patch community_event_path(community, event), params: {event: attributes_for(:event, name: 'hogehoge')}
         end
 
         example 'ステータス200が返ってくること' do
@@ -206,7 +198,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
       context '有効なパラメータ(description)の場合' do
 
         before do
-          patch "/events/#{event.id}", event: attributes_for(:event, description: 'hogehoge')
+          patch community_event_path(community, event), params: {event: attributes_for(:event, description: 'hogehoge')}
         end
 
         example 'ステータス200が返ってくること' do
@@ -228,7 +220,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
       context '無効なパラメータ(name)の場合' do
 
         before do
-          patch "/events/#{event.id}", event: attributes_for(:event, name: nil)
+          patch community_event_path(community, event), params: {event: attributes_for(:event, name: nil)}
         end
 
         example 'ステータス422が返ってくること' do
@@ -245,7 +237,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
       context '無効なパラメータ(description)の場合' do
 
         before do
-          patch "/events/#{event.id}", event: attributes_for(:event, description: nil)
+          patch community_event_path(community, event), params: {event: attributes_for(:event, description: nil)}
         end
 
         example 'ステータス422が返ってくること' do
@@ -262,7 +254,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
       context '要求されたイベントが存在しない場合' do
 
         before do
-          patch "/events/hogehoge", event: attributes_for(:event, description: 'hogehoge')
+          patch community_event_path(community_id: community.id, id: 0), params: {event: attributes_for(:event, description: 'hogehoge')}
         end
 
         # TODO: eq('text/html')になる。相談の上修正するか決める
@@ -280,16 +272,13 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
   end
 
 
-  describe 'DELETE /events/:id (events#destroy)' do
-
-    # letだと上手くいかない。(itが一つしかなければうまくいく)
-    # let!だと毎回処理される
-    let!(:event) { FactoryGirl.create(:event) }
+  describe 'DELETE community_event_path (events#destroy)' do
 
     context '正常系' do
 
+      let!(:event) { FactoryGirl.create(:event, community: community) }
       subject do
-        delete "/events/#{event.id}", event: event
+        delete community_event_path(community, event)
       end
 
       example 'ステータス200を返すこと' do
@@ -318,7 +307,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
       context '要求されたイベントが存在しない場合' do
 
         before do
-          delete '/events/hogehoge'
+          delete community_event_path(community_id: community.id, id: 0)
         end
 
         # TODO: eq('text/html')になる。相談の上修正するか決める
