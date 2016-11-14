@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
 
   before_action :load_community,  only: [:index, :create]
-  before_action :set_event,       only: [:show, :update, :destroy]
+  before_action :load_event,      only: [:show, :update, :destroy]
 
   def index
     @events = @community.events
@@ -46,12 +46,12 @@ class EventsController < ApplicationController
     params.require(:event).permit(:name, :description)
   end
 
-  def set_event
+  def load_event
     @event = Event.find(params[:id])
   end
 
   def load_community
-    @community = Community.includes(:events).find(params[:community_id])
+    @community = Community.find(params[:community_id])
   end
 
 end
