@@ -1,7 +1,5 @@
 # rails g rspec:integration Event
 
-# TODO: communitiesモデルが追加されたらリクエストパス修正
-
 require 'rails_helper'
 
 RSpec.describe 'Events(イベントAPI)', type: :request do
