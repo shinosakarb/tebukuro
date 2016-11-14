@@ -1,19 +1,20 @@
 class EventsController < ApplicationController
 
-  before_action :set_event, only: [:show, :update, :destroy]
+  before_action :load_community,  only: [:index, :create]
+  before_action :set_event,       only: [:show, :update, :destroy]
 
   def index
-    @events = Event.all
+    @events = @community.events
     render json: @events
   end
 
 
   # paramsハッシュデータをPOSTする場合
   def create
-    @event = Event.new(event_params)
+    @event = @community.events.build(event_params)
     if @event.save
       # resource毎に使うシリアライザーを変えたいときはeach_serializerで指定する
-      render json: @event, status: :created, location: @event
+      render json: @event, status: :created, location: [@community, @event]
     else
       render json: @event.errors, status: :unprocessable_entity
     end
@@ -47,6 +48,10 @@ class EventsController < ApplicationController
 
   def set_event
     @event = Event.find(params[:id])
+  end
+
+  def load_community
+    @community = Community.includes(:events).find(params[:community_id])
   end
 
 

@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-
-  resources :events, :defaults => { :format => 'json' }
-
+  resources :communities, :defaults => { :format => 'json' } do
+      resources :events do
+        resources :tickets
+      end
+      resources :admins
+      resources :owners
+      resources :members
+    end
 end
