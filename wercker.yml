@@ -1,7 +1,7 @@
 box: ruby:2.3.1
 
 services:
-  - id: postgres
+  - postgres:9.6
     env:
       DATABASE_USERNAME: postgres
 
@@ -32,10 +32,18 @@ backend-request-spec:
 
 backend-model-spec:
   steps:
+    - install-packages:
+      packages: nodejs
+
     - bundle-install
+
+    - rails-database-yml:
+      service: postgresql-docker
+
     - script:
       name: Prepare database
-      code: bundle exec rake db:test:prepare
+      code: RAILS_ENV=test bin/rake db:schema:load
+
     - script:
       name: Run model spec
       code: bin/rake spec:models
