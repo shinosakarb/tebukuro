@@ -1,9 +1,9 @@
 box: ruby:2.3.1
 
 services:
-  - postgres:9.6
+  - id: postgres
     env:
-      DATABASE_USERNAME: postgres
+      POSTGRES_ENV_PG_MAJOR: 9.6
 
 build:
   steps:
