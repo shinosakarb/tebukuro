@@ -1,0 +1,34 @@
+box: ruby:2.3.2
+
+services:
+  - postgres:9.6
+
+build:
+  steps:
+    - bundle-install
+
+backend-request-spec:
+  steps:
+    - bundle-install
+    - script:
+      name: Set DATABASE_USERNAME
+      code: export DATABASE_USERNAME=postgres
+    - script:
+      name: Prepare database
+      code: bundle exec rake db:test:prepare
+    - script:
+      name: Run request spec
+      code: bin/rake spec:requests
+
+backend-model-spec:
+  steps:
+    - bundle-install
+    - script:
+      name: Set DATABASE_USERNAME
+      code: export DATABASE_USERNAME=postgres
+    - script:
+      name: Prepare database
+      code: bundle exec rake db:test:prepare
+    - script:
+      name: Run model spec
+      code: bin/rake spec:models
