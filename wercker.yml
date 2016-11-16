@@ -1,15 +1,23 @@
 box: ruby:2.3.1
 
 services:
-  - postgres:9.6
+  - id: postgres
+    env:
+      POSTGRES_PASSWORD: secret_password
 
 build:
   steps:
+    - install-packages:
+      packages: nodejs
     - bundle-install
 
 backend-request-spec:
   steps:
+    - install-packages:
+      packages: nodejs
     - bundle-install
+    - rails-database-yml:
+      service: postgresql-docker
     - script:
       name: Prepare database
       code: bundle exec rake db:test:prepare
