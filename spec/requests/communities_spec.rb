@@ -76,7 +76,7 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
 
         let(:community_name_blank_params) { {community: FactoryGirl.attributes_for(:community_name_blank)} }
         before do
-          post communities_path(community), params: community_name_blank_params
+          post communities_path, params: community_name_blank_params
         end
 
         example 'エラーが返ってくること' do
