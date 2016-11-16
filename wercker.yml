@@ -11,9 +11,6 @@ backend-request-spec:
   steps:
     - bundle-install
     - script:
-      name: Set DATABASE_USERNAME
-      code: export DATABASE_USERNAME=postgres
-    - script:
       name: Prepare database
       code: bundle exec rake db:test:prepare
     - script:
@@ -23,9 +20,6 @@ backend-request-spec:
 backend-model-spec:
   steps:
     - bundle-install
-    - script:
-      name: Set DATABASE_USERNAME
-      code: export DATABASE_USERNAME=postgres
     - script:
       name: Prepare database
       code: bundle exec rake db:test:prepare
