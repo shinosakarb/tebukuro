@@ -12,6 +12,21 @@ build:
 
     - bundle-install
 
+    - rails-database-yml:
+      service: postgresql-docker
+
+    - script:
+      name: Prepare database
+      code: RAILS_ENV=test bin/rake db:schema:load
+
+    - script:
+      name: Run request spec
+      code: bin/rake spec:requests
+
+    - script:
+      name: Run model spec
+      code: bin/rake spec:models
+
 backend-request-spec:
   steps:
     - install-packages:
