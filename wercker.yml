@@ -30,6 +30,12 @@ backend-request-spec:
       name: Run request spec
       code: bin/rake spec:requests
 
+  after-steps:
+    - slack-notifier:
+      url: $SLACK_URL
+      channel: wercker
+      username: wercker
+
 backend-model-spec:
   steps:
     - install-packages:
@@ -48,8 +54,8 @@ backend-model-spec:
       name: Run model spec
       code: bin/rake spec:models
 
-after-steps:
-  - slack-notifier:
-    url: $SLACK_URL
-    channel: wercker
-    username: wercker
+  after-steps:
+    - slack-notifier:
+      url: $SLACK_URL
+      channel: wercker
+      username: wercker
