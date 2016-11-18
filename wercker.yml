@@ -12,6 +12,12 @@ build:
 
     - bundle-install
 
+  after-steps:
+    - slack-notifier:
+      url: $SLACK_URL
+      channel: wercker
+      username: incoming-webhook
+
 backend-request-spec:
   steps:
     - install-packages:
