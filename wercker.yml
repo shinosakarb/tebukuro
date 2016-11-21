@@ -30,6 +30,13 @@ backend-request-spec:
       name: Run request spec
       code: bin/rake spec:requests
 
+  after-steps:
+    - slack-notifier:
+      url: $SLACK_URL
+      channel: wercker
+      username: webhook
+      notify_on: "failed"
+
 backend-model-spec:
   steps:
     - install-packages:
@@ -47,3 +54,10 @@ backend-model-spec:
     - script:
       name: Run model spec
       code: bin/rake spec:models
+
+  after-steps:
+    - slack-notifier:
+      url: $SLACK_URL
+      channel: wercker
+      username: incoming-webhook
+      notify_on: "failed"
