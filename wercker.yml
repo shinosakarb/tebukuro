@@ -35,7 +35,7 @@ backend-request-spec:
       url: $SLACK_URL
       channel: wercker
       username: webhook
-      notify_on: failed
+      notify_on: "failed"
 
 backend-model-spec:
   steps:
@@ -60,4 +60,4 @@ backend-model-spec:
       url: $SLACK_URL
       channel: wercker
       username: incoming-webhook
-      notify_on: failed
+      notify_on: "failed"
