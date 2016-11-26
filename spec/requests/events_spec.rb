@@ -26,9 +26,13 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
         expect(result[0]['id']).to eq events[0].id
         expect(result[0]['name']).to eq events[0].name
         expect(result[0]['description']).to eq events[0].description
+        expect(result[0]['start_time']).to eq events[0].start_time.to_json
+        expect(result[0]['end_time']).to eq events[0].end_time.to_json
         expect(result[1]['id']).to eq events[1].id
         expect(result[1]['name']).to eq events[1].name
         expect(result[1]['description']).to eq events[1].description
+        expect(result[1]['start_time']).to eq events[1].start_time.to_json
+        expect(result[1]['end_time']).to eq events[1].end_time.to_json
       end
 
     end
@@ -40,6 +44,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
     context '正常系' do
 
       let(:event_params) { {event: FactoryGirl.attributes_for(:event)} }
+
       before do
         post community_events_path(community), params: event_params
       end
@@ -60,13 +65,16 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
         expect(result).to have_key('name')
         expect(result).to have_key('description')
         expect(result).to have_key('community_id')
-
+        expect(result).to have_key('start_time')
+        expect(result).to have_key('end_time')
       end
 
       example 'JSONからイベント情報が取得できる' do
         result = JSON.parse(response.body)
         expect(result['name']).to eq(event_params[:event][:name])
         expect(result['description']).to eq(event_params[:event][:description])
+        expect(result['start_time']).to eq(Event.last.start_time.to_json)
+        expect(result['end_time']).to eq(Event.last.end_time.to_json)
       end
 
     end
@@ -111,6 +119,30 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
         end
       end
 
+      context 'start_time, 作成時間より前であること' do
+        let(:early_start_params) { {event: FactoryGirl.attributes_for(:early_event)} }
+        before do
+          post community_events_path(community), params: early_start_params
+        end
+
+        example 'エラーが返ってくること' do
+          result = JSON.parse(response.body)
+          expect(result).to include("start_time" => ["はもう過ぎてしまっています"])
+        end
+      end
+
+      context 'start_time, 作成時間より前であること' do
+        let(:start_after_end_event_params) { {event: FactoryGirl.attributes_for(:start_after_end_event)} }
+        before do
+          post community_events_path(community), params: start_after_end_event_params
+        end
+
+        example 'エラーが返ってくること' do
+          result = JSON.parse(response.body)
+          expect(result).to include("start_time" => ["は終了時間よりも前に設定してください"])
+        end
+      end
+
     end
 
   end
@@ -135,7 +167,8 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
         expect(result).to have_key('name')
         expect(result).to have_key('description')
         expect(result).to have_key('community_id')
-
+        expect(result).to have_key('start_time')
+        expect(result).to have_key('end_time')
       end
 
       example 'JSONからイベントの情報を取得できること' do
@@ -143,6 +176,8 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
         expect(json['id']).to eq event.id
         expect(json['name']).to eq event.name
         expect(json['description']).to eq event.description
+        expect(json['start_time']).to eq event.start_time.to_json
+        expect(json['end_time']).to eq event.end_time.to_json
       end
 
     end
@@ -297,7 +332,8 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
         expect(result).to have_key('name')
         expect(result).to have_key('description')
         expect(result).to have_key('community_id')
-
+        expect(result).to have_key('start_time')
+        expect(result).to have_key('end_time')
       end
 
     end
