@@ -3,26 +3,26 @@ class Event < ApplicationRecord
 
   validates :name, presence: true
   validates :description, presence: true
-  validates :start_time, presence: true
-  validates :end_time, presence: true
+  validates :started_at, presence: true
+  validates :ended_at, presence: true
 
   validate :start_is_after_created
   validate :start_is_before_end
 
   private
   def start_is_after_created
-    return unless start_time
+    return unless started_at
 
-    if start_time < Time.now
-      errors.add(:start_time, 'はもう過ぎてしまっています')
+    if started_at < Time.now
+      errors.add(:started_at, 'はもう過ぎてしまっています')
     end
   end
 
   def start_is_before_end
-    return unless start_time && end_time
+    return unless started_at && ended_at
 
-    if start_time >= end_time
-      errors.add(:start_time, 'は終了時間よりも前に設定してください')
+    if started_at >= ended_at
+      errors.add(:started_at, 'は終了時間よりも前に設定してください')
     end
   end
 

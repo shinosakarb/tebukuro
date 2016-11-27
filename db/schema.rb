@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161126015113) do
+ActiveRecord::Schema.define(version: 20161127105527) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,8 +28,8 @@ ActiveRecord::Schema.define(version: 20161126015113) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.integer  "community_id"
-    t.datetime "start_time"
-    t.datetime "end_time"
+    t.datetime "started_at"
+    t.datetime "ended_at"
     t.index ["community_id"], name: "index_events_on_community_id", using: :btree
   end
 
