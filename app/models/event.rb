@@ -13,7 +13,7 @@ class Event < ApplicationRecord
   def start_is_after_created
     return unless started_at
 
-    if started_at < Time.now
+    if started_at < Time.zone.now
       errors.add(:started_at, 'はもう過ぎてしまっています')
     end
   end
