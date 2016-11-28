@@ -33,7 +33,7 @@ backend-request-spec:
   after-steps:
     - slack-notifier:
       url: $SLACK_URL
-      channel: wercker
+      channel: notification
       username: webhook
       notify_on: "failed"
 
@@ -58,6 +58,6 @@ backend-model-spec:
   after-steps:
     - slack-notifier:
       url: $SLACK_URL
-      channel: wercker
+      channel: notification
       username: incoming-webhook
       notify_on: "failed"
