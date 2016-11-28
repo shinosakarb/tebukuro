@@ -1,0 +1,13 @@
+# モデル名
+ja:
+  activerecord:
+    models:
+      event: イベント
+
+# モデルの属性名
+ja:
+  activerecord:
+    attributes:
+      event:
+        name: イベント名
+        description: 説明

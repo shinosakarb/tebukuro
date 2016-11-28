@@ -1,0 +1,13 @@
+# モデル名
+ja:
+  activerecord:
+    models:
+      community: コミュニティ
+
+# モデルの属性名
+ja:
+  activerecord:
+    attributes:
+      community:
+        name: コミュニティ名
+        description: 説明
