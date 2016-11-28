@@ -79,7 +79,7 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
 
         example 'エラーが返ってくること' do
           result = JSON.parse(response.body)
-          expect(result['name']).to include ("can't be blank")
+          expect(result['name']).to include I18n.t("errors.messages.blank")
           expect(result['description']).to eq nil
         end
 
@@ -95,7 +95,7 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
         example 'エラーが返ってくること' do
           result = JSON.parse(response.body)
           expect(result['name']).to eq nil
-          expect(result['description']).to include ("can't be blank")
+          expect(result['description']).to include I18n.t("errors.messages.blank")
         end
 
       end
@@ -109,7 +109,7 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
 
         example 'エラーが返ってくること' do
           result = JSON.parse(response.body)
-          expect(result).to include("name" => ["can't be blank"], "description" => ["can't be blank"])
+          expect(result).to include("name" => [I18n.t("errors.messages.blank")], "description" => [I18n.t("errors.messages.blank")])
         end
 
       end
