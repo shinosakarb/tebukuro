@@ -139,7 +139,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
 
         example 'エラーが返ってくること' do
           result = JSON.parse(response.body)
-          expect(result).to include("started_at" => ["は終了時間よりも前に設定してください"])
+          expect(result).to include("started_at" => ["は終了時間より前に設定してください"])
         end
       end
 

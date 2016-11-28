@@ -3,6 +3,7 @@ require "rails_helper"
 describe Event do
 
   let(:community) { FactoryGirl.create(:community) }
+  let(:event) { FactoryGirl.build(:event, community: community) }
 
   describe 'presence' do
     it { is_expected.to belong_to(:community) }
@@ -16,8 +17,6 @@ describe Event do
 
     context '正常系' do
 
-      let(:event) { FactoryGirl.create(:event, community: community) }
-
       example '開始時間は終了時間より前であって、作成時間より後であること' do
         expect(event).to be_valid
       end
@@ -26,19 +25,13 @@ describe Event do
 
     context '異常系' do
 
-      let(:event) { FactoryGirl.create(:event, community: community) }
-      before do
-        event.ended_at = 2.days.ago
-      end
-      example '開始時間は終了時間より後であること' do
+      example '開始時間は了時間より後であること' do
+        event.started_at = 5.hours.from_now
         expect(event).to be_invalid
       end
 
-      let(:event) { FactoryGirl.create(:event, community: community) }
-      before do
-        event.started_at = 2.days.ago
-      end
       example '作成時間より前であること' do
+        event.started_at = 2.hours.ago
         expect(event).to be_invalid
       end
 
