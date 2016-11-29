@@ -1,0 +1,13 @@
+# model name
+ja:
+  activerecord:
+    models:
+      community: Community
+
+# model attributes name
+ja:
+  activerecord:
+    attributes:
+      community:
+        name: Name
+        description: Description
