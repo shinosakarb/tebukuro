@@ -81,8 +81,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
 
         example 'エラーが返ってくること' do
           result = JSON.parse(response.body)
-          expect(result['name']).to include ("can't be blank")
-          expect(result['description']).to eq nil
+          expect(result).to be_has_key 'name'
         end
       end
 
@@ -94,8 +93,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
 
         example 'エラーが返ってくること' do
           result = JSON.parse(response.body)
-          expect(result['name']).to eq nil
-          expect(result['description']).to include ("can't be blank")
+          expect(result).to be_has_key 'description'
         end
       end
 
@@ -107,7 +105,8 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
 
         example 'エラーが返ってくること' do
           result = JSON.parse(response.body)
-          expect(result).to include("name" => ["can't be blank"], "description" => ["can't be blank"])
+          expect(result).to be_has_key 'name'
+          expect(result).to be_has_key 'description'
         end
       end
 

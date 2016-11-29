@@ -1,0 +1,13 @@
+# model name
+en:
+  activerecord:
+    models:
+      event: Event
+
+# model attributes name
+ja:
+  activerecord:
+    attributes:
+      event:
+        name: Name
+        description: Description
