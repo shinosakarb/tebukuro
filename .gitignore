@@ -22,7 +22,7 @@
 .byebug_history
 
 # node.js dependencies
-/client/node_modules
+/front/node_modules
 
 /vendor/bundle
 .DS_Store
