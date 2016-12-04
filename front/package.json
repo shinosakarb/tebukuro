@@ -12,6 +12,10 @@
   },
   "dependencies": {
     "immutable": "^3.8.1",
+    "koa": "2",
+    "koa-router": "next",
+    "koa-views": "next",
+    "pug": "^2.0.0-beta6",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",
