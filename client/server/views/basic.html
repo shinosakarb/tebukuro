@@ -1,0 +1,15 @@
+doctype html
+html(lang="ja")
+  head
+    title= "tebukuro"
+    //-script(type='text/javascript').
+    //-  if (foo) bar(1 + 5)
+  body
+    h1 welcom to tebukuro
+    #container.col
+      if youAreUsingPug
+        p='tebukuro version:'+version
+      else
+        p Get on it!
+      p.
+        tebukuro is a next-generation event management system.
