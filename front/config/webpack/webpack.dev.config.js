@@ -1,10 +1,7 @@
 var webpack = require('webpack')
-var postcssImport = require('postcss-import')
-var autoprefixer = require('autoprefixer')
-var precss = require('precss')
 
 module.exports = {
-  entry: './index.js',
+  entry: './client/index',
   output: {
     filename: 'bundle.js',
     publicPath: 'http://localhost:4000/'
@@ -24,9 +21,9 @@ module.exports = {
         test: /\.css$/,
         include: /app/,
         loaders: [
-          'style',
-          'css?modules',
-          'postcss'
+          'style-loader',
+          'css-loader?modules',
+          'postcss-loader'
         ]
       },
       {
@@ -49,15 +46,6 @@ module.exports = {
         test: /\.(jpg|png|gif)$/,
         loader: 'file-loader?name=[name].[ext]'
       }
-    ]
-  },
-  postcss(webpack) {
-    return [
-      postcssImport({
-          addDependencyTo: webpack
-      }),
-      precss,
-      autoprefixer
     ]
   },
   devServer: {
