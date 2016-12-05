@@ -4,9 +4,11 @@ module.exports = {
   entry: './client/index',
   output: {
     filename: 'bundle.js',
-    publicPath: 'http://localhost:4000/'
+    path: '/public/dist',
+    publicPath: '/dist/'
   },
   plugins: [
+    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ],
