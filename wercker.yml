@@ -12,6 +12,31 @@ build:
 
     - bundle-install
 
+frontend-unit-test:
+  steps:
+    - install-packages:
+      packages: nodejs
+
+    - script:
+      name: update npm
+      code: npm update -g npm
+
+    - script:
+      name: install yarn
+      code: npm install -g yarn
+
+    - script:
+      name: change directory
+      code: cwd: front/
+
+    - script:
+      name: install packages
+      code: yarn
+
+    - script:
+      name: run test
+      code: npm run test
+
 backend-request-spec:
   steps:
     - install-packages:
