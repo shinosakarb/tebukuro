@@ -38,6 +38,7 @@ module.exports = function(app) {
     hot: {
       // log: console.log,
       // path: '/__webpack_hmr',
+      // timeout: 2000
       // heartbeat: 10 * 1000
     }
   }))

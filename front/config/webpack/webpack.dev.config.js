@@ -1,7 +1,11 @@
 var webpack = require('webpack')
 
 module.exports = {
-  entry: './client/index',
+  entry: [
+    'react-hot-loader/patch',
+    'webpack-hot-middleware/client',
+    './client/index'
+  ],
   output: {
     filename: 'bundle.js',
     path: '/public/dist',
@@ -49,11 +53,5 @@ module.exports = {
         loader: 'file-loader?name=[name].[ext]'
       }
     ]
-  },
-  devServer: {
-    hot: true,
-    port: 4000,
-    inline: true,
-    historyApiFallback: true
   }
 }
