@@ -14,16 +14,23 @@ build:
 
 frontend-unit-test:
   steps:
-    - install-packages:
-      packages: nodejs
+    - script:
+      name: install nodejs
+      code: |
+        sudo apt-get update
+        sudo apt-get install -y nodejs npm
+
+    - script:
+      name: nodejs version
+      code: echo "Node.js version $(node -v) running"
 
     - script:
       name: update npm
-      code: npm update -g npm
+      code: sudo npm update -g npm
 
     - script:
       name: install yarn
-      code: npm install -g yarn
+      code: sudo npm install -g yarn
 
     - script:
       name: change directory
@@ -35,7 +42,7 @@ frontend-unit-test:
 
     - script:
       name: run test
-      code: npm run test
+      code: yarn run test
 
 backend-request-spec:
   steps:
