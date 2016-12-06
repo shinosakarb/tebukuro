@@ -27,7 +27,7 @@ frontend-unit-test:
 
     - script:
       name: change directory
-      code: cwd: front/
+      cwd: front/
 
     - script:
       name: install packages
