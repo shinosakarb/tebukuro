@@ -8,7 +8,6 @@ module.exports = {
   ],
   output: {
     filename: 'bundle.js',
-    path: '/public/dist',
     publicPath: '/dist/'
   },
   plugins: [
