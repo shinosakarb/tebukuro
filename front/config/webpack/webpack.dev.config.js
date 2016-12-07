@@ -1,12 +1,17 @@
 var webpack = require('webpack')
 
 module.exports = {
-  entry: './client/index',
+  entry: [
+    'react-hot-loader/patch',
+    'webpack-hot-middleware/client',
+    './client/index'
+  ],
   output: {
     filename: 'bundle.js',
-    publicPath: 'http://localhost:4000/'
+    publicPath: '/dist/'
   },
   plugins: [
+    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ],
@@ -47,11 +52,5 @@ module.exports = {
         loader: 'file-loader?name=[name].[ext]'
       }
     ]
-  },
-  devServer: {
-    hot: true,
-    port: 4000,
-    inline: true,
-    historyApiFallback: true
   }
 }
