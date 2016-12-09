@@ -13,6 +13,10 @@ case ${1} in
     docker-compose build
   ;;
 
+  front|f)
+    docker-compose exec frontend ${@:2}
+  ;;
+
   *)
     docker-compose exec spring $@
   ;;
