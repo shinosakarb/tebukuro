@@ -25,3 +25,14 @@ services:
     image: busybox
     volumes:
       - "/var/lib/postgresql/data"
+  frontend:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    command: "yarn start"
+    volumes:
+      - .:/app
+    ports:
+      - "4000:4000"
+    tty: true
+    stdin_open: true
