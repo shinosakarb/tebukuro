@@ -20,7 +20,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
 
     before do
       get community_events_path(community)
-      # responseのJSONのtimezoneに合わせるために
       events_json_parse[0] = JSON.parse(events[0].to_json)
       events_json_parse[1] = JSON.parse(events[1].to_json)
     end
@@ -43,7 +42,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           end
         end
       end
-
     end
   end
 
@@ -93,7 +91,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           end
         end
       end
-
     end
 
     context '異常系' do
@@ -193,11 +190,8 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           expect(response).not_to be_success
           expect(response.status).to eq 404
         end
-
       end
-
     end
-
   end
 
 
