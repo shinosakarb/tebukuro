@@ -37,7 +37,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           )
         end
       end
-
     end
   end
 
@@ -81,6 +80,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
 
       end
 
+      # TODO: community_idの取得は難しいのでテストしない
       example 'JSONからイベント情報が取得できる' do
         expect(subject['community_id']).to eq community['id']
         expect(subject).to match_hash_after_jsonalized(
@@ -88,7 +88,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           # specを無視するkey
           'id', 'community_id'
         )
-
       end
     end
 
@@ -178,7 +177,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           'updated_at', 'created_at'
         )
       end
-
     end
 
     context '異常系' do
@@ -331,9 +329,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           # specを無視するkey
           'created_at', 'updated_at'
         )
-
       end
-
     end
 
     context '異常系' do
@@ -352,7 +348,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
         example 'ステータス404が返されること' do
           expect(response.status).to eq 404
         end
-
       end
     end
   end
