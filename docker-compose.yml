@@ -31,7 +31,7 @@ services:
       dockerfile: Dockerfile
     command: "yarn start"
     volumes:
-      - .:/app
+      - ./front:/front_app
     ports:
       - "4000:4000"
     tty: true
