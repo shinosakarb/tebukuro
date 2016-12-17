@@ -5,7 +5,6 @@ require 'rails_helper'
 RSpec.describe 'Events(イベントAPI)', type: :request do
 
 
-  events_json_parse = []  # eventsをJSONにしてparseしたもの
   event_keys = [:id, :name, :description, :community_id,
                 :invitation_starts_at, :invitation_ends_at,
                 :event_starts_at, :event_ends_at,
@@ -28,9 +27,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
 
     subject do
       JSON.parse(response.body)
-      # responseのJSONのtimezoneに合わせるために
-      events_json_parse[0] = JSON.parse(events[0].to_json)
-      events_json_parse[1] = JSON.parse(events[1].to_json)
     end
 
     context '正常系' do
