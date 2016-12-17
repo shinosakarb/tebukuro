@@ -4,7 +4,6 @@ require 'rails_helper'
 
 RSpec.describe 'Events(イベントAPI)', type: :request do
 
-
   event_keys = [:id, :name, :description, :community_id,
                 :invitation_starts_at, :invitation_ends_at,
                 :event_starts_at, :event_ends_at,
@@ -20,7 +19,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
 
     before do
       get community_events_path(community)
-      # responseのJSONのtimezoneに合わせるために
       events_json_parse[0] = JSON.parse(events[0].to_json)
       events_json_parse[1] = JSON.parse(events[1].to_json)
     end
@@ -43,7 +41,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           end
         end
       end
-
     end
   end
 
@@ -83,7 +80,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
       end
 
       example 'JSONからイベント情報が取得できる' do
-
         # evnet_paramsではdate型がstringになっているから、それと同じデータをもつdummy_eventを使う
         event_keys_without_id.each do |key|
           if (key == 'community_id')
@@ -93,7 +89,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           end
         end
       end
-
     end
 
     context '異常系' do
@@ -193,11 +188,8 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           expect(response).not_to be_success
           expect(response.status).to eq 404
         end
-
       end
-
     end
-
   end
 
 
