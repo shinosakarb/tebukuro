@@ -42,7 +42,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           end
         end
       end
-
     end
   end
 
@@ -82,7 +81,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
       end
 
       example 'JSONからイベント情報が取得できる' do
-
         # evnet_paramsではdate型がstringになっているから、それと同じデータをもつdummy_eventを使う
         event_keys_without_id.each do |key|
           if (key == 'community_id')
