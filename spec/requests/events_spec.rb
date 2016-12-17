@@ -42,6 +42,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           end
         end
       end
+
     end
   end
 
