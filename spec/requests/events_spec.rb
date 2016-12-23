@@ -325,6 +325,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
 
       example 'JSONに含まれるキーが適切であること' do
         subject
+        result = JSON.parse(response.body)
         expect(result).to match_hash_keys(
           event,
           # specを無視するkey
