@@ -78,11 +78,18 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           # specを無視するkey
           'id', 'community_id'
         )
+<<<<<<< HEAD
+=======
+
+>>>>>>> e0c62f742ba87c38cdd7fc6a029ccec16827ff30
       end
 
       # TODO: community_idの取得は難しいのでテストしない
       example 'JSONからイベント情報が取得できる' do
+<<<<<<< HEAD
         # evnet_paramsではdate型がstringになっているから、それと同じデータをもつdummy_eventを使う
+=======
+>>>>>>> e0c62f742ba87c38cdd7fc6a029ccec16827ff30
         expect(subject['community_id']).to eq community['id']
         expect(subject).to match_hash_after_jsonalized(
           dummy_event,
@@ -148,7 +155,11 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
 
     context '正常系' do
       let(:event) { FactoryGirl.create(:event, community: community) }
+<<<<<<< HEAD
       let(:event_json_parse){ JSON.parse(event.to_json) }
+=======
+      let(:event_json_parse){JSON.parse(event.to_json)}
+>>>>>>> e0c62f742ba87c38cdd7fc6a029ccec16827ff30
 
       before do
         get community_event_path(community, event)
@@ -178,7 +189,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           'updated_at', 'created_at'
         )
       end
-
     end
 
     context '異常系' do
