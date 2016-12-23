@@ -10,6 +10,7 @@ class Event < ApplicationRecord
   validates :number_of_accepted_participants, presence: true
   validates :cost, presence: true
 
+<<<<<<< 0213140ee4b1f7421af74710547a67f7b1c5ab82
 <<<<<<< 32ff1bed124921c00ada3b6a7072a9e9e4115635
 =======
 =begin
@@ -39,4 +40,6 @@ class Event < ApplicationRecord
 =end
 
 >>>>>>> ADD event_detail_information
+=======
+>>>>>>> FIX add event_detail_information
 end
