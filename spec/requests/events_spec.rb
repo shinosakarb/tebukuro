@@ -4,12 +4,6 @@ require 'rails_helper'
 
 RSpec.describe 'Events(イベントAPI)', type: :request do
 
-  event_keys = [:id, :name, :description, :community_id,
-                :invitation_starts_at, :invitation_ends_at,
-                :event_starts_at, :event_ends_at,
-                :number_of_accepted_participants, :cost]
-  event_keys_without_id = event_keys.reject{|key| key = 'id'}
-
   let(:community) { FactoryGirl.create(:community) }
 
   describe 'GET community_events_path (events#index)' do
@@ -19,6 +13,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
 
     before do
       get community_events_path(community)
+      # responseのJSONのtimezoneに合わせるために
       events_json_parse[0] = JSON.parse(events[0].to_json)
       events_json_parse[1] = JSON.parse(events[1].to_json)
     end
@@ -36,9 +31,11 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
 
       example 'JSONに含まれる情報が適切であること' do
         2.times do |i|
-          event_keys.each do |key|
-            expect(subject[i]["#{key}"]).to eq events_json_parse[i]["#{key}"]
-          end
+          expect(subject[i]).to match_hash_after_jsonalized(
+            events_json_parse[i],
+            # specを無視するkey
+            'updated_at', 'created_at'
+          )
         end
       end
     end
@@ -73,21 +70,25 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
       end
 
       example 'JSONに含まれるキーが適切であること' do
-        event_keys.each do |key|
-          expect(subject).to have_key("#{key}")
-        end
-
+        # match_hash_keysは第二引数に可変長引数を使っているため、第二引数を省略すると
+        # 第一引数のdummy_event.keysを展開して、第二引数に割当てしまうので
+        # 何も書かないときはnilを書く必要がある。
+        expect(subject).to match_hash_keys(
+          dummy_event,
+          # specを無視するkey
+          'id', 'community_id'
+        )
       end
 
+      # TODO: community_idの取得は難しいのでテストしない
       example 'JSONからイベント情報が取得できる' do
         # evnet_paramsではdate型がstringになっているから、それと同じデータをもつdummy_eventを使う
-        event_keys_without_id.each do |key|
-          if (key == 'community_id')
-            expect(subject["#{key}"]).to eq community['id']
-          else
-            expect(subject["#{key}"]).to eq event_json_parse["#{key}"]
-          end
-        end
+        expect(subject['community_id']).to eq community['id']
+        expect(subject).to match_hash_after_jsonalized(
+          dummy_event,
+          # specを無視するkey
+          'id', 'community_id'
+        )
       end
     end
 
@@ -147,7 +148,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
 
     context '正常系' do
       let(:event) { FactoryGirl.create(:event, community: community) }
-      let(:event_json_parse){ JSON.parse(event.to_json)}
+      let(:event_json_parse){ JSON.parse(event.to_json) }
 
       before do
         get community_event_path(community, event)
@@ -163,15 +164,19 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
       end
 
       example 'JSONに含まれるキーが適切であること' do
-        event_keys.each do |key|
-          expect(subject).to have_key("#{key}")
-        end
+        expect(subject).to match_hash_keys(
+          event,
+          # specを無視するkey
+          'updated_at', 'created_at'
+        )
       end
 
       example 'JSONからイベントの情報を取得できること' do
-        event_keys.each do |key|
-          expect(subject["#{key}"]).to eq event_json_parse["#{key}"]
-        end
+        expect(subject).to match_hash_after_jsonalized(
+          event,
+          # specを無視するkey
+          'updated_at', 'created_at'
+        )
       end
 
     end
@@ -320,13 +325,12 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
 
       example 'JSONに含まれるキーが適切であること' do
         subject
-        result = JSON.parse(response.body)
-        event_keys.each do |key|
-          expect(result).to have_key("#{key}")
-        end
-
+        expect(result).to match_hash_keys(
+          event,
+          # specを無視するkey
+          'created_at', 'updated_at'
+        )
       end
-
     end
 
     context '異常系' do
@@ -345,7 +349,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
         example 'ステータス404が返されること' do
           expect(response.status).to eq 404
         end
-
       end
     end
   end
