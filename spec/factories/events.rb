@@ -7,37 +7,35 @@ FactoryGirl.define do
   # 必ずこの形式でないと、JSON.parse()で日付のフォーマットがISO8061に変換されなくなる。
   factory_time = Time.zone.local(2015,12,15)
 
-  trait :event_detail_information do
-      invitation_starts_at factory_time
-      invitation_ends_at factory_time
-      event_starts_at factory_time
-      event_ends_at factory_time
-      number_of_accepted_participants {generate :number_of_accepted_participants}
-      cost {generate :cost}
+  trait :partial_event_detail_information do
+    invitation_starts_at factory_time
+    invitation_ends_at factory_time
+    event_starts_at factory_time
+    event_ends_at factory_time
   end
 
   factory :event do
     name {generate :name}
     description {generate :description}
-    event_detail_information
+    partial_event_detail_information
   end
 
   factory :event_name_blank, class: Event do
     name nil
     description {generate :description}
-    event_detail_information
+    partial_event_detail_information
   end
 
   factory :event_description_blank, class: Event do
     name {generate :name}
     description nil
-    event_detail_information
+    partial_event_detail_information
   end
 
   factory :event_blank, class: Event do
     name nil
     description nil
-    event_detail_information
+    partial_event_detail_information
   end
 
 end
