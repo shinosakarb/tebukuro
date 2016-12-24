@@ -1,6 +1,6 @@
 FactoryGirl.define do
 
-  factory :community, class: Community do
+  factory :community do
     name 'Community'
     description 'Description'
   end

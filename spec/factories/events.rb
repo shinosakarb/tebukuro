@@ -12,8 +12,6 @@ FactoryGirl.define do
       invitation_ends_at factory_time
       event_starts_at factory_time
       event_ends_at factory_time
-      number_of_accepted_participants {generate :number_of_accepted_participants}
-      cost {generate :cost}
   end
 
   factory :event do

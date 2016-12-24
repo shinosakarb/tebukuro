@@ -1,0 +1,6 @@
+# 全てのモデルオブジェクトに共通のエラーメッセージ
+ja:
+  activerecord:
+    errors:
+      messages:
+        blank: が入力されていません。
