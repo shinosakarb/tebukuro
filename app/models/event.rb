@@ -3,4 +3,11 @@ class Event < ApplicationRecord
 
   validates :name, presence: true
   validates :description, presence: true
+  validates :invitation_starts_at, presence:true
+  validates :invitation_ends_at, presence:true
+  validates :event_starts_at, presence:true
+  validates :event_ends_at, presence:true
+  validates :number_of_accepted_participants, presence: true
+  validates :cost, presence: true
+
 end

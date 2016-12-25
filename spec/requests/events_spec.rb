@@ -3,14 +3,28 @@
 require 'rails_helper'
 
 RSpec.describe 'Events(イベントAPI)', type: :request do
+
+  event_keys = [:id, :name, :description, :community_id,
+                :invitation_starts_at, :invitation_ends_at,
+                :event_starts_at, :event_ends_at,
+                :number_of_accepted_participants, :cost]
+  event_keys_without_id = event_keys.reject{|key| key = 'id'}
+
   let(:community) { FactoryGirl.create(:community) }
 
   describe 'GET community_events_path (events#index)' do
 
     let!(:events) { FactoryGirl.create_list(:event, 2, community: community) }
+    let(:events_json_parse){[]}
 
     before do
       get community_events_path(community)
+      events_json_parse[0] = JSON.parse(events[0].to_json)
+      events_json_parse[1] = JSON.parse(events[1].to_json)
+    end
+
+    subject do
+      JSON.parse(response.body)
     end
 
     context '正常系' do
@@ -21,16 +35,12 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
       end
 
       example 'JSONに含まれる情報が適切であること' do
-        result = JSON.parse(response.body)
-        expect(result.size).to eq events.count
-        expect(result[0]['id']).to eq events[0].id
-        expect(result[0]['name']).to eq events[0].name
-        expect(result[0]['description']).to eq events[0].description
-        expect(result[1]['id']).to eq events[1].id
-        expect(result[1]['name']).to eq events[1].name
-        expect(result[1]['description']).to eq events[1].description
+        2.times do |i|
+          event_keys.each do |key|
+            expect(subject[i]["#{key}"]).to eq events_json_parse[i]["#{key}"]
+          end
+        end
       end
-
     end
   end
 
@@ -39,9 +49,17 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
 
     context '正常系' do
 
-      let(:event_params) { {event: FactoryGirl.attributes_for(:event)} }
+      # event_paramsのデータ型は全てstring型になるため、dummy_eventを用意しておく
+      let(:dummy_event) { FactoryGirl.attributes_for(:event)}
+      let(:event_params) { {event: dummy_event} }
+      let(:event_json_parse){JSON.parse(dummy_event.to_json)}
+
       before do
         post community_events_path(community), params: event_params
+      end
+
+      subject do
+        JSON.parse(response.body)
       end
 
       example 'ステータス201を返されること' do
@@ -55,20 +73,22 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
       end
 
       example 'JSONに含まれるキーが適切であること' do
-        result = JSON.parse(response.body)
-        expect(result).to have_key('id')
-        expect(result).to have_key('name')
-        expect(result).to have_key('description')
-        expect(result).to have_key('community_id')
+        event_keys.each do |key|
+          expect(subject).to have_key("#{key}")
+        end
 
       end
 
       example 'JSONからイベント情報が取得できる' do
-        result = JSON.parse(response.body)
-        expect(result['name']).to eq(event_params[:event][:name])
-        expect(result['description']).to eq(event_params[:event][:description])
+        # evnet_paramsではdate型がstringになっているから、それと同じデータをもつdummy_eventを使う
+        event_keys_without_id.each do |key|
+          if (key == 'community_id')
+            expect(subject["#{key}"]).to eq community['id']
+          else
+            expect(subject["#{key}"]).to eq event_json_parse["#{key}"]
+          end
+        end
       end
-
     end
 
     context '異常系' do
@@ -79,21 +99,28 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           post community_events_path(community), params: event_name_blank_params
         end
 
+        subject do
+          JSON.parse(response.body)
+        end
+
         example 'エラーが返ってくること' do
-          result = JSON.parse(response.body)
-          expect(result).to be_has_key 'name'
+          expect(subject).to be_has_key 'name'
         end
       end
 
       context 'descriptionが未記入' do
         let(:event_description_blank_params) { {event: FactoryGirl.attributes_for(:event_description_blank)} }
+
         before do
           post community_events_path(community), params: event_description_blank_params
         end
 
+        subject do
+          JSON.parse(response.body)
+        end
+
         example 'エラーが返ってくること' do
-          result = JSON.parse(response.body)
-          expect(result).to be_has_key 'description'
+          expect(subject).to be_has_key 'description'
         end
       end
 
@@ -103,15 +130,16 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           post community_events_path(community), params: event_blank_params
         end
 
+        subject do
+          JSON.parse(response.body)
+        end
+
         example 'エラーが返ってくること' do
-          result = JSON.parse(response.body)
-          expect(result).to be_has_key 'name'
-          expect(result).to be_has_key 'description'
+          expect(subject).to be_has_key 'name'
+          expect(subject).to be_has_key 'description'
         end
       end
-
     end
-
   end
 
 
@@ -119,8 +147,14 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
 
     context '正常系' do
       let(:event) { FactoryGirl.create(:event, community: community) }
+      let(:event_json_parse){ JSON.parse(event.to_json)}
+
       before do
         get community_event_path(community, event)
+      end
+
+      subject do
+        JSON.parse(response.body)
       end
 
       example 'ステータス200が返ってくること' do
@@ -129,19 +163,15 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
       end
 
       example 'JSONに含まれるキーが適切であること' do
-        result = JSON.parse(response.body)
-        expect(result).to have_key('id')
-        expect(result).to have_key('name')
-        expect(result).to have_key('description')
-        expect(result).to have_key('community_id')
-
+        event_keys.each do |key|
+          expect(subject).to have_key("#{key}")
+        end
       end
 
       example 'JSONからイベントの情報を取得できること' do
-        json = JSON.parse(response.body)
-        expect(json['id']).to eq event.id
-        expect(json['name']).to eq event.name
-        expect(json['description']).to eq event.description
+        event_keys.each do |key|
+          expect(subject["#{key}"]).to eq event_json_parse["#{key}"]
+        end
       end
 
     end
@@ -158,17 +188,15 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           expect(response).not_to be_success
           expect(response.status).to eq 404
         end
-
       end
-
     end
-
   end
 
 
   describe 'PATCH community_event_path (events#update)' do
 
     let(:event) { FactoryGirl.create(:event, community: community) }
+
     before do
       @name = event.name
       @description = event.description
@@ -276,6 +304,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
     context '正常系' do
 
       let!(:event) { FactoryGirl.create(:event, community: community) }
+
       subject do
         delete community_event_path(community, event)
       end
@@ -292,10 +321,9 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
       example 'JSONに含まれるキーが適切であること' do
         subject
         result = JSON.parse(response.body)
-        expect(result).to have_key('id')
-        expect(result).to have_key('name')
-        expect(result).to have_key('description')
-        expect(result).to have_key('community_id')
+        event_keys.each do |key|
+          expect(result).to have_key("#{key}")
+        end
 
       end
 
@@ -320,7 +348,5 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
 
       end
     end
-
   end
-
 end
