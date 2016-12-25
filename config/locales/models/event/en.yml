@@ -11,3 +11,8 @@ ja:
       event:
         name: Name
         description: Description
+        invitation_starts_at: Entry start time of Event
+        invitation_starts_at: Entry end time of Event
+        event_starts_at: Start time of Event
+        event_ends_at: End time of Event
+
