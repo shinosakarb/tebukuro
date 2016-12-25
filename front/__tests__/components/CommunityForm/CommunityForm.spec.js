@@ -1,5 +1,5 @@
-import React from 'react';
-import CommunityForm from '../index'
+import React from 'react'
+import CommunityForm from '../../../client/components/CommunityForm'
 import renderer from 'react-test-renderer'
 
 describe('CommunityForm', () => {
