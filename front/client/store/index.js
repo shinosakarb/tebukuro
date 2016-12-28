@@ -1,6 +1,7 @@
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import { routerMiddleware } from 'react-router-redux'
 import TebukuroApp from '../reducers'
 
-const store = createStore(TebukuroApp)
-
-export default store
+export default (preloadState = {}, history) => {
+  return createStore(TebukuroApp, {}, applyMiddleware(routerMiddleware(history)))
+}
