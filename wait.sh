@@ -8,7 +8,7 @@ export PGPASSWD="$DATABASE_PASSWORD"
 cmd="$@"
 
 echo "Waiting for psql"
-until psql -h "$host" -U "$user" &> /dev/null
+until psql -h "$host" -U "$user" -c '\l' &> /dev/null
 do
   >$2 echo -n "."
   sleep 1
