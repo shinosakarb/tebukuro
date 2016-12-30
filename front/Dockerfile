@@ -1,6 +1,6 @@
-FROM node:7.2.1
+FROM node:7.3.0-alpine
 
-RUN apt-get update -qq
+RUN apk update && apk upgrade && apk add --update --no-cache python gcc g++ make
 RUN npm install -g yarn
 RUN mkdir /front_app
 WORKDIR /front_app

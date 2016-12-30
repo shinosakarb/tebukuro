@@ -22,7 +22,7 @@ services:
     tty: false
     stdin_open: false
   db:
-    image: postgres:9.6
+    image: postgres:9.6-alpine
     volumes_from:
       - data
   data:
@@ -36,6 +36,7 @@ services:
     command: "yarn start"
     volumes:
       - ./front:/front_app
+      - /front_app/node_modules
     ports:
       - "4000:4000"
     tty: true
