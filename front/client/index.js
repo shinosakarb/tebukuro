@@ -1,29 +1,28 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
-import store from './store'
-import App from './containers/App'
-import { Provider } from 'react-redux'
+import configureStore from './store'
+import { browserHistory } from 'react-router'
+import { syncHistoryWithStore } from 'react-router-redux'
+import Root from './containers/Root'
 
-ReactDOM.render(
-  <Provider store={store}>
+const state = {}
+const store = configureStore(state, browserHistory)
+const history = syncHistoryWithStore(browserHistory, store)
+
+const renderApp = (RootComponent) => {
+  ReactDOM.render(
     <AppContainer>
-      <App/>
-    </AppContainer>
-  </Provider>,
-  document.getElementById('root')
-)
+      <RootComponent store={store} history={history} />
+    </AppContainer>,
+    document.getElementById('root')
+  )
+}
+
+renderApp(Root)
 
 if (module.hot) {
-  module.hot.accept('./containers/App', () => {
-    const NextApp = require('./containers/App').default
-    ReactDOM.render(
-      <Provider store={store}>
-        <AppContainer>
-          <NextApp/>
-        </AppContainer>
-      </Provider>,
-      document.getElementById('root')
-    )
+  module.hot.accept('./containers/Root', () => {
+    renderApp(require('./containers/Root').default)
   })
 }
