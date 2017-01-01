@@ -1,7 +1,7 @@
 import { Record, Set } from 'immutable'
 
 const CommunityListRecord = Record({
-  communities: Set.new()
+  communities: Set.of()
 })
 
 export default class CommunityList extends CommunityListRecord {
