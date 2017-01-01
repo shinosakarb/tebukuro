@@ -4,7 +4,7 @@ import { Router, Route, IndexRoute } from 'react-router'
 import App from '../App'
 import Top from '../../components/Top'
 import CommunityList from '../../components/CommunityList'
-import CommunityForm from '../../components/CommunityForm'
+import CreateCommunityForm from '../CreateCommunityForm'
 
 export default class Root extends React.Component {
   static propTypes = {
@@ -20,7 +20,7 @@ export default class Root extends React.Component {
           <Route path="/" component={App}>
             <IndexRoute component={Top}/>
             <Route path="communities" component={CommunityList}/>
-            <Route path="communities/new" component={CommunityForm}/>
+            <Route path="communities/new" component={CreateCommunityForm}/>
           </Route>
         </Router>
       </Provider>
