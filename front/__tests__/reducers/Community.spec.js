@@ -1,17 +1,17 @@
-import CommunityReducer from '../../client/reducers/Community'
-import { addCommunity } from '../../client/actions/Community'
-import CommunityModel   from '../../client/models/Community'
+import CommunityReducer     from '../../client/reducers/Community'
+import { createCommunity }  from '../../client/actions/Community'
+import CommunityModel       from '../../client/models/Community'
 
 const model = (params) => {
   return new CommunityModel(params)
 }
 
 describe('Community', () => {
-  describe('ADD_COMMUNITY', () => {
-    it("should handle ADD_COMMUNITY", () => {
+  describe('CREATE_COMMUNITY', () => {
+    it("should handle CREATE_COMMUNITY", () => {
       const subject = CommunityReducer(
         model(),
-        addCommunity({
+        createCommunity({
           id:           10,
           name:         'communityName',
           description:  'communityDescription'
