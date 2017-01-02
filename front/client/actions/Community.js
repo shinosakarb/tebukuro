@@ -1,4 +1,4 @@
 import { createAction } from 'redux-actions'
-export const ADD_COMMUNITY = 'ADD_COMMUNITY'
+export const CREATE_COMMUNITY = 'CREATE_COMMUNITY'
 
-export const addCommunity = createAction(ADD_COMMUNITY)
+export const createCommunity = createAction(CREATE_COMMUNITY)
