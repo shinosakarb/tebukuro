@@ -1,14 +1,31 @@
 import React from 'react'
-import { Link } from 'react-router'
+import CommunityListModel from '../../models/CommunityList'
 
-const CommunityList = () => {
+const CommunityList = ({CommunityList}) => {
   return (
-    <div>
-      <div>community list sample</div>
-
-      <Link to="/communities/new">new</Link>
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>name</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          CommunityList.communities.map((community) => {
+            return (
+              <tr key={community.id}>
+                <td>{community.name}</td>
+              </tr>
+            )
+          })
+        }
+      </tbody>
+    </table>
   )
+}
+
+CommunityList.propTypes = {
+  CommunityList : React.PropTypes.instanceOf(CommunityListModel).isRequired,
 }
 
 export default CommunityList

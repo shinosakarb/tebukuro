@@ -1,0 +1,23 @@
+exports[`CommunityList render list 1`] = `
+<table>
+  <thead>
+    <tr>
+      <th>
+        name
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        name1
+      </td>
+    </tr>
+    <tr>
+      <td>
+        name2
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;

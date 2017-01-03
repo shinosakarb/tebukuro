@@ -1,5 +1,5 @@
 import nock from 'nock'
-import { createCommunityHandler } from '../../client/api/Community'
+import * as CommunityAPI from '../../client/api/Community'
 
 describe('createCommunityHandler', () => {
   describe('when valid param', () => {
@@ -21,7 +21,7 @@ describe('createCommunityHandler', () => {
       .post('/communities')
       .reply(201, response)
 
-      return createCommunityHandler(name, description)
+      return CommunityAPI.createCommunityHandler(name, description)
       .then((payload) => {
         expect(payload.id).toBe(response.id)
         expect(payload.name).toBe(response.name)
@@ -47,11 +47,23 @@ describe('createCommunityHandler', () => {
       const name = ''
       const description = ''
 
-      return createCommunityHandler(name, description)
+      return CommunityAPI.createCommunityHandler(name, description)
       .catch((payload) => {
         expect(payload.messages[0]).toContain('name')
         expect(payload.messages[1]).toContain('description')
       })
+    })
+  })
+
+  describe('getCommunities', () => {
+    test('get JSON of communities', async () =>{
+      const response = [{id: 1, name: "name1", description: "description1"}, {id: 2, name: "name2", description: "description2"}]
+
+      nock(Config.ApiEndPoint)
+        .get('/communities.json')
+        .reply(200, response)
+      const subject = await CommunityAPI.getCommunities()
+      expect(subject).toEqual(response)
     })
   })
 })
