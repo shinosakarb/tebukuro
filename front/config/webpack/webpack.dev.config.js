@@ -15,6 +15,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ],
+  devtool: 'inline-source-map',
   module: {
     loaders: [
       {
