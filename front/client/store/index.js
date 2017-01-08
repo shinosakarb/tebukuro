@@ -1,10 +1,12 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
+import promiseMiddleware from 'redux-promise'
 import TebukuroApp from '../reducers'
 
 export default (preloadState = {}, history) => {
   const middlewares = [
-    routerMiddleware(history)
+    routerMiddleware(history),
+    promiseMiddleware
   ]
 
   const composeEnhancers =
