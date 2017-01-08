@@ -47,4 +47,11 @@ Rails.application.configure do
 
   # app/middleware/pretty_json_responseを参照してください
   config.middleware.use PrettyJsonResponse
+
+  config.middleware.insert_before 0, Rack::Cors do
+    allow do
+      origins '*'
+      resource '*', :headers => :any, :methods => [:get, :post, :delete, :patch]
+    end
+  end
 end
