@@ -25,15 +25,13 @@ ActiveRecord::Schema.define(version: 20161207133326) do
   create_table "events", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.integer  "community_id"
-    t.datetime "invitation_starts_at"
-    t.datetime "invitation_ends_at"
-    t.datetime "event_starts_at"
-    t.datetime "event_ends_at"
-    t.integer  "number_of_accepted_participants"
-    t.integer  "cost"
+    t.datetime "invitation_starts_at", null: false
+    t.datetime "invitation_ends_at",   null: false
+    t.datetime "event_starts_at",      null: false
+    t.datetime "event_ends_at",        null: false
     t.index ["community_id"], name: "index_events_on_community_id", using: :btree
   end
 

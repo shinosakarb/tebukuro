@@ -51,6 +51,9 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.5'
   gem 'shoulda-matchers'
   gem 'rails-controller-testing', require: false
+
+  # RSpec::JsonExpectations
+  gem 'rspec-json_expectations'
 end
 
 group :development do
@@ -87,3 +90,4 @@ gem 'sidekiq'
 
 # State machine
 gem 'stateful_enum'
+
