@@ -1,21 +1,6 @@
 require 'rails_helper'
 
-describe DatetimeLessValidator do
-  let(:dummy_class) do
-    Struct.new(:start_at, :end_at) do
-      include ActiveModel::Validations
-
-      validates :start_at,
-        datetime_less: {
-          before: :end_at
-        }
-
-      def self.name
-        'Dummy'
-      end
-    end
-  end
-
+shared_examples "validate before option" do  
   describe 'start_at' do
     let(:base_datetime) { Time.current }
 
@@ -58,5 +43,42 @@ describe DatetimeLessValidator do
         )
       end
     end
+  end
+end
+
+describe DatetimeLessValidator do
+  describe 'option' do
+    let(:dummy_class) do
+      Struct.new(:start_at, :end_at) do
+        include ActiveModel::Validations
+
+        validates :start_at,
+          datetime_less: {
+            before: :end_at
+          }
+
+        def self.name
+          'Dummy'
+        end
+      end
+    end
+
+    include_examples "validate before option"
+  end
+
+  describe 'helper method' do
+    let(:dummy_class) do
+      Struct.new(:start_at, :end_at) do
+        include ActiveModel::Validations
+
+        validates_datetime_less_of :start_at, before: :end_at, presence: true
+
+        def self.name
+          'Dummy'
+        end
+      end
+    end
+
+    include_examples "validate before option"
   end
 end

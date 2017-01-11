@@ -18,3 +18,9 @@ class DatetimeLessValidator < ActiveModel::EachValidator
     ) if error.present?
   end
 end
+
+module ActiveModel::Validations::HelperMethods
+  def validates_datetime_less_of(*attr_names)
+    validates_with DatetimeLessValidator, _merge_attributes(attr_names)
+  end
+end
