@@ -1,6 +1,6 @@
 import { Record, Set } from 'immutable'
 
-const CommunityListRecord = Record({
+export const CommunityListRecord = Record({
   communities: Set.of()
 })
 
