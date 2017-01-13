@@ -15,7 +15,7 @@ FactoryGirl.define do
     description nil
   end
 
-  factory :community_blank, class: Community do
+  factory :community_blank, class:Community do
     name nil
     description nil
   end
