@@ -9,7 +9,7 @@ export const communityListReducerMap = {
     const communityList = new CommunityList()
     return communityList.setCommunities(
       action.payload.map((item) => {
-        return communityReducerMap.CREATE_COMMUNITY(
+        return communityReducerMap.CREATE_COMMUNITY.next(
           null,
           {payload: {id: item.id, name: item.name, description: item.description}}
         )

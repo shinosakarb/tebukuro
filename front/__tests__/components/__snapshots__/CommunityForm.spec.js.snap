@@ -3,7 +3,8 @@ exports[`CommunityForm render form 1`] = `
   <h3>
     create community form
   </h3>
-  <form>
+  <form
+    onSubmit={[Function]}>
     <div>
       <label>
         name
