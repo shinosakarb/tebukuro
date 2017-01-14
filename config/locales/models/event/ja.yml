@@ -11,7 +11,5 @@ ja:
       event:
         name: イベント名
         description: 説明
-        invitation_starts_at: イベント応募開始時間
-        invitation_ends_at: イベント応募終了時間
         event_starts_at: イベント開始時間
         event_ends_at: イベント終了時間

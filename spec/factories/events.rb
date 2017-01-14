@@ -8,8 +8,6 @@ FactoryGirl.define do
   factory_time = Time.zone.local(2015,12,15)
 
   trait :partial_event_detail_information do
-    invitation_starts_at factory_time
-    invitation_ends_at factory_time
     event_starts_at factory_time
     event_ends_at factory_time
   end
