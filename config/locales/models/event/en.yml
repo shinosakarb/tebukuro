@@ -11,3 +11,6 @@ ja:
       event:
         name: Name
         description: Description
+        event_starts_at: Start time of Event
+        event_ends_at: End time of Event
+

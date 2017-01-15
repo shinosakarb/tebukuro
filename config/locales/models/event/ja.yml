@@ -11,3 +11,5 @@ ja:
       event:
         name: イベント名
         description: 説明
+        event_starts_at: イベント開始時間
+        event_ends_at: イベント終了時間
