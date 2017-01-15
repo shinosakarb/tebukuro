@@ -1,183 +1,112 @@
 require 'rails_helper'
 
-shared_examples "validate before option" do
-  describe 'start_at' do
-    let(:base_datetime) { Time.current }
+shared_context 'less_than_or_equal_to' do
+  let(:start_at) { Time.now }
 
-    subject { dummy_class.new(start_at, end_at) }
-
-    context 'less than end_at' do
-      let(:start_at) { base_datetime }
-      let(:end_at)   { base_datetime.tomorrow }
-
-      it { is_expected.to be_valid }
-    end
-
-    context 'equal to end_at' do
-      let(:start_at) { base_datetime }
-      let(:end_at)   { base_datetime }
-
-      it { is_expected.to be_valid }
-    end
-
-    context 'greater than end_at' do
-      let(:start_at) { base_datetime }
-      let(:end_at)   { base_datetime.yesterday }
-
-      example do
-        is_expected.not_to be_valid
-        expect(subject.errors.messages).to include(
-          start_at: ['must be before End at']
-        )
-      end
-    end
-
-    context 'target nil' do
-      let(:start_at) { base_datetime }
-      let(:end_at)   { nil }
-
-      example do
-        is_expected.not_to be_valid
-        expect(subject.errors.messages).to include(
-          start_at: ["End at can't be blank"]
-        )
-      end
-    end
-  end
-end
-
-shared_examples "validate after option" do
-  describe 'end_at' do
-    let(:base_datetime) { Time.current }
-
-    subject { dummy_class.new(start_at, end_at) }
-
-    context 'greater than start_at' do
-      let(:start_at) { base_datetime }
-      let(:end_at)   { base_datetime.tomorrow }
-
-      it { is_expected.to be_valid }
-    end
-
-    context 'equal to start_at' do
-      let(:start_at) { base_datetime }
-      let(:end_at)   { base_datetime }
-
-      it { is_expected.to be_valid }
-    end
-
-    context 'less than start_at' do
-      let(:start_at) { base_datetime }
-      let(:end_at)   { base_datetime.yesterday }
-
-      example do
-        is_expected.not_to be_valid
-        expect(subject.errors.messages).to include(
-          end_at: ['must be after Start at']
-        )
-      end
-    end
-
-    context 'target nil' do
-      let(:start_at) { nil }
-      let(:end_at)   { base_datetime }
-
-      example do
-        is_expected.not_to be_valid
-        expect(subject.errors.messages).to include(
-          end_at: ["Start at can't be blank"]
-        )
-      end
-    end
-  end
-end
-
-shared_examples "ArgumentError example" do |message|
   subject { dummy_class.new(start_at, end_at) }
 
-  example do 
-    expect { subject.vaid? }.to raise_error(ArgumentError, message)
+  context 'less than' do
+    let(:end_at) { Time.now.tomorrow }
+    it { is_expected.to be_valid }
+  end
+
+  context 'equal to' do
+    let(:end_at) { start_at }
+    it { is_expected.to be_valid }
+  end
+
+  context 'greater than' do
+    let(:end_at) { start_at.yesterday }
+
+    example do
+      is_expected.to be_invalid
+      expect(subject.errors.messages).to include(
+        start_at: ['はEnd atより以前の日時にしてください']
+      )
+    end
+  end
+end
+
+shared_context 'greater_than_or_equal_to' do
+  let(:start_at) { Time.now }
+
+  subject { dummy_class.new(start_at, end_at) }
+
+  context 'less than' do
+    let(:end_at) { Time.now.yesterday }
+    example do
+      is_expected.to be_invalid
+      expect(subject.errors.messages).to include(
+        end_at: ['はStart atより以後の日時にしてください']
+      )
+    end
+  end
+
+  context 'equal to' do
+    let(:end_at) { start_at }
+    it { is_expected.to be_valid }
+  end
+
+  context 'greater than' do
+    let(:end_at) { start_at.tomorrow }
+    it { is_expected.to be_valid }
   end
 end
 
 describe DatetimeLessValidator do
-  describe 'option' do
-    context 'before' do
-      let(:dummy_class) do
-        Struct.new(:start_at, :end_at) do
-          include ActiveModel::Validations
+  let(:dummy_class) do
+    Struct.new(:start_at, :end_at) do
+      include ActiveModel::Validations
 
-          validates :start_at,
-            datetime_less: {
-              before: :end_at
-            }
+      validates :start_at, datetime_less: { less_than_or_equal_to: :end_at }
 
-          def self.name
-            'Dummy'
-          end
+      def self.name
+        'Dummy'
+      end
+    end
+  end
+
+  describe 'less_than_or_equal_to' do
+    include_context 'less_than_or_equal_to'
+  end
+
+  describe 'greater_than_or_equal_to' do
+    let(:dummy_class) do
+      Struct.new(:start_at, :end_at) do
+        include ActiveModel::Validations
+
+        validates :end_at, datetime_less: { greater_than_or_equal_to: :start_at }
+
+        def self.name
+          'Dummy'
         end
       end
-
-      include_examples "validate before option"
     end
 
-    context 'after' do
-      let(:dummy_class) do
-        Struct.new(:start_at, :end_at) do
-          include ActiveModel::Validations
+    include_context 'greater_than_or_equal_to'
+  end
 
-          validates :end_at,
-            datetime_less: {
-              after: :start_at
-            }
+  describe 'type error' do
+    subject { dummy_class.new }
 
-          def self.name
-            'Dummy'
-          end
-        end
-      end
-
-      include_examples "validate after option"
+    example do
+      is_expected.to be_invalid
+      expect(subject.errors.messages).to include(
+        start_at: ['は日時で入力してください']
+      )
     end
+  end
 
-    context 'argument error' do
-      context 'option not exists' do
-        let(:dummy_class) do
-          Struct.new(:start_at, :end_at) do
-            include ActiveModel::Validations
+  describe 'target blank' do
+    let(:start_at) { Time.now }
 
-            validates :end_at,
-              datetime_less: {
-              }
+    subject { dummy_class.new(start_at) }
 
-            def self.name
-              'Dummy'
-            end
-          end
-        end
-
-        include_examples 'ArgumentError example', /Requires :before or :after optio/
-      end
-
-      context 'dupulicate option' do
-        let(:dummy_class) do
-          Struct.new(:start_at, :end_at) do
-            include ActiveModel::Validations
-
-            validates :end_at,
-              datetime_less: {
-                before: :start_at,
-                after:  :start_at
-              }
-
-            def self.name
-              'Dummy'
-            end
-          end
-        end
-
-        include_examples 'ArgumentError example', /Duplicate option of :before and :afte/
-      end
+    example do
+      is_expected.to be_invalid
+      expect(subject.errors.messages).to include(
+        start_at: ['End atを入力してください']
+      )
     end
   end
 
@@ -186,7 +115,7 @@ describe DatetimeLessValidator do
       Struct.new(:start_at, :end_at) do
         include ActiveModel::Validations
 
-        validates_datetime_less_of :start_at, before: :end_at, presence: true
+        validates_datetime_less_of :start_at, less_than_or_equal_to: :end_at
 
         def self.name
           'Dummy'
@@ -194,6 +123,6 @@ describe DatetimeLessValidator do
       end
     end
 
-    include_examples "validate before option"
+    include_context 'less_than_or_equal_to'
   end
 end

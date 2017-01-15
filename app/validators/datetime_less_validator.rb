@@ -1,59 +1,39 @@
 class DatetimeLessValidator < ActiveModel::EachValidator
   CHECKS = {
-    before: :<=,
-    after:  :>=
+    less_than_or_equal_to:    :<=,
+    greater_than_or_equal_to: :>=
   }.freeze
-
-  ERRORS = {
-    before: :before_datetime,
-    after:  :after_datetime
-  }.freeze
-
-  def initialize(options)
-    super
-    @option_key = option_keys.first
-    @comparison_attr = options[@option_key]
-  end
-
-  def check_validity!
-    raise ArgumentError, 'Requires :before or :after option'      if !required_option_exist?
-    raise ArgumentError, 'Duplicate option of :before and :after' if duplicate_option?
-  end
 
   def validate_each(record, attribute, value)
-    target_datetime  = record.send(@comparison_attr)
-    target_attr_name = record.class.human_attribute_name(@comparison_attr)
-
-    if target_datetime.blank?
-      error   = :target_blank
-      message = "#{target_attr_name} can't be blank"
-    else
-      unless value.send(CHECKS[@option_key], target_datetime)
-        error   = ERRORS[@option_key]
-        message = "must be #{@option_key.to_s} #{target_attr_name}"
-      end
+    unless is_datetime?(value)
+      record.errors.add(attribute, :not_a_datetime)
+      return
     end
 
-    record.errors.add(
-      attribute, 
-      error,
-      target_attr: target_attr_name,
-      message:     message
-    ) if error.present?
+    options.slice(*CHECKS.keys).each do |option, option_value|
+      target_datetime  = record.send(option_value)
+      error_option = {
+        target_attr_name: record.class.human_attribute_name(option_value)
+      }
+
+      if target_datetime.blank?
+        record.errors.add(attribute, :datetime_target_blank, error_option)
+        next
+      end
+
+      unless value.send(CHECKS[option], target_datetime)
+        record.errors.add(attribute, :"datetime_#{option.to_s}", error_option)
+      end
+    end
   end
 
   private
 
-  def option_keys
-    CHECKS.keys & options.keys
-  end
-
-  def required_option_exist?
-    option_keys.present?
-  end
-
-  def duplicate_option?
-    options.key?(:before) && options.key?(:after)
+  def is_datetime?(value)
+    DateTime.parse(value.to_s)
+    true
+  rescue ArgumentError, TypeError
+    false
   end
 end
 
