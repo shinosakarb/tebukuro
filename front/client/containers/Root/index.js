@@ -3,7 +3,7 @@ import { Provider } from 'react-redux'
 import { Router, Route, IndexRoute } from 'react-router'
 import App from '../App'
 import Top from '../../components/Top'
-import CommunityList from '../../components/CommunityList'
+import CommunityList from '../CommunityList'
 import CreateCommunityForm from '../CreateCommunityForm'
 
 export default class Root extends React.Component {
