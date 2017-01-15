@@ -2,12 +2,12 @@ class DatetimeLessValidator < ActiveModel::EachValidator
   CHECKS = {
     before: :<=,
     after:  :>=
-  }
+  }.freeze
 
   ERRORS = {
     before: :before_datetime,
     after:  :after_datetime
-  }
+  }.freeze
 
   def initialize(options)
     super
