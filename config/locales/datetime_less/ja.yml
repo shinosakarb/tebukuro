@@ -3,6 +3,6 @@ ja:
     format: "%{attribute}%{message}"
     messages:
       not_a_datetime: は日時で入力してください
-      datetime_less_than_or_equal_to: は%{target_attr_name}より以前の日時にしてください
-      datetime_greater_than_or_equal_to: は%{target_attr_name}より以後の日時にしてください
+      datetime_less_than_or_equal_to: は%{target_attr_name}より前の日時にしてください
+      datetime_greater_than_or_equal_to: は%{target_attr_name}より後の日時にしてください
       datetime_target_blank: '%{target_attr_name}を入力してください'
