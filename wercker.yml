@@ -12,6 +12,38 @@ build:
 
     - bundle-install
 
+frontend-unit-test:
+  steps:
+    - script:
+      name: install nodejs
+      code: |
+        sudo apt-get update
+        sudo apt-get install -y nodejs npm
+
+    - script:
+      name: nodejs version
+      code: echo "Node.js version $(node -v) running"
+
+    - script:
+      name: update npm
+      code: sudo npm update -g npm
+
+    - script:
+      name: install yarn
+      code: sudo npm install -g yarn
+
+    - script:
+      name: change directory
+      cwd: front/
+
+    - script:
+      name: install packages
+      code: yarn
+
+    - script:
+      name: run test
+      code: yarn run test
+
 backend-request-spec:
   steps:
     - install-packages:
