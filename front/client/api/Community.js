@@ -1,7 +1,7 @@
 import ApiRequest from './ApiRequest'
 import request from 'superagent'
 
-export const createCommunityHandler = (name, description) => {
+export const createCommunity = (name, description) => {
   const communityParams = {
     name: name,
     description: description
