@@ -1,0 +1,8 @@
+en:
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      not_a_datetime: must be a datetime
+      datetime_less_than_or_equal_to: must be less than or equal to %{target_attr_name}
+      datetime_greater_than_or_equal_to: must be greater than or equal to %{target_attr_name}
+      datetime_target_blank: "%{target_attr_name} can't be blank"
