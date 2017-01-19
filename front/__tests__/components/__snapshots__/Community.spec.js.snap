@@ -1,0 +1,12 @@
+exports[`Community render community component 1`] = `
+<div>
+  <p>
+    name: 
+    shinosaka.rb
+  </p>
+  <p>
+    description: 
+    This community is active in shinosaka.
+  </p>
+</div>
+`;
