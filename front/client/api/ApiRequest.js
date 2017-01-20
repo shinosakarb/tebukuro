@@ -2,6 +2,15 @@ import request from 'superagent'
 import ApiResponseError from './ApiResponseError'
 
 const ApiRequest = {
+  get(path) {
+    const onSuccess = (response) => {
+      return response.body
+    }
+
+    return request.get(Config.ApiEndPoint + path)
+      .then(onSuccess)
+  },
+
   post(path, params) {
     const onSuccess = (response) => {
       return response.body

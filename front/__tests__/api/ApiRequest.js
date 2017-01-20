@@ -2,6 +2,32 @@ import nock from 'nock'
 import ApiRequest from '../../client/api/ApiRequest'
 
 describe('ApiRequest', () => {
+  describe('get', () => {
+    describe('when success', () => {
+      it('should return action', () => {
+        const id = 1
+        const name = 'communityName'
+        const description = 'communityDescription'
+
+        const response = {
+          id: id,
+          name: name,
+          description: description
+        }
+
+        nock(Config.ApiEndPoint)
+        .get('/communities/' + id.toString())
+        .reply(201, response)
+
+        return ApiRequest.get('/communities/' + id.toString())
+        .then((payload) => {
+          expect(payload.id).toBe(response.id)
+          expect(payload.name).toBe(response.name)
+          expect(payload.description).toBe(response.description)
+        })
+      })
+    })
+  })
   describe('post', () => {
     describe('when success', () => {
       it('should return action', () => {
