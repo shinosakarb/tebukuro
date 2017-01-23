@@ -12,6 +12,31 @@ build:
 
     - bundle-install
 
+backend-spec:
+  steps:
+    - install-packages:
+      packages: nodejs
+
+    - bundle-install
+
+    - rails-database-yml:
+      service: postgresql-docker
+
+    - script:
+      name: Prepare database
+      code: RAILS_ENV=test bin/rake db:schema:load
+
+    - script:
+      name: Run RSpec
+      code: bundle exec rspec
+
+  after-steps:
+    - slack-notifier:
+      url: $SLACK_URL
+      channel: notification
+      username: wercker
+      notify_on: "failed"
+
 backend-request-spec:
   steps:
     - install-packages:
