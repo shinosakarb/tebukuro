@@ -21,7 +21,7 @@ shared_context 'less_than_or_equal_to' do
     example do
       is_expected.to be_invalid
       expect(subject.errors.messages).to include(
-        start_at: ['はEnd atより以前の日時にしてください']
+        start_at: ['はEnd atより前の日時にしてください']
       )
     end
   end
@@ -37,7 +37,7 @@ shared_context 'greater_than_or_equal_to' do
     example do
       is_expected.to be_invalid
       expect(subject.errors.messages).to include(
-        end_at: ['はStart atより以後の日時にしてください']
+        end_at: ['はStart atより後の日時にしてください']
       )
     end
   end
@@ -70,7 +70,7 @@ shared_context 'multiple options' do
     example do
       is_expected.to be_invalid
       expect(subject.errors.messages).to include(
-        checked_at: ['はStart atより以後の日時にしてください']
+        checked_at: ['はStart atより後の日時にしてください']
       )
     end
   end
@@ -81,7 +81,7 @@ shared_context 'multiple options' do
     example do
       is_expected.to be_invalid
       expect(subject.errors.messages).to include(
-        checked_at: ['はEnd atより以前の日時にしてください']
+        checked_at: ['はEnd atより前の日時にしてください']
       )
     end
   end
