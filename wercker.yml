@@ -1,4 +1,4 @@
-box: ruby:2.3.1
+box: ruby:2.4.0
 
 services:
   - id: postgres
