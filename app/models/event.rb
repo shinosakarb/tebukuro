@@ -1,5 +1,6 @@
 class Event < ApplicationRecord
   belongs_to :community
+  has_many :tickets
 
   validates :name, presence: true
   validates :description, presence: true
