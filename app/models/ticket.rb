@@ -1,4 +1,5 @@
 class Ticket < ApplicationRecord
+  # TODO: Delete the "#" after the user model is added.
   belongs_to :event #through :user
 
   validates :name, presence: true
