@@ -9,6 +9,8 @@ describe Ticket do
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:cost) }
     it { is_expected.to validate_presence_of(:quantity) }
+    it { is_expected.to validate_presence_of(:sale_starts_at) }
+    it { is_expected.to validate_presence_of(:sale_ends_at) }
   end
 
   describe 'numericality' do
