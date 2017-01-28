@@ -9,6 +9,10 @@ export const createCommunityHandler = (name, description) => {
   return ApiRequest.post('/communities', communityParams)
 }
 
+export const showCommunity = (id) => {
+  return ApiRequest.get('/communities/' + id.toString())
+}
+
 export const getCommunities = () => {
   return request.get(`${Config.ApiEndPoint}/communities.json`)
     .then(res => res.body)
