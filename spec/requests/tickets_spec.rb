@@ -15,9 +15,7 @@ RSpec.describe 'Tickets(チケットAPI)', type: :request do
     before do
       get event_tickets_path(event, tickets)
       5.times do |i|
-        tickets_json_parse.unshift(
-          JSON.parse(tickets[i].to_json).except('updated_at', 'created_at', 'community_id')
-          )
+        tickets_json_parse << JSON.parse(tickets[i].to_json).except('updated_at', 'created_at', 'community_id')
       end
     end
 
@@ -39,9 +37,7 @@ RSpec.describe 'Tickets(チケットAPI)', type: :request do
       end
 
       example 'JSONに含まれる情報が適切であること' do
-        5.times do |i|
-          expect(subject[i]).to include_json(tickets_json_parse[i])
-        end
+        expect(subject).to include_unordered_json(tickets_json_parse)
       end
     end
   end
