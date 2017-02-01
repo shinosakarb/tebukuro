@@ -35,5 +35,9 @@ module Tebukuro
         routing_specs: false,
         controller_specs: false
     end
+
+    config.middleware.use config.session_store, config.session_options
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore
   end
 end
