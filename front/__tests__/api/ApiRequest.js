@@ -1,5 +1,6 @@
 import nock from 'nock'
 import ApiRequest from '../../client/api/ApiRequest'
+import RequestUrls from '../../client/constants/RequestUrls'
 
 describe('ApiRequest', () => {
   describe('post', () => {
@@ -16,20 +17,20 @@ describe('ApiRequest', () => {
         }
 
         nock(Config.ApiEndPoint)
-        .post('/communities')
-        .reply(201, response)
+          .post(RequestUrls.communities)
+          .reply(201, response)
 
         const communityParams = {
           name: name,
           description: description
         }
 
-        return ApiRequest.post('/communities', communityParams)
-        .then((payload) => {
-          expect(payload.id).toBe(response.id)
-          expect(payload.name).toBe(response.name)
-          expect(payload.description).toBe(response.description)
-        })
+        return ApiRequest.post(RequestUrls.communities, communityParams)
+          .then((payload) => {
+            expect(payload.id).toBe(response.id)
+            expect(payload.name).toBe(response.name)
+            expect(payload.description).toBe(response.description)
+          })
       })
     })
 
@@ -44,19 +45,19 @@ describe('ApiRequest', () => {
         }
 
         nock(Config.ApiEndPoint)
-        .post('/communities')
-        .reply(422, response)
+          .post(RequestUrls.communities)
+          .reply(422, response)
 
         const communityParams = {
           name: '',
           description: ''
         }
 
-        return ApiRequest.post('/communities', communityParams)
-        .catch((payload) => {
-          expect(payload.messages[0]).toContain('name')
-          expect(payload.messages[1]).toContain('description')
-        })
+        return ApiRequest.post(RequestUrls.communities, communityParams)
+          .catch((payload) => {
+            expect(payload.messages[0]).toContain('name')
+            expect(payload.messages[1]).toContain('description')
+          })
       })
     })
   })

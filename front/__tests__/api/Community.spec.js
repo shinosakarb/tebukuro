@@ -1,5 +1,6 @@
 import nock from 'nock'
 import * as CommunityAPI from '../../client/api/Community'
+import RequestUrls from '../../client/constants/RequestUrls'
 
 describe('Community', () => {
   describe('createCommunity', () => {
@@ -19,15 +20,15 @@ describe('Community', () => {
         }
 
         nock(Config.ApiEndPoint)
-        .post('/communities')
-        .reply(201, response)
+          .post(RequestUrls.communities)
+          .reply(201, response)
 
         return CommunityAPI.createCommunity(name, description)
-        .then((payload) => {
-          expect(payload.id).toBe(response.id)
-          expect(payload.name).toBe(response.name)
-          expect(payload.description).toBe(response.description)
-        })
+          .then((payload) => {
+            expect(payload.id).toBe(response.id)
+            expect(payload.name).toBe(response.name)
+            expect(payload.description).toBe(response.description)
+          })
       })
     })
 
@@ -42,17 +43,17 @@ describe('Community', () => {
         }
 
         nock(Config.ApiEndPoint)
-        .post('/communities')
-        .reply(422, response)
+          .post(RequestUrls.communities)
+          .reply(422, response)
 
         const name = ''
         const description = ''
 
         return CommunityAPI.createCommunity(name, description)
-        .catch((payload) => {
-          expect(payload.messages[0]).toContain('name')
-          expect(payload.messages[1]).toContain('description')
-        })
+          .catch((payload) => {
+            expect(payload.messages[0]).toContain('name')
+            expect(payload.messages[1]).toContain('description')
+          })
       })
     })
   })
@@ -62,7 +63,7 @@ describe('Community', () => {
       const response = [{id: 1, name: "name1", description: "description1"}, {id: 2, name: "name2", description: "description2"}]
 
       nock(Config.ApiEndPoint)
-        .get('/communities.json')
+        .get(RequestUrls.communities)
         .reply(200, response)
       const subject = await CommunityAPI.getCommunities()
       expect(subject).toEqual(response)

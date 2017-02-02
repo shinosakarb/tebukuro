@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createCommunity } from '../actions/Community'
-import CommunityForm from '../components/CommunityForm'
+import { createCommunity } from '../../actions/Community'
+import CommunityForm from '../../components/CommunityForm'
 
 const mapStateToProps = (state, ownProps) => {
   return {

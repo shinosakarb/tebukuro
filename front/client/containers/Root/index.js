@@ -4,7 +4,7 @@ import { Router, Route, IndexRoute } from 'react-router'
 import App from '../App'
 import Top from '../../components/Top'
 import CommunityList from '../CommunityList'
-import CreateCommunityForm from '../CreateCommunityForm'
+import CreateCommunityForm from '../CommunityForm'
 
 export default class Root extends React.Component {
   static propTypes = {
