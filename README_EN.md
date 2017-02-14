@@ -1,23 +1,23 @@
 # Tebukuro
 [![wercker status](https://app.wercker.com/status/35e08da3b0a742e5c50ffac2670a821b/s/master "wercker status")](https://app.wercker.com/project/byKey/35e08da3b0a742e5c50ffac2670a821b)
 
-A 'Mobile-friendly' open-source web service for events and communities management
+ "Mobile Friendly" open-source web service for managing events and communities.
 
 <img src="http://4.bp.blogspot.com/-dMHKByNfZxo/Uku9_iuHWHI/AAAAAAAAYqg/LjlcTLrN44o/s800/winter_tebukuro.png" width="320px">
 
 ## What is tebukuro?
 
-Tebukuro is the 'Mobile-friendly' open-source web service, enabling you to manage everything about your communities and events only from mobile devices. Furthermore, supporting communication while holding events and after closed events, not only annoucements and receptions before events.
+Tebukuro is a "Mobile Friendly" open-source web service, enabling you to manage your communities and events solely from mobile devices. Furthermore, not only is there support for announcements and reception before events, but for communication during events and ones that have already closed as well.
 
 ## Features
 
-- **Mobile-friendly**
-  - [ ] Managing communities and events from mobile devices.
+- **Mobile Friendly**
+  - [ ] Manage communities and events from mobile devices
 
-- **Energizing your communities**
-  - [ ] Simple procedure for releasing new events to communities' site.
-  - [ ] Uploading events' photos (with notifications to social media).
-  - [ ] Holding the private events.
+- **Energize your communities**
+  - [ ] Simple procedure for releasing new events to communities' site
+  - [ ] Upload photos from events (with notifications to social media)
+  - [ ] Hold private events
 
 ## Demo
 It's to be prepared...
@@ -34,7 +34,7 @@ It's to be prepared...
 
 ## Contributing
 
-Please feel free to fork and join us! This project is also a place for improving members' skill and testing the latest technologies.
+Please feel free to fork and join us! This project is also a place for improving members' skills and testing the latest technologies.
 
 - [Policies](https://github.com/shinosakarb/tebukuro/wiki/Kick-off)
 - [Docker development environment](https://github.com/shinosakarb/tebukuro/wiki/Setup#setup-for-development)
