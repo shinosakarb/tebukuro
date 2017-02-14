@@ -7,7 +7,7 @@ A 'Mobile-friendly' open-source web service for events and communities managemen
 
 ## What is tebukuro?
 
-Tebukuro is the 'Mobile-friendly' open-source web service, enabling you managing everything about your communities and events only from mobile devices. Furthermore, supporting communication while holding events and after closed events, not only annoucements and receptions before events.
+Tebukuro is the 'Mobile-friendly' open-source web service, enabling you to manage everything about your communities and events only from mobile devices. Furthermore, supporting communication while holding events and after closed events, not only annoucements and receptions before events.
 
 ## Features
 

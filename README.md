@@ -3,7 +3,10 @@
 
 オープンソースなイベント運営管理サービス
 
+English README is available at README_EN.md!
+
 <img src="http://4.bp.blogspot.com/-dMHKByNfZxo/Uku9_iuHWHI/AAAAAAAAYqg/LjlcTLrN44o/s800/winter_tebukuro.png" width="320px">
+
 
 ## What is tebukuro?
 
