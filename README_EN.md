@@ -1,7 +1,7 @@
 # Tebukuro
 [![wercker status](https://app.wercker.com/status/35e08da3b0a742e5c50ffac2670a821b/s/master "wercker status")](https://app.wercker.com/project/byKey/35e08da3b0a742e5c50ffac2670a821b)
 
- "Mobile Friendly" open-source web service for managing events and communities.
+A "Mobile Friendly" open-source web service for managing events and communities.
 
 <img src="http://4.bp.blogspot.com/-dMHKByNfZxo/Uku9_iuHWHI/AAAAAAAAYqg/LjlcTLrN44o/s800/winter_tebukuro.png" width="320px">
 
@@ -15,7 +15,7 @@ Tebukuro is a "Mobile Friendly" open-source web service, enabling you to manage 
   - [ ] Manage communities and events from mobile devices
 
 - **Energize your communities**
-  - [ ] Simple procedure for releasing new events to communities' site
+  - [ ] Simple procedure for opening new events in communities
   - [ ] Upload photos from events (with notifications to social media)
   - [ ] Hold private events
 
