@@ -1,7 +1,7 @@
 # Tebukuro
 [![wercker status](https://app.wercker.com/status/35e08da3b0a742e5c50ffac2670a821b/s/master "wercker status")](https://app.wercker.com/project/byKey/35e08da3b0a742e5c50ffac2670a821b)
 
-オープンソースなイベント運営管理サービス
+モバイルフレンドリーなオープンソースイベント運営管理サービス
 
 The English README is available at README_EN.md!
 
@@ -10,14 +10,21 @@ The English README is available at README_EN.md!
 
 ## What is tebukuro?
 
-TebukuroはOSSプロジェクトによる次世代のイベント運営管理サービスです。イベントの募集や受付だけではなく、イベント開催中や終了後の参加者のコミュニケーションもサポートします。
+TebukuroはOSSプロジェクトによるモバイルフレンドリーなイベント運営管理サービスです。コミュニティやイベントの管理はモバイル端末だけで完結でき、イベントの募集や受付だけではなく、イベント開催中や終了後の参加者のコミュニケーションもサポートします。
+
 
 ## Features
 
-- [ ] 外部に非公開なイベントの作成
-- [ ] モバイル端末のみで完了できるイベント管理機能
+- **モバイルフレンドリー**
+  - [ ] モバイル端末のみでコミュニティやイベントを管理
+
+- **コミュニティーの活性化**
+  - [ ] コミュニティページから簡単に新規イベントを追加
+  - [ ] イベントの写真をアップロード、SNSに通知を送信
+  - [ ] 外部に非公開なイベントの開催
 
 ## Demo
+準備中
 
 ## Roadmap
 
@@ -39,4 +46,4 @@ TebukuroはOSSプロジェクトによる次世代のイベント運営管理サ
 
 ## License
 
-[BSD-3-Clause](https://opensource.org/licenses/BSD-3-Clause)
+Tebukuroは[BSD-3-Clause](https://opensource.org/licenses/BSD-3-Clause)ライセンスの下にリリースされます。
