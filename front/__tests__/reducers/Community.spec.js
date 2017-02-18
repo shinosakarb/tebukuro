@@ -1,6 +1,6 @@
 import { createAction }     from 'redux-actions'
 import CommunityReducer     from '../../client/reducers/Community'
-import ApiResponseError     from '../../client/api/ApiResponseError'
+import ApiResponseError     from '../../client/utils/ApiResponseError'
 import { CREATE_COMMUNITY } from '../../client/actions/Community'
 import CommunityModel       from '../../client/models/Community'
 

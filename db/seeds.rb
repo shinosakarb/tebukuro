@@ -9,6 +9,8 @@ require 'faker'
   event = Event.create!(
     name:  name,
     description: description,
-    community_id: community_id
+    community_id: community_id,
+    event_starts_at: Time.zone.now + (n + 3).day,
+    event_ends_at: Time.zone.now + (n + 3).day + 1.hour,
     )
 end

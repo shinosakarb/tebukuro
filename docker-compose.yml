@@ -1,10 +1,11 @@
-version: '2'
+version: '3'
 services:
   backend: &app_base
     build: .
     command: "sh /app/wait.sh bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - .:/app
+      - /app/vendor
     ports:
       - "3000:3000"
     environment:
@@ -23,12 +24,8 @@ services:
     stdin_open: false
   db:
     image: postgres:9.6-alpine
-    volumes_from:
-      - data
-  data:
-    image: busybox
     volumes:
-      - "/var/lib/postgresql/data"
+      - postgresql-webapp-data:/var/lib/postgresql
   frontend:
     build:
       context: ./front
@@ -41,3 +38,5 @@ services:
       - "4000:4000"
     tty: true
     stdin_open: true
+volumes:
+  postgresql-webapp-data:

@@ -1,15 +1,14 @@
-import ApiRequest from './ApiRequest'
-import request from 'superagent'
+import RequestUrls from '../constants/RequestUrls'
+import ApiClient from '../utils/ApiClient'
 
 export const createCommunity = (name, description) => {
   const communityParams = {
     name: name,
     description: description
   }
-  return ApiRequest.post('/communities', communityParams)
+  return ApiClient.post(RequestUrls.communities, communityParams)
 }
 
 export const getCommunities = () => {
-  return request.get(`${Config.ApiEndPoint}/communities.json`)
-    .then(res => res.body)
+  return ApiClient.get(RequestUrls.communities)
 }
