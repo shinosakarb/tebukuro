@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe Community, type: :model do
   describe 'association' do
     it { is_expected.to have_many(:events) }
+    it { is_expected.to have_many(:tickets).through(:events) }
   end
 
   describe 'presence' do
