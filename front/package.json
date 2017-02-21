@@ -23,7 +23,9 @@
     "react-router-redux": "^4.0.7",
     "redux": "^3.6.0",
     "redux-actions": "^1.2.0",
+    "redux-auth": "^0.0.5-beta5",
     "redux-promise": "^0.5.3",
+    "redux-thunk": "^2.2.0",
     "superagent": "^3.3.0"
   },
   "devDependencies": {
