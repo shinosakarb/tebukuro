@@ -1,0 +1,14 @@
+exports[`OAuth render Signin 1`] = `
+<div>
+  <img
+    height="20"
+    src="example.png"
+    width="20" />
+  <Connect(t) />
+</div>
+`;
+
+exports[`OAuth render Signout 1`] = `
+<Connect(t)
+  provider="github" />
+`;
