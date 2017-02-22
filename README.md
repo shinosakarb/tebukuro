@@ -40,9 +40,7 @@ TebukuroはOSSプロジェクトによるモバイルフレンドリーなイベ
 
 このプロジェクトは参加メンバーのスキル向上や、お仕事では試しにくい最新の技術を試せる場として立ち上げました。誰でも気軽に参加してください！
 
-- [プロジェクトの方針](https://github.com/shinosakarb/tebukuro/wiki/Kick-off)
-- [Dockerによる開発環境の構築手順](https://github.com/shinosakarb/tebukuro/wiki/Setup#setup-for-development)
-- [pull requestの手順](https://github.com/shinosakarb/tebukuro/wiki/Develop-tips#how-to-merge-pull-request)
+詳しくは[CONTRIBUTING.md](https://github.com/shinosakarb/tebukuro/blob/master/CONTRIBUTING.md )をご覧ください。
 
 ## License
 
