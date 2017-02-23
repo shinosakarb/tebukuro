@@ -3,6 +3,7 @@ require 'rails_helper'
 describe Ticket do
   describe 'association' do
     it { is_expected.to belong_to(:event) }
+    it { is_expected.to have_one(:community).through(:event) }
   end
 
   describe 'presence' do

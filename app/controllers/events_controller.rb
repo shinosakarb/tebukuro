@@ -14,7 +14,7 @@ class EventsController < ApplicationController
     @event = @community.events.build(event_params)
     if @event.save
       # resource毎に使うシリアライザーを変えたいときはeach_serializerで指定する
-      render json: @event, status: :created, location: [@community, @event]
+      render json: @event, status: :created, location: @event
     else
       render json: @event.errors, status: :unprocessable_entity
     end
