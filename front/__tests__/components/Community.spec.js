@@ -1,7 +1,8 @@
 import React from 'react'
+import { shallow } from 'enzyme'
+import shallowToJson from 'enzyme-to-json'
 import CommunityModel from '../../client/models/Community'
 import Community from '../../client/components/Community'
-import renderer from 'react-test-renderer'
 
 const model = (params) => {
   return new CommunityModel(params)
@@ -14,11 +15,11 @@ describe('Community', () => {
       description: 'This community is active in shinosaka.'
     }
 
-    const component = renderer.create(
+    const component = shallow(
       <Community community={ model(communityParams) } />
     )
 
-    const tree = component.toJSON()
+    const tree = shallowToJson(component)
     expect(tree).toMatchSnapshot()
   })
 })

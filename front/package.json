@@ -34,7 +34,6 @@
     "babel-jest": "^18.0.0",
     "babel-loader": "^6.2.10",
     "babel-plugin-transform-define": "^1.2.0",
-    "babel-plugin-webpack-loaders": "^0.8.0",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-2": "^6.18.0",
@@ -42,6 +41,7 @@
     "enzyme": "^2.6.0",
     "enzyme-to-json": "^1.4.5",
     "file-loader": "^0.9.0",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^18.0.0",
     "json-loader": "^0.5.4",
     "koa-webpack": "^0.1.10",
@@ -50,10 +50,18 @@
     "postcss-loader": "^1.2.1",
     "react-addons-test-utils": "^15.4.1",
     "react-hot-loader": "next",
-    "react-test-renderer": "^15.4.1",
     "sass-loader": "^4.1.0",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "2.2.0-rc.0"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(css|scss)$": "identity-obj-proxy"
+    },
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileTransformer.js"
+    }
   }
 }
