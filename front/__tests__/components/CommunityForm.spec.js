@@ -1,18 +1,18 @@
 import React from 'react'
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme'
+import toJson from 'enzyme-to-json'
 import CommunityForm from '../../client/components/CommunityForm'
 import Community from '../../client/models/Community'
-import renderer from 'react-test-renderer'
 
 describe('CommunityForm', () => {
   it('render form', () => {
     const onSubmitMock = jest.fn()
 
-    const component = renderer.create(
+    const component = shallow(
       <CommunityForm onSubmit={onSubmitMock} community={new Community()}/>
     )
 
-    let tree = component.toJSON()
+    let tree = toJson(component)
     expect(tree).toMatchSnapshot()
   })
 

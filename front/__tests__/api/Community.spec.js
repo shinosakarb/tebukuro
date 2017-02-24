@@ -59,14 +59,17 @@ describe('Community', () => {
   })
 
   describe('getCommunities', () => {
-    test('get JSON of communities', async () =>{
+    test('get JSON of communities', () =>{
       const response = [{id: 1, name: "name1", description: "description1"}, {id: 2, name: "name2", description: "description2"}]
 
       nock(Config.ApiEndPoint)
         .get(RequestUrls.communities)
         .reply(200, response)
-      const subject = await CommunityAPI.getCommunities()
-      expect(subject).toEqual(response)
+
+      return CommunityAPI.getCommunities()
+        .then((pyaload) => {
+          expect(pyaload).toEqual(response)
+        })
     })
   })
 })
