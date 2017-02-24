@@ -36,9 +36,7 @@ It's to be prepared...
 
 Please feel free to fork and join us! This project is also a place for improving members' skills and testing the latest technologies.
 
-- [Policies](https://github.com/shinosakarb/tebukuro/wiki/Kick-off)
-- [Docker development environment](https://github.com/shinosakarb/tebukuro/wiki/Setup#setup-for-development)
-- [Creating a pull request](https://github.com/shinosakarb/tebukuro/wiki/Develop-tips#how-to-merge-pull-request)
+For more details, visit [CONTRIBUTING.md](https://github.com/shinosakarb/tebukuro/blob/master/CONTRIBUTING.md).
 
 ## License
 
