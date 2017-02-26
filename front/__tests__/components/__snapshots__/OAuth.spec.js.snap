@@ -1,0 +1,15 @@
+exports[`OAuth render Signin 1`] = `
+<div>
+  <Avatar
+    src="example.png" />
+  <Connect(t) />
+</div>
+`;
+
+exports[`OAuth render Signout 1`] = `
+<div>
+  <Avatar />
+  <Connect(t)
+    provider="github" />
+</div>
+`;

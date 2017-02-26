@@ -1,3 +1,8 @@
 export default {
-  "communities": "/communities"
+  communities: "/communities",
+  auth: {
+    github        : "/auth/github",
+    facebook      : "/auth/facebook",
+    twitter       : "/auth/twitter",
+  }
 }

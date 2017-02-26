@@ -1,0 +1,10 @@
+exports[`Avatar not render Avatar 1`] = `<span />`;
+
+exports[`Avatar render Avatar 1`] = `
+<span>
+  <img
+    height="20"
+    src="example.png"
+    width="20" />
+</span>
+`;
