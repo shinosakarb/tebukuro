@@ -1,15 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`CommunityForm render form 1`] = `
 <div>
   <h3>
     create community form
   </h3>
   <form
-    onSubmit={[Function]}>
+    onSubmit={[Function]}
+  >
     <div>
       <label>
         name
         <input
-          type="text" />
+          type="text"
+        />
       </label>
     </div>
     <div>
@@ -20,7 +24,8 @@ exports[`CommunityForm render form 1`] = `
     </div>
     <div>
       <input
-        type="submit" />
+        type="submit"
+      />
     </div>
   </form>
 </div>

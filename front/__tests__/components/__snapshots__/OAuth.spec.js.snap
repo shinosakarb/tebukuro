@@ -1,7 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`OAuth render Signin 1`] = `
 <div>
   <Avatar
-    src="example.png" />
+    src="example.png"
+  />
   <Connect(t) />
 </div>
 `;
@@ -10,6 +13,7 @@ exports[`OAuth render Signout 1`] = `
 <div>
   <Avatar />
   <Connect(t)
-    provider="github" />
+    provider="github"
+  />
 </div>
 `;
