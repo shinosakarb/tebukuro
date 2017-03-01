@@ -20,7 +20,7 @@ Here's a primer for how to contribute to the project for those who would like to
   Everyone's here to up their skills, so don't be afraid of making mistakes or trying out the latest
   architectures and tools! :fist:
 
-  >_*Most failures usually don't get in the way. The biggest issue is being afraid of making a mistake!*_
+  >_*Failure seldom stops you. What stops you is the fear of failure.*_ -Jack Lemmon
 
 - ####How to join the project
 
