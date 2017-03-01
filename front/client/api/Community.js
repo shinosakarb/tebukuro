@@ -12,3 +12,7 @@ export const createCommunity = (name, description) => {
 export const getCommunities = () => {
   return ApiClient.get(RequestUrls.communities)
 }
+
+export const showCommunity = (id) => {
+  return ApiClient.get(`${RequestUrls.communities}/${id}`)
+}
