@@ -36,7 +36,7 @@ It's to be prepared...
 
 Please feel free to fork and join us! This project is also a place for improving members' skills and testing the latest technologies.
 
-For more details, visit [CONTRIBUTING.md](https://github.com/shinosakarb/tebukuro/blob/master/CONTRIBUTING.md).
+For more details, visit [CONTRIBUTING_EN.md](https://github.com/shinosakarb/tebukuro/blob/master/CONTRIBUTING_EN.md).
 
 ## License
 
