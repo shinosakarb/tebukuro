@@ -1,6 +1,6 @@
-import { createAction } from 'redux-actions'
+import { createAction }     from 'redux-actions'
 import CommunityListReducer from '../../client/reducers/CommunityList'
-import { CREATE_COMMUNITIES }   from '../../client/actions/CommunityList'
+import Actions              from '../../client/constants/Actions'
 import CommunityListModel   from '../../client/models/CommunityList'
 
 const model = (params) => {
@@ -24,7 +24,7 @@ describe('CommunityList', () => {
       ]
       const subject = CommunityListReducer(
         model(),
-        createAction(CREATE_COMMUNITIES)(values)
+        createAction(Actions.CommunityList.createCommunities)(values)
       )
 
       expect(subject.communities.count()).toBe(2)

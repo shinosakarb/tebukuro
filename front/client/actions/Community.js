@@ -1,10 +1,9 @@
 import { createAction } from 'redux-actions'
 import { routerActions } from 'react-router-redux'
 import { createCommunity as createAPI, showCommunity as showAPI } from '../api/Community'
+import Actions from '../constants/Actions'
 
-export const CREATE_COMMUNITY = 'CREATE_COMMUNITY'
-
-export const createCommunity = createAction(CREATE_COMMUNITY, createAPI)
+export const createCommunity = createAction(Actions.Community.createCommunity, createAPI)
 
 export const showCommunity = (id) => {
   return dispatch => {
