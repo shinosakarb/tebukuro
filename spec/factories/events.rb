@@ -15,6 +15,7 @@ FactoryGirl.define do
   factory :event do
     name {generate :name}
     description {generate :description}
+    address { ForgeryJa(:address).full_address }
     partial_event_detail_information
   end
 

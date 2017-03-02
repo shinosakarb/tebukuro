@@ -73,6 +73,7 @@ end
 group :test do
   # generates fake data
   gem 'faker'
+  gem 'forgery_ja'
 
   # for build strategies
   gem 'factory_girl_rails'
