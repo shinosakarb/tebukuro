@@ -1,14 +1,10 @@
-import { Record } from 'immutable'
+import Record from './Base'
 
 export const CommunityRecord = Record({
   id:           0,
   name:         '',
-  description:  '',
-  errors:       []
+  description:  ''
 })
 
 export default class Community extends CommunityRecord {
-  isError() {
-    return this.errors.length !== 0
-  }
 }

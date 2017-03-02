@@ -1,17 +1,19 @@
-import Community from '../../client/models/Community'
+import Base from '../../client/models/Base'
 
-describe('Community', () => {
+describe('Base', () => {
   describe('isError', () => {
     describe('when error is not empty', () => {
       it('should return true', () => {
-        const subject = new Community({ errors: ['error'] })
+        const klass = Base({ errors: ['error'] })
+        const subject = new klass()
         expect(subject.isError()).toBe(true)
       })
     })
 
     describe('when error is empty', () => {
       it('should return false', () => {
-        const subject = new Community({ errors: [] })
+        const klass = Base({ errors: [] })
+        const subject = new klass()
         expect(subject.isError()).toBe(false)
       })
     })
