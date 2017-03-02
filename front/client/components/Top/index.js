@@ -1,4 +1,5 @@
 import React from 'react'
+import RouteUrls from '../../constants/RouteUrls'
 import { Link } from 'react-router'
 
 const Top = () => {
@@ -6,7 +7,7 @@ const Top = () => {
     <div>
       <div>tebukuro top sample</div>
 
-      <Link to="/communities">Community List</Link>
+      <Link to={RouteUrls.communities}>Community List</Link>
     </div>
   )
 }
