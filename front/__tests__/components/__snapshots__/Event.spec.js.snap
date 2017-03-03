@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Event render event component 1`] = `
+<div>
+  <p>
+    name: 
+    rubykansai#77
+  </p>
+  <p>
+    eventStartsAt: 
+    2017-03-04 13:00
+  </p>
+  <p>
+    eventEndsAt: 
+    2017-03-04 17:00
+  </p>
+  <p>
+    description: 
+    This event is active in Umeda.
+  </p>
+  <p>
+    address: 
+    Hilton Plaza West 12F
+  </p>
+</div>
+`;
