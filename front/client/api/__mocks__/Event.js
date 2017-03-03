@@ -10,4 +10,4 @@ export const showEvent = (id) => mockResult ? Promise.resolve({message: "normal 
 export const createEvent = require('../Event').createEvent
 export const getEvents = require('../Event').getEvents
 export const editEvent = require('../Event').editEvent
-export const deleteEvent = require('../Event').deleteEvents
+export const deleteEvent = require('../Event').deleteEvent
