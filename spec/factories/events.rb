@@ -36,7 +36,7 @@ FactoryGirl.define do
   factory :event_address_blank, class: Event do
     name {generate :name}
     description {generate :description}
-    address { nil }
+    address nil
     partial_event_detail_information
   end
 
