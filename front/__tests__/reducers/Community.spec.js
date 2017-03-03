@@ -1,7 +1,7 @@
 import { createAction }     from 'redux-actions'
 import CommunityReducer     from '../../client/reducers/Community'
 import ApiResponseError     from '../../client/utils/ApiResponseError'
-import { CREATE_COMMUNITY } from '../../client/actions/Community'
+import Actions              from '../../client/constants/Actions'
 import CommunityModel       from '../../client/models/Community'
 
 const model = (params) => {
@@ -10,7 +10,7 @@ const model = (params) => {
 
 describe('Community', () => {
   describe('CREATE_COMMUNITY', () => {
-    const createCommunity = createAction(CREATE_COMMUNITY)
+    const createCommunity = createAction(Actions.Community.createCommunity)
 
     it("should handle CREATE_COMMUNITY", () => {
       const id = 1
@@ -23,7 +23,6 @@ describe('Community', () => {
         description: description
       }
 
-      const createCommunity = createAction(CREATE_COMMUNITY)
       const subject = CommunityReducer(model(), createCommunity(response))
 
       expect(subject.id).toBe(response.id)

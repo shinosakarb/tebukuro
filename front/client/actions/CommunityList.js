@@ -1,6 +1,5 @@
 import { createAction } from 'redux-actions'
 import { getCommunities } from '../api/Community'
+import Actions from '../constants/Actions'
 
-export const CREATE_COMMUNITIES = 'CREATE_COMMUNITIES'
-
-export const createCommunities = createAction(CREATE_COMMUNITIES, getCommunities)
+export const createCommunities = createAction(Actions.CommunityList.createCommunities, getCommunities)
