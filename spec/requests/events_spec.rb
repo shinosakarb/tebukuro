@@ -115,7 +115,23 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
         end
       end
 
-      context 'name, descriptionが未記入' do
+      context 'addressが未記入' do
+        let(:event_address_blank_params) { {event: FactoryGirl.attributes_for(:event_address_blank)} }
+
+        before do
+          post community_events_path(community), params: event_address_blank_params
+        end
+
+        subject do
+          JSON.parse(response.body)
+        end
+
+        example 'エラーが返ってくること' do
+          expect(subject).to be_has_key 'address'
+        end
+      end
+
+      context 'name, description, addressが未記入' do
         let(:event_blank_params) { {event: FactoryGirl.attributes_for(:event_blank)} }
         before do
           post community_events_path(community), params: event_blank_params
@@ -128,6 +144,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
         example 'エラーが返ってくること' do
           expect(subject).to be_has_key 'name'
           expect(subject).to be_has_key 'description'
+          expect(subject).to be_has_key 'address'
         end
       end
     end
@@ -187,6 +204,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
     before do
       @name = event.name
       @description = event.description
+      @address = event.address
     end
 
     context '正常系' do
@@ -201,7 +219,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           expect(response.status).to eq 200
         end
 
-        example 'データベースのユーザーが更新されること' do
+        example 'name更新されること' do
           event.reload
           expect(event.name).to eq 'hogehoge'
         end
@@ -219,9 +237,26 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           expect(response.status).to eq 200
         end
 
-        example 'データベースのユーザーが更新されること' do
+        example 'descriptionが更新されること' do
           event.reload
           expect(event.description).to eq 'hogehoge'
+        end
+
+      end
+
+      context '有効なパラメータ(address)の場合' do
+
+        before do
+          patch event_path(event), params: {event: attributes_for(:event, address: 'hogehoge')}
+        end
+
+        example 'ステータス200が返ってくること' do
+          expect(response.status).to eq 200
+        end
+
+        example 'addressが更新されること' do
+          event.reload
+          expect(event.address).to eq 'hogehoge'
         end
 
       end
@@ -263,6 +298,22 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           expect(event.description).to eq @description
         end
 
+      end
+
+      context '無効なパラメータ(address)の場合' do
+
+        before do
+          patch event_path(event), params: {event: attributes_for(:event, address: nil)}
+        end
+
+        example 'ステータス422が返ってくること' do
+          expect(response.status).to eq 422
+        end
+
+        example 'イベントのaddressは更新されないこと' do
+          event.reload
+          expect(event.address).to eq @address
+        end
       end
 
       context '要求されたイベントが存在しない場合' do

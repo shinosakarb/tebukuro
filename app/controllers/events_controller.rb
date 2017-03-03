@@ -22,7 +22,8 @@ class EventsController < ApplicationController
 
 
   def show
-    render json: @event
+    render json: @event,
+      include: @event.tickets
   end
 
   def update
@@ -44,7 +45,8 @@ class EventsController < ApplicationController
   private
   def event_params
     params.require(:event).permit(:name, :description,
-                                  :event_starts_at, :event_ends_at, :address)
+                                  :event_starts_at, :event_ends_at, :address,
+                                  )
   end
 
   def set_event
