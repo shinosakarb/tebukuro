@@ -22,18 +22,28 @@ FactoryGirl.define do
   factory :event_name_blank, class: Event do
     name nil
     description {generate :description}
+    address { ForgeryJa(:address).full_address }
     partial_event_detail_information
   end
 
   factory :event_description_blank, class: Event do
     name {generate :name}
     description nil
+    address { ForgeryJa(:address).full_address }
+    partial_event_detail_information
+  end
+
+  factory :event_address_blank, class: Event do
+    name {generate :name}
+    description {generate :description}
+    address nil
     partial_event_detail_information
   end
 
   factory :event_blank, class: Event do
     name nil
     description nil
+    address nil
     partial_event_detail_information
   end
 

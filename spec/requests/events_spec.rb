@@ -187,6 +187,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
     before do
       @name = event.name
       @description = event.description
+      @address = event.address
     end
 
     context '正常系' do
@@ -201,7 +202,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           expect(response.status).to eq 200
         end
 
-        example 'データベースのユーザーが更新されること' do
+        example 'イベントのnameが更新されること' do
           event.reload
           expect(event.name).to eq 'hogehoge'
         end
@@ -219,13 +220,28 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           expect(response.status).to eq 200
         end
 
-        example 'データベースのユーザーが更新されること' do
+        example 'イベントのdescriptionが更新されること' do
           event.reload
           expect(event.description).to eq 'hogehoge'
         end
 
       end
 
+      context '有効なパラメータ(address)の場合' do
+
+        before do
+          patch event_path(event), params: {event: attributes_for(:event, address: 'hogehoge')}
+        end
+
+        example 'ステータス200が返ってくること' do
+          expect(response.status).to eq 200
+        end
+
+        example 'イベントのaddressが更新されること' do
+          event.reload
+          expect(event.address).to eq 'hogehoge'
+        end
+      end
 
     end
 
@@ -258,7 +274,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           expect(response.status).to eq 422
         end
 
-        example 'DBのイベントは更新されないこと' do
+        example 'イベントのdescriptionは更新されないこと' do
           event.reload
           expect(event.description).to eq @description
         end
