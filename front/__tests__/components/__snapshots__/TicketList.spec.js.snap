@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TicketList render list of tickets 1`] = `
+<ul>
+  <li>
+    <p>
+      name: 
+      ticketName1
+    </p>
+    <p>
+      cost: 
+      4
+    </p>
+    <p>
+      quantity: 
+      5
+    </p>
+    // TODO: These Date object strings should be formatted.
+    <p>
+      saleStartsAt: 
+      Wed Mar 01 2017 18:00:00 GMT+0900 (JST)
+    </p>
+    <p>
+      saleEndsAt: 
+      Wed Mar 01 2017 19:30:00 GMT+0900 (JST)
+    </p>
+  </li>
+  <li>
+    <p>
+      name: 
+      ticketName2
+    </p>
+    <p>
+      cost: 
+      8
+    </p>
+    <p>
+      quantity: 
+      9
+    </p>
+    // TODO: These Date object strings should be formatted.
+    <p>
+      saleStartsAt: 
+      Mon Dec 11 2017 22:30:00 GMT+0900 (JST)
+    </p>
+    <p>
+      saleEndsAt: 
+      Tue Dec 12 2017 00:00:00 GMT+0900 (JST)
+    </p>
+  </li>
+</ul>
+`;
