@@ -32,3 +32,6 @@
 
 # RubyMineが勝手に作ってしまうファイル
 .idea
+
+# Ignore Ruby version
+.ruby-version

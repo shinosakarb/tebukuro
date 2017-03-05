@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Define Ruby version
-ruby "~>2.4.0"
+ruby "2.4.0"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.0.beta1'
 # Use PostgreSQL as the database for Active Record
