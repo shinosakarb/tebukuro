@@ -7,5 +7,8 @@ export default {
   },
   Event: {
     createEvent: "CREATE_EVENT"
+  },
+  Ticket: {
+    createTicket: "CREATE_TICKET"
   }
 }
