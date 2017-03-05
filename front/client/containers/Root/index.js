@@ -6,6 +6,7 @@ import App from '../App'
 import Top from '../../components/Top'
 import CommunityList from '../CommunityList'
 import CreateCommunityForm from '../CommunityForm'
+import Community from '../Community'
 import Event from '../Event'
 import PageNotFound from '../../components/PageNotFound'
 
@@ -24,7 +25,7 @@ export default class Root extends React.Component {
             <IndexRoute component={Top}/>
             <Route path={RouteUrls.communities} component={CommunityList}/>
             <Route path={RouteUrls.newCommunity} component={CreateCommunityForm}/>
-            <Route path={RouteUrls.community}/>
+            <Route path={RouteUrls.community} component={Community}/>
             <Route path={RouteUrls.editCommunity}/>
             <Route path={RouteUrls.events}/>
             <Route path={RouteUrls.newEvent}/>

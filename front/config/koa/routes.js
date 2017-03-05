@@ -7,7 +7,7 @@ module.exports = function(app) {
   // register functions
   var router = new Router()
 
-  router.get("/", function (ctx, next) {
+  router.get("/(.*)", function (ctx, next) {
     return rootController.index(ctx)
   })
 
