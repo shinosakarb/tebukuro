@@ -19,32 +19,4 @@ FactoryGirl.define do
     partial_ticket_detail_information
   end
 
-  factory :ticket_name_blank, class: Ticket do
-    name nil
-    cost {generate :cost}
-    quantity {generate :quantity}
-    partial_ticket_detail_information
-  end
-
-  factory :ticket_cost_blank, class: Ticket do
-    name {generate :name}
-    cost nil
-    quantity {generate :quantity}
-    partial_event_detail_information
-  end
-
-  factory :ticket_quantity_blank, class: Ticket do
-    name {generate :name}
-    cost {generate :cost}
-    quantity nil
-    partial_event_detail_information
-  end
-
-  factory :ticket_blank, class: Event do
-    name nil
-    cost nil
-    quantity nil
-    partial_event_detail_information
-  end
-
 end
