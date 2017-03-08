@@ -85,7 +85,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
     context '異常系' do
 
       context 'nameが未記入' do
-        let(:event_name_blank_params) { {event: FactoryGirl.attributes_for(:event_name_blank)} }
+        let(:event_name_blank_params) { {event: FactoryGirl.attributes_for(:event, name: nil)} }
         before do
           post community_events_path(community), params: event_name_blank_params
         end
@@ -100,7 +100,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
       end
 
       context 'descriptionが未記入' do
-        let(:event_description_blank_params) { {event: FactoryGirl.attributes_for(:event_description_blank)} }
+        let(:event_description_blank_params) { {event: FactoryGirl.attributes_for(:event, description: nil)} }
 
         before do
           post community_events_path(community), params: event_description_blank_params
@@ -116,7 +116,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
       end
 
       context 'name, descriptionが未記入' do
-        let(:event_blank_params) { {event: FactoryGirl.attributes_for(:event_blank)} }
+        let(:event_blank_params) { {event: FactoryGirl.attributes_for(:event, name: nil, description: nil)} }
         before do
           post community_events_path(community), params: event_blank_params
         end

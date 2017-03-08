@@ -84,7 +84,7 @@ RSpec.describe 'Tickets(チケットAPI)', type: :request do
     context '異常系' do
 
       context 'nameが未記入' do
-        let(:ticket_name_blank_params) { {ticket: FactoryGirl.attributes_for(:ticket_name_blank)} }
+        let(:ticket_name_blank_params) { {ticket: FactoryGirl.attributes_for(:ticket, name: nil)} }
         before do
           post event_tickets_path(event), params: ticket_name_blank_params
         end
@@ -99,7 +99,7 @@ RSpec.describe 'Tickets(チケットAPI)', type: :request do
       end
 
       context 'costが未記入' do
-        let(:ticket_cost_blank_params) { {ticket: FactoryGirl.attributes_for(:ticket_cost_blank)} }
+        let(:ticket_cost_blank_params) { {ticket: FactoryGirl.attributes_for(:ticket, cost: nil)} }
 
         before do
           post event_tickets_path(event), params: ticket_cost_blank_params
@@ -115,7 +115,7 @@ RSpec.describe 'Tickets(チケットAPI)', type: :request do
       end
 
       context 'quantityが未記入' do
-        let(:ticket_quantity_blank_params) { {ticket: FactoryGirl.attributes_for(:ticket_quantity_blank)} }
+        let(:ticket_quantity_blank_params) { {ticket: FactoryGirl.attributes_for(:ticket, quantity: nil)} }
         before do
           post event_tickets_path(event), params: ticket_quantity_blank_params
         end
@@ -133,7 +133,7 @@ RSpec.describe 'Tickets(チケットAPI)', type: :request do
     end
 
     context 'name, cost, quantityが未記入' do
-      let(:ticket_blank_params) { {ticket: FactoryGirl.attributes_for(:ticket_blank)} }
+      let(:ticket_blank_params) { {ticket: FactoryGirl.attributes_for(:ticket, name: nil, cost: nil, quantity: nil)} }
       before do
         post event_tickets_path(event), params: ticket_blank_params
       end

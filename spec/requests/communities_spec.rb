@@ -72,7 +72,7 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
 
       context 'nameが未記入' do
 
-        let(:community_name_blank_params) { {community: FactoryGirl.attributes_for(:community_name_blank)} }
+        let(:community_name_blank_params) { {community: FactoryGirl.attributes_for(:community, name: nil)} }
         before do
           post communities_path, params: community_name_blank_params
         end
@@ -86,7 +86,7 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
 
       context 'descriptionが未記入' do
 
-        let(:community_description_blank_params) { {community: FactoryGirl.attributes_for(:community_description_blank)} }
+        let(:community_description_blank_params) { {community: FactoryGirl.attributes_for(:community, description: nil)} }
         before do
           post communities_path, params: community_description_blank_params
         end
@@ -100,7 +100,7 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
 
       context 'name, descriptionが未記入' do
 
-        let(:community_blank_params) { {community: FactoryGirl.attributes_for(:community_blank)} }
+        let(:community_blank_params) { {community: FactoryGirl.attributes_for(:community, name: nil, description: nil)} }
         before do
           post communities_path, params: community_blank_params
         end
