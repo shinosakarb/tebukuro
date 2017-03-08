@@ -12,6 +12,9 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
     let(:events_json_parse){[]}
 
     before do
+      2.times do |n|
+        post event_tickets_path(events[n], FactoryGirl.create_list(:ticket, 5, event: events[n]))
+      end
       get community_events_path(community)
       events_json_parse[0] = JSON.parse(events[0].to_json).except('updated_at', 'created_at')
       events_json_parse[1] = JSON.parse(events[1].to_json).except('updated_at', 'created_at')
@@ -139,8 +142,10 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
     context '正常系' do
       let(:event) { FactoryGirl.create(:event, community: community) }
       let(:event_json_parse){JSON.parse(event.to_json).except('created_at', 'updated_at')}
+      let(:tickets) { FactoryGirl.create_list(:ticket, 5, event: event) }
 
       before do
+        post event_tickets_path(tickets, event)
         get event_path(event)
       end
 
