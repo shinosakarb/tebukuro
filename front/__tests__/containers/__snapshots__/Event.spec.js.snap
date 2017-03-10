@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Event container renders Event and TicketList component 1`] = `
+<div>
+  event page sample
+  <div>
+    <p>
+      name: test
+    </p>
+    <p>
+      eventStartsAt: 2017-03-04T13:00:00.000Z
+    </p>
+    <p>
+      eventEndsAt: 2017-03-04T17:00:00.000Z
+    </p>
+    <p>
+      description: This event is active in Umeda.
+    </p>
+    <p>
+      address: Hilton Plaza West 12F
+    </p>
+  </div>
+  <ul>
+    <li>
+      <p>
+        name: ticketName1
+      </p>
+      <p>
+        cost: 4
+      </p>
+      <p>
+        quantity: 5
+      </p>
+      // TODO: These Date object strings should be formatted.
+      <p>
+        saleStartsAt: 2017-03-01T09:00:00Z
+      </p>
+      <p>
+        saleEndsAt: 2017-03-01T10:30:00Z
+      </p>
+    </li>
+    <li>
+      <p>
+        name: ticketName2
+      </p>
+      <p>
+        cost: 8
+      </p>
+      <p>
+        quantity: 9
+      </p>
+      // TODO: These Date object strings should be formatted.
+      <p>
+        saleStartsAt: 2017-12-11T13:30:00Z
+      </p>
+      <p>
+        saleEndsAt: 2017-12-11T15:00:00Z
+      </p>
+    </li>
+  </ul>
+</div>
+`;
