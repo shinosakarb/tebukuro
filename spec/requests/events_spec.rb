@@ -156,11 +156,12 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
         expect(response.status).to eq 200
       end
 
-      # example 'JSONから適切なkeyを取得できること' do
-        # The JSON API returns attributes like "community-id" instead of "community_id",
-        # so the test needs to change
-        # expect(subject["data"]["attributes"].keys.sort).to include_json(event_json_parse.keys.sort)
-      # end
+      example 'JSONから適切なkeyを取得できること' do
+        subject["data"]["attributes"].each do |data|
+          data[0] = data[0].gsub(/-/, "_")
+          expect(event_json_parse.keys).to include(data[0])
+        end
+      end
 
     end
 
