@@ -11,8 +11,8 @@ const TicketList = ({tickets}) => {
               <p>cost: { ticket.cost }</p>
               <p>quantity: { ticket.quantity }</p>
               // TODO: These Date object strings should be formatted.
-              <p>saleStartsAt: { ticket.makeDateWith('saleStartsAt').toString() }</p>
-              <p>saleEndsAt: { ticket.makeDateWith('saleEndsAt').toString() }</p>
+              <p>saleStartsAt: { ticket.formatDateWith('saleStartsAt') }</p>
+              <p>saleEndsAt: { ticket.formatDateWith('saleEndsAt') }</p>
             </li>
           )
         })
