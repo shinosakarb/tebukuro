@@ -157,9 +157,9 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
       end
 
       example 'JSONから適切なkeyを取得できること' do
-        subject["data"]["attributes"].each do |data|
-          data[0] = data[0].gsub(/-/, "_")
-          expect(event_json_parse.keys).to include(data[0])
+        subject["data"]["attributes"].each do |key, value|
+          key = key.gsub(/-/, "_")
+          expect(event_json_parse.keys).to include(key)
         end
       end
 
