@@ -25,7 +25,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
     context '正常系' do
 
       example 'ステータス200が返されること' do
-        # p response.body
         expect(response).to be_success
         expect(response.status).to eq 200
       end
