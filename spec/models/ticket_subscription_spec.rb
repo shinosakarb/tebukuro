@@ -14,5 +14,10 @@ RSpec.describe TicketSubscription, type: :model do
     describe 'numericality' do
       it { is_expected.to validate_numericality_of(:quantity).only_integer.is_greater_than_or_equal_to(1) }
     end
+
+    describe 'uniqueness' do
+      subject { TicketSubscription.new(quantity: 1, user: create(:user)) }
+      it { is_expected.to validate_uniqueness_of(:user_id).scoped_to(:ticket_id) }
+    end
   end
 end
