@@ -140,7 +140,7 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
     context '正常系' do
       let(:event) { FactoryGirl.create(:event, community: community) }
       let(:tickets) { FactoryGirl.create_list(:ticket, 5, event: event) }
-      let(:event_json_parse){JSON.parse(event.to_json).except('created_at', 'updated_at')}
+      let(:event_json_parse){JSON.parse(event.to_json).except('id', 'created_at', 'updated_at')}
 
       before do
         post event_tickets_path(tickets, event)
@@ -157,10 +157,12 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
       end
 
       example 'JSONから適切なkeyを取得できること' do
-        subject["data"]["attributes"].each do |key, value|
-          key = key.gsub(/-/, "_")
-          expect(event_json_parse.keys).to include(key)
-        end
+        json_data = change_jsonapi_format_of(subject)
+        expect(json_data.keys.sort).to include_json(event_json_parse.keys.sort)
+      end
+
+      example 'responseのidがイベントのidと一致していること' do
+        expect(subject["data"]["id"]).to eq event.id.to_json
       end
 
     end
