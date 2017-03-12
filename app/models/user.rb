@@ -7,4 +7,8 @@ class User < ActiveRecord::Base
 
   has_many :ticket_subscriptions
   has_many :tickets, through: :ticket_subscriptions
+
+  def purchases(ticket)
+    ticket_subscriptions.build(ticket: ticket, quantity: 1)
+  end
 end
