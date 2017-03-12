@@ -7,5 +7,5 @@ import ActionDispatch from '../utils/ActionDispatch'
 export const createEvent = createAction(Actions.Event.createEvent, createAPI)
 
 export const showEvent = (id) => {
-  return ActionDispatch.executeApi(showAPI, id, createEvent, errorUrls.pageNotFound)
+  return ActionDispatch.executeApi(showAPI, id, createAction(Actions.Event.createEvent), errorUrls.pageNotFound)
 }
