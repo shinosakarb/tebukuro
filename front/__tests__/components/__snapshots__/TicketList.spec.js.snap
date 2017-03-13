@@ -18,11 +18,11 @@ exports[`TicketList render list of tickets 1`] = `
     // TODO: These Date object strings should be formatted.
     <p>
       saleStartsAt: 
-      Wed Mar 01 2017 18:00:00 GMT+0900 (JST)
+      2017-03-01T09:00:00Z
     </p>
     <p>
       saleEndsAt: 
-      Wed Mar 01 2017 19:30:00 GMT+0900 (JST)
+      2017-03-01T10:30:00Z
     </p>
   </li>
   <li>
@@ -41,11 +41,11 @@ exports[`TicketList render list of tickets 1`] = `
     // TODO: These Date object strings should be formatted.
     <p>
       saleStartsAt: 
-      Mon Dec 11 2017 22:30:00 GMT+0900 (JST)
+      2017-12-11T13:30:00Z
     </p>
     <p>
       saleEndsAt: 
-      Tue Dec 12 2017 00:00:00 GMT+0900 (JST)
+      2017-12-11T15:00:00Z
     </p>
   </li>
 </ul>

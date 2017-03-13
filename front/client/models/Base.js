@@ -1,4 +1,5 @@
 import { Record as originRecord } from 'immutable'
+import moment from 'moment'
 
 export default (args = {}) => {
   const base = originRecord({errors: [], ...args})
@@ -20,6 +21,10 @@ export default (args = {}) => {
 
     makeDateWith(attribute) {
       return this.get(attribute) && this.get(attribute).length > 0 ? new Date(this.get(attribute)) : null
+    }
+  
+    formatDateWith(attribute) {
+      return this.makeDateWith(attribute) ? moment(this.makeDateWith(attribute)).format() : null
     }
   }
 }

@@ -1,5 +1,6 @@
 import Base from '../../client/models/Base'
 import MockDate from 'mockdate'
+import moment from 'moment-timezone'
 
 const subjectClass = (params) => {
   const klass = Base(params)
@@ -78,7 +79,35 @@ describe('Base', () => {
 
     test('presence eventStartsAt', () => {
       const subject = subjectClass({eventStartsAt: '2017/03/02 09:00:00'})
-      expect(subject.makeDateWith('eventStartsAt').getTime()).toBe((new Date('2017/03/02 09:00:00')).getTime())
+      expect(subject.makeDateWith('eventStartsAt').getTime()).toBe((new Date()).getTime())
+    })
+  })
+  
+  describe('formatDateWith', () => {
+    afterEach(() => {
+      // Timezone should be restored to UTC, for in case of the failing test that is changing timezone.
+      moment.tz.setDefault('UTC')
+    })
+
+    test('non existent attribute', () => {
+      const subject = subjectClass({eventStartsAt: ''})
+      expect(subject.formatDateWith('eventEndsAt')).toBeNull()
+    })
+
+    test('blank eventStartsAt', () => {
+      const subject = subjectClass({eventStartsAt: ''})
+      expect(subject.formatDateWith('eventStartsAt')).toBeNull()
+    })
+
+    test('presence eventStartsAt in JST', () => {
+      moment.tz.setDefault('Asia/Tokyo')
+      const subject = subjectClass({eventStartsAt: '2017-03-02T09:00:00.000Z'})
+      expect(subject.formatDateWith('eventStartsAt').toString()).toBe('2017-03-02T18:00:00+09:00')
+    })
+
+    test('presence eventStartsAt in UTC', () => {
+      const subject = subjectClass({eventStartsAt: '2017-03-02T09:00:00.000Z'})
+      expect(subject.formatDateWith('eventStartsAt').toString()).toBe('2017-03-02T09:00:00Z')
     })
   })
 })
