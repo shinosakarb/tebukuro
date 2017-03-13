@@ -84,6 +84,11 @@ describe('Base', () => {
   })
   
   describe('formatDateWith', () => {
+    afterEach(() => {
+      // Timezone should be restored to UTC, for in case of the failing test that is changing timezone.
+      moment.tz.setDefault('UTC')
+    })
+
     test('non existent attribute', () => {
       const subject = subjectClass({eventStartsAt: ''})
       expect(subject.formatDateWith('eventEndsAt')).toBeNull()
@@ -98,7 +103,6 @@ describe('Base', () => {
       moment.tz.setDefault('Asia/Tokyo')
       const subject = subjectClass({eventStartsAt: '2017-03-02T09:00:00.000Z'})
       expect(subject.formatDateWith('eventStartsAt').toString()).toBe('2017-03-02T18:00:00+09:00')
-      moment.tz.setDefault('UTC')
     })
 
     test('presence eventStartsAt in UTC', () => {
