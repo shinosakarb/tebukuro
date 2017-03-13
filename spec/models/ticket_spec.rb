@@ -1,9 +1,11 @@
 require 'rails_helper'
 
-describe Ticket do
+describe Ticket, type: :model do
   describe 'association' do
     it { is_expected.to belong_to(:event) }
     it { is_expected.to have_one(:community).through(:event) }
+    it { is_expected.to have_many(:ticket_subscriptions) }
+    it { is_expected.to have_many(:users).through(:ticket_subscriptions) }
   end
 
   describe 'presence' do

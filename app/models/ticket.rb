@@ -3,6 +3,8 @@ class Ticket < ApplicationRecord
   #belongs_to :event #through :user
   belongs_to :event
   has_one :community, through: :event
+  has_many :ticket_subscriptions
+  has_many :users, through: :ticket_subscriptions
 
   validates :name, presence: true
   validates :cost, presence: true,
