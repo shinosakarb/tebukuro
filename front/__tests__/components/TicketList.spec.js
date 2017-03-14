@@ -1,8 +1,9 @@
-import React from 'react'
-import { shallow } from 'enzyme'
+import React         from 'react'
+import { Set }       from 'immutable'
+import { shallow }   from 'enzyme'
 import shallowToJson from 'enzyme-to-json'
-import TicketModel from '../../client/models/Ticket'
-import TicketList from '../../client/components/TicketList'
+import TicketModel   from '../../client/models/Ticket'
+import TicketList    from '../../client/components/TicketList'
 
 const model = (params) => {
   return new TicketModel(params)
@@ -31,9 +32,10 @@ describe('TicketList', () => {
       }
     ]
 
-    const tickets = ticketsParams.map((params) => model(params))
+    const ticketsModel = ticketsParams.map((params) => model(params))
+    const ticketsSet = Set.of(...ticketsModel) 
 
-    const component = shallow(<TicketList tickets={ tickets } />)
+    const component = shallow(<TicketList tickets={ ticketsSet } />)
 
     const tree = shallowToJson(component)
     expect(tree).toMatchSnapshot()

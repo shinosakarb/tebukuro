@@ -1,4 +1,5 @@
 import React     from 'react'
+import { Set }   from 'immutable'
 
 const TicketList = ({tickets}) => {
   return (
@@ -22,7 +23,7 @@ const TicketList = ({tickets}) => {
 }
 
 TicketList.propTypes = {
-  tickets: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
+  tickets: React.PropTypes.instanceOf(Set).isRequired
 }
 
 export default TicketList
