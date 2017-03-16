@@ -1,17 +1,22 @@
 import React               from 'react'
 import { Provider }        from 'react-redux'
 import configureStore      from 'redux-mock-store'
+import thunk               from 'redux-thunk'
 import { mount, render }   from 'enzyme'
 import ToJson              from 'enzyme-to-json'
+import sinon               from 'sinon'
 
-import * as Actions        from '../../client/actions/Event'
 import EventContainer      from '../../client/containers/Event'
 import EventComponent      from '../../client/components/Event'
 import TicketListComponent from '../../client/components/TicketList'
 import EventModel          from '../../client/models/Event'
 import TicketModel         from '../../client/models/Ticket'
 
-const mockStore = configureStore()
+sinon.spy(EventContainer.prototype, 'componentDidMount')
+jest.mock('../../client/api/Event')
+
+const middlewares = [thunk]
+const mockStore = configureStore(middlewares)
 let store = Object.create(null)
 let initialState = {}
 
@@ -49,21 +54,25 @@ let eventModel = new EventModel(eventParams)
 const ticketListModel = ticketsParams.map((ticket) => new TicketModel(ticket))
 eventModel = eventModel.setTickets(ticketListModel)
 
+const routerParams = { eventId: eventModel.id }
+
 describe('Event container', () => {
   beforeEach(() => {
     initialState = { event: eventModel }
     store = mockStore(initialState)
   })
 
-  it('maps event in the store to Event component props', () => {
+  it('maps event and actions in the store to Event component props', () => {
     const wrapper = mount(
       <Provider store={store}>
-        <EventContainer />
+        <EventContainer params={ routerParams }/>
       </Provider>
     )
 
     const eventComponent = wrapper.find(EventComponent)
     const ticketListComponent = wrapper.find(TicketListComponent)
+
+    expect(EventContainer.prototype.componentDidMount.calledOnce).toBe(true)
     expect(eventComponent.prop('event')).toBe(eventModel)
     expect(ticketListComponent.prop('tickets')).toBe(eventModel.tickets)
   })
