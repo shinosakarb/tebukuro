@@ -22,12 +22,12 @@ class EventsController < ApplicationController
 
 
   def show
-    render json: @event
+    render json: @event, adapter: :json_api, include: 'tickets'
   end
 
   def update
     if @event.update(event_params)
-      render json: @event
+      render json: @event, adapter: :json_api, include: 'tickets'
     else
       render json: @event.errors, status: :unprocessable_entity
     end

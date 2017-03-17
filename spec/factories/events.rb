@@ -13,7 +13,7 @@ FactoryGirl.define do
   end
 
   factory :event do
-    name {generate :name}
+    sequence(:name) { |n| "イベント #{n}"  }
     description {generate :description}
     address { ForgeryJa(:address).full_address }
     partial_event_detail_information
