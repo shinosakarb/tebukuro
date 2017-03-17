@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Event container renders Event and TicketList component 1`] = `
+exports[`Event container should render self and subcomponents 1`] = `
 <div>
   event page sample
   <div>
