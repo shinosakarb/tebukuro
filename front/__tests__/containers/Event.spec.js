@@ -1,9 +1,9 @@
-import React             from 'react'
-import { mount, render } from 'enzyme'
-import ToJson            from 'enzyme-to-json'
-import { Event }         from '../../client/containers/Event'
-import EventModel        from '../../client/models/Event'
-import TicketModel       from '../../client/models/Ticket'
+import React              from 'react'
+import { mount, shallow } from 'enzyme'
+import ToJson             from 'enzyme-to-json'
+import { Event }          from '../../client/containers/Event'
+import EventModel         from '../../client/models/Event'
+import TicketModel        from '../../client/models/Ticket'
 
 const eventParams = {
   id: 1,
@@ -53,7 +53,7 @@ describe('Event container', () => {
   })
 
   it('should render self and subcomponents', () => {
-    const wrapper = render(<Event {...props} />)
+    const wrapper = shallow(<Event {...props} />)
     const tree = ToJson(wrapper)
     expect(tree).toMatchSnapshot()
   })
