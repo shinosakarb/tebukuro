@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Event container should render self and subcomponents 1`] = `
+<div>
+  event page sample
+  <Event
+    event={
+      Object {
+        "address": "Hilton Plaza West 12F",
+        "communityId": 0,
+        "description": "This event is active in Umeda.",
+        "errors": Array [],
+        "eventEndsAt": "2017-03-04T17:00:00.000Z",
+        "eventStartsAt": "2017-03-04T13:00:00.000Z",
+        "id": 1,
+        "name": "test",
+        "tickets": Array [
+          Object {
+            "cost": 4,
+            "errors": Array [],
+            "eventId": 1,
+            "id": 3,
+            "name": "ticketName1",
+            "quantity": 5,
+            "saleEndsAt": "2017-03-01T10:30:00.000Z",
+            "saleStartsAt": "2017-03-01T09:00:00.000Z",
+          },
+          Object {
+            "cost": 8,
+            "errors": Array [],
+            "eventId": 1,
+            "id": 7,
+            "name": "ticketName2",
+            "quantity": 9,
+            "saleEndsAt": "2017-12-11T15:00:00.000Z",
+            "saleStartsAt": "2017-12-11T13:30:00.000Z",
+          },
+        ],
+      }
+    }
+  />
+  <TicketList
+    tickets={
+      Array [
+        Object {
+          "cost": 4,
+          "errors": Array [],
+          "eventId": 1,
+          "id": 3,
+          "name": "ticketName1",
+          "quantity": 5,
+          "saleEndsAt": "2017-03-01T10:30:00.000Z",
+          "saleStartsAt": "2017-03-01T09:00:00.000Z",
+        },
+        Object {
+          "cost": 8,
+          "errors": Array [],
+          "eventId": 1,
+          "id": 7,
+          "name": "ticketName2",
+          "quantity": 9,
+          "saleEndsAt": "2017-12-11T15:00:00.000Z",
+          "saleStartsAt": "2017-12-11T13:30:00.000Z",
+        },
+      ]
+    }
+  />
+</div>
+`;
