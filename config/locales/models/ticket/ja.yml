@@ -1,0 +1,16 @@
+# モデル名
+ja:
+  activerecord:
+    models:
+      ticket: チケット
+
+# モデルの属性名
+ja:
+  activerecord:
+    attributes:
+      ticket:
+        name: 名前
+        cost: 値段
+        quantity: 枚数
+        sale_starts_at: 販売開始時間
+        sale_ends_at: 販売終了時間
