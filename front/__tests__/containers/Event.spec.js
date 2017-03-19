@@ -49,7 +49,7 @@ describe('Event container', () => {
 
   it('should call showEvent in componentDidMount once', () => {
     const wrapper = mount(<Event {...props} />)
-    expect(props.actions.showEvent.mock.calls.length).toBe(1)
+    expect(props.actions.showEvent).toHaveBeenCalledTimes(1)
   })
 
   it('should render self and subcomponents', () => {
