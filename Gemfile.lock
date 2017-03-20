@@ -46,10 +46,6 @@ GEM
     arel (8.0.0)
     ast (2.3.0)
     bcrypt (3.1.11)
-    better_errors (2.1.1)
-      coderay (>= 1.0.0)
-      erubis (>= 2.6.6)
-      rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     brakeman (3.5.0)
@@ -77,7 +73,6 @@ GEM
       dotenv (= 2.2.0)
       railties (>= 3.2, < 5.1)
     erubi (1.5.0)
-    erubis (2.7.0)
     factory_girl (4.8.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.8.0)
@@ -304,8 +299,6 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers (~> 0.10.0)
-  better_errors
-  binding_of_caller
   brakeman
   byebug
   database_rewinder
@@ -346,4 +339,4 @@ RUBY VERSION
    ruby 2.4.0p0
 
 BUNDLED WITH
-   1.14.5
+   1.14.6

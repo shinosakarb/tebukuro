@@ -291,11 +291,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
           patch event_path(community_id: community.id, id: 0), params: {event: attributes_for(:event, description: 'hogehoge')}
         end
 
-        # TODO: eq('text/html')になる。相談の上修正するか決める
-        example 'Content-Typeはtext/htmlであること' do
-          expect(response.content_type).to eq('text/html')
-        end
-
         example 'リクエストはRecordNotFoundとなること' do
           expect(response.status).to eq 404
         end
@@ -333,11 +328,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
 
         before do
           delete event_path(community_id: community.id, id: 0)
-        end
-
-        # TODO: eq('text/html')になる。相談の上修正するか決める
-        example 'Content-Typeはtext/htmlであること' do
-          expect(response.content_type).to eq('text/html')
         end
 
         example 'ステータス404が返されること' do

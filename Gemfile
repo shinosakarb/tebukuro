@@ -50,10 +50,6 @@ group :development, :test do
   # automatically launch specs
   gem 'guard-rspec', require: false
 
-  # debug
-  gem 'better_errors'
-  gem 'binding_of_caller'
-
   # rspec
   gem 'rspec-rails', '~> 3.5'
   gem 'shoulda-matchers'

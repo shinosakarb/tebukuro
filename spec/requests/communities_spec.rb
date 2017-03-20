@@ -6,7 +6,7 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
 
     let!(:communities) { FactoryGirl.create_list(:community, 2) }
 
-    before do 
+    before do
       get communities_path
     end
 
@@ -36,7 +36,7 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
   describe 'POST communities_path (communities#create)' do
 
     context '正常系' do
-      
+
       let(:community_params) { {community: FactoryGirl.attributes_for(:community)} }
       before do
         post communities_path, params: community_params
@@ -255,11 +255,6 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
           patch community_path(id: 0), params: {community: attributes_for(:community, description: 'hogehoge')}
         end
 
-        # TODO: eq('text/html')になる。相談の上修正するか決める
-        example 'Content-Typeはtext/htmlであること' do
-          expect(response.content_type).to eq('text/html')
-        end
-
         example 'リクエストはRecordNotFoundとなること' do
           expect(response.status).to eq 404
         end
@@ -305,11 +300,6 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
 
         before do
           delete community_path(id: 0)
-        end
-
-        # TODO: eq('text/html')になる。相談の上修正するか決める
-        example 'Content-Typeはtext/htmlであること' do
-          expect(response.content_type).to eq('text/html')
         end
 
         example 'ステータス404が返されること' do
