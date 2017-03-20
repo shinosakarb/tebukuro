@@ -1,0 +1,16 @@
+# model name
+en:
+  activerecord:
+    models:
+      ticket: Ticket
+
+# model attributes name
+ja:
+  activerecord:
+    attributes:
+      ticket:
+        name: Name
+        cost: Cost
+        quantity: Quantity
+        sale_starts_at: Start time of sale
+        sale_ends_at: End time of sale
