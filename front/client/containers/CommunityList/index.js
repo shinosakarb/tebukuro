@@ -6,7 +6,7 @@ import * as Actions           from '../../actions/CommunityList'
 import CommunityListTable     from '../../components/CommunityList'
 
 export class CommunityList extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.actions.createCommunities()
   }
 

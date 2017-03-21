@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CommunityList container should render self and a subcomponent 1`] = `
+<div>
+  <CommunityList
+    CommunityList={
+      Object {
+        "communities": Array [
+          Object {
+            "description": "",
+            "errors": Array [],
+            "id": 1,
+            "name": "name1",
+          },
+          Object {
+            "description": "",
+            "errors": Array [],
+            "id": 2,
+            "name": "name2",
+          },
+        ],
+      }
+    }
+  />
+  <Link
+    onlyActiveOnIndex={false}
+    style={Object {}}
+    to="/communities/new"
+  >
+    new
+  </Link>
+</div>
+`;
