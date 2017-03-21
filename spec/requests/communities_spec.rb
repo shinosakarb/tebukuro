@@ -71,13 +71,6 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
 
 
     context '異常系' do
-      context 'auth_headers is nothing' do
-        before {post communities_path}
-
-        example 'http status is 401' do
-          expect(response).to have_http_status(:unauthorized)
-        end
-      end
 
       context 'nameが未記入' do
 
