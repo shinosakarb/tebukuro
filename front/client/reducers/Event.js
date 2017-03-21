@@ -7,15 +7,9 @@ export const eventInitialState = new Event()
 export const eventReducerMap = {
   CREATE_EVENT: {
     next: (state, action) => {
-      const event = new Event({
-        id:             action.payload.id,
-        name:           action.payload.name,
-        description:    action.payload.description,
-        communityId:    action.payload.community_id,
-        eventStartsAt:  action.payload.event_starts_at,
-        eventEndsAt:    action.payload.event_ends_at,
-        address:        action.payload.address
-      })
+      const event = new Event(
+          (new Event).camelKeysOf(action.payload)
+        )
       return event.setTickets(
         action.payload.tickets ? action.payload.tickets.map((item) => {
           return ticketReducerMap.CREATE_TICKET.next(

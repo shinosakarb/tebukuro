@@ -1,5 +1,6 @@
 import { Record as originRecord } from 'immutable'
 import moment from 'moment'
+import _ from 'lodash' 
 
 export default (args = {}) => {
   const base = originRecord({errors: [], ...args})
@@ -25,6 +26,14 @@ export default (args = {}) => {
   
     formatDateWith(attribute) {
       return this.makeDateWith(attribute) ? moment(this.makeDateWith(attribute)).format() : null
+    }
+
+    convertKeys(dict, converter){
+      return _.mapKeys(dict, (v, k) => converter(k))
+    }
+
+    camelKeysOf(dict){
+      return this.convertKeys(dict, _.camelCase)
     }
   }
 }

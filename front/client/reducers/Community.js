@@ -6,11 +6,9 @@ export const communityInitialState = new Community()
 export const communityReducerMap = {
   CREATE_COMMUNITY: {
     next: (state, action) => {
-      return new Community({
-        id:           action.payload.id,
-        name:         action.payload.name,
-        description:  action.payload.description
-      })
+      return new Community(
+        (new Community).camelKeysOf(action.payload)
+      )
     },
     throw: (state, action) => {
       return new Community({

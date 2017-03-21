@@ -110,4 +110,24 @@ describe('Base', () => {
       expect(subject.formatDateWith('eventStartsAt').toString()).toBe('2017-03-02T09:00:00Z')
     })
   })
+
+  describe('camelKeysOf', () => {
+
+    const camelKeysParams = {
+      name: 'name',
+      eventStartsAt: '2017-03-04 13:00',
+      eventEndsAt: '2017-03-04 17:00'
+    }
+
+    const snakeKeysParams = {
+      name: 'name',
+      event_starts_at: '2017-03-04 13:00',
+      event_ends_at: '2017-03-04 17:00'
+    }
+
+    it('converts snake case to camel case', () => {
+      const subject = subjectClass({})
+      expect(subject.camelKeysOf(snakeKeysParams)).toEqual(camelKeysParams)
+    })
+  })
 })
