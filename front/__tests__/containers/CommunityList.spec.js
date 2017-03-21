@@ -4,8 +4,9 @@ import ToJson             from 'enzyme-to-json'
 import { CommunityList }  from '../../client/containers/CommunityList'
 import CommunityModel     from '../../client/models/Community'
 import CommunityListModel from '../../client/models/CommunityList'
+import Params             from '../factories/Community'
 
-const communities = [new CommunityModel({id: 1, name: "name1"}), new CommunityModel({id: 2, name: "name2"})]
+const communities = [new CommunityModel(Params.community1), new CommunityModel(Params.community2)]
 const communityList = new CommunityListModel({communities: communities})
 
 const props = {

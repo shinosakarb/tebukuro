@@ -4,23 +4,23 @@ exports[`Event render event component 1`] = `
 <div>
   <p>
     name: 
-    rubykansai#77
+    event1
   </p>
   <p>
     eventStartsAt: 
-    2017-03-04 13:00
+    2017-03-04T13:00:00.000Z
   </p>
   <p>
     eventEndsAt: 
-    2017-03-04 17:00
+    2017-03-04T17:00:00.000Z
   </p>
   <p>
     description: 
-    This event is active in Umeda.
+    This is the first event.
   </p>
   <p>
     address: 
-    Hilton Plaza West 12F
+    address1
   </p>
 </div>
 `;
