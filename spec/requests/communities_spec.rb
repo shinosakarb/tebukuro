@@ -39,6 +39,7 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
 
       let(:community_params) { {community: FactoryGirl.attributes_for(:community)} }
       before do
+        mock_current_user_with(build(:user))
         post communities_path, params: community_params
       end
 
@@ -48,6 +49,7 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
 
       example 'コミュニティーが作成されること' do
         expect do
+          mock_current_user_with(build(:user))
           post communities_path, params: community_params
         end.to change(Community, :count).by(1)
       end
@@ -69,11 +71,19 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
 
 
     context '異常系' do
+      context 'auth_headers is nothing' do
+        before {post communities_path}
+
+        example 'http status is 401' do
+          expect(response).to have_http_status(:unauthorized)
+        end
+      end
 
       context 'nameが未記入' do
 
         let(:community_name_blank_params) { {community: FactoryGirl.attributes_for(:community, name: nil)} }
         before do
+          mock_current_user_with(build(:user))
           post communities_path, params: community_name_blank_params
         end
 
@@ -88,6 +98,7 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
 
         let(:community_description_blank_params) { {community: FactoryGirl.attributes_for(:community, description: nil)} }
         before do
+          mock_current_user_with(build(:user))
           post communities_path, params: community_description_blank_params
         end
 
@@ -102,6 +113,7 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
 
         let(:community_blank_params) { {community: FactoryGirl.attributes_for(:community, name: nil, description: nil)} }
         before do
+          mock_current_user_with(build(:user))
           post communities_path, params: community_blank_params
         end
 
