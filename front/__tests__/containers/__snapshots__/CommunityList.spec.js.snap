@@ -7,16 +7,16 @@ exports[`CommunityList container should render self and a subcomponent 1`] = `
       Object {
         "communities": Array [
           Object {
-            "description": "",
+            "description": "This is the first community.",
             "errors": Array [],
             "id": 1,
-            "name": "name1",
+            "name": "community1",
           },
           Object {
-            "description": "",
+            "description": "This is the second community.",
             "errors": Array [],
             "id": 2,
-            "name": "name2",
+            "name": "community2",
           },
         ],
       }

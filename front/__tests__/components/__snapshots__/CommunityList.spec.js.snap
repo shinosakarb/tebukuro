@@ -12,12 +12,12 @@ exports[`CommunityList render list 1`] = `
   <tbody>
     <tr>
       <td>
-        name1
+        community1
       </td>
     </tr>
     <tr>
       <td>
-        name2
+        community2
       </td>
     </tr>
   </tbody>

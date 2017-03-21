@@ -9,11 +9,11 @@ exports[`TicketList render list of tickets 1`] = `
     </p>
     <p>
       cost: 
-      4
+      500
     </p>
     <p>
       quantity: 
-      5
+      50
     </p>
     // TODO: These Date object strings should be formatted.
     <p>
@@ -32,11 +32,11 @@ exports[`TicketList render list of tickets 1`] = `
     </p>
     <p>
       cost: 
-      8
+      4000
     </p>
     <p>
       quantity: 
-      9
+      20
     </p>
     // TODO: These Date object strings should be formatted.
     <p>
