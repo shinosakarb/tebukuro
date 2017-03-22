@@ -48,9 +48,8 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
       end
 
       example 'コミュニティーが作成されること' do
-        expect do
-          post communities_path, params: community_params, headers: auth_headers
-        end.to change(Community, :count).by(1)
+        expect(Community.count).to eq 1
+        expect(Owner.count).to eq 1
       end
 
       example 'JSONに含まれるキーが適切であること' do
