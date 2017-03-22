@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
+  let(:auth_headers) {create(:user).create_new_auth_token}
 
   describe 'GET communities_path (communities#index)' do
 
@@ -39,8 +40,7 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
 
       let(:community_params) { {community: FactoryGirl.attributes_for(:community)} }
       before do
-        mock_current_user_with(build(:user))
-        post communities_path, params: community_params
+        post communities_path, params: community_params, headers: auth_headers
       end
 
       example 'ステータス201を返されること' do
@@ -49,8 +49,7 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
 
       example 'コミュニティーが作成されること' do
         expect do
-          mock_current_user_with(build(:user))
-          post communities_path, params: community_params
+          post communities_path, params: community_params, headers: auth_headers
         end.to change(Community, :count).by(1)
       end
 
@@ -76,8 +75,7 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
 
         let(:community_name_blank_params) { {community: FactoryGirl.attributes_for(:community, name: nil)} }
         before do
-          mock_current_user_with(build(:user))
-          post communities_path, params: community_name_blank_params
+          post communities_path, params: community_name_blank_params, headers: auth_headers
         end
 
         example 'エラーが返ってくること' do
@@ -91,8 +89,7 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
 
         let(:community_description_blank_params) { {community: FactoryGirl.attributes_for(:community, description: nil)} }
         before do
-          mock_current_user_with(build(:user))
-          post communities_path, params: community_description_blank_params
+          post communities_path, params: community_description_blank_params, headers: auth_headers
         end
 
         example 'エラーが返ってくること' do
@@ -106,8 +103,7 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
 
         let(:community_blank_params) { {community: FactoryGirl.attributes_for(:community, name: nil, description: nil)} }
         before do
-          mock_current_user_with(build(:user))
-          post communities_path, params: community_blank_params
+          post communities_path, params: community_blank_params, headers: auth_headers
         end
 
         example 'エラーが返ってくること' do
