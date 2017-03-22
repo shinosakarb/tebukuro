@@ -28,8 +28,8 @@ export default (args = {}) => {
       return this.makeDateWith(attribute) ? moment(this.makeDateWith(attribute)).format() : null
     }
 
-    convertKeysToSnake(){
-      return ConvertCase.snakeKeysOf(this)
+    toSnakeKeys(){
+      return ConvertCase.snakeKeysOf(this.toJSON())
     }
   }
 }
