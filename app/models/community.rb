@@ -5,5 +5,10 @@ class Community < ApplicationRecord
 
   validates :name, presence: true
   validates :description, presence: true
-  
+
+  def self.new_with_owners(attributes = nil)
+    self.new(attributes&.except(:owners)) do |c|
+      c.owners.build(attributes.try!(:[], :owners))
+    end
+  end
 end
