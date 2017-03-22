@@ -1,6 +1,7 @@
-import Base from '../../client/models/Base'
-import MockDate from 'mockdate'
-import moment from 'moment-timezone'
+import Base        from '../../client/models/Base'
+import ConvertCase from '../../client/utils/ConvertCase'
+import MockDate    from 'mockdate'
+import moment      from 'moment-timezone'
 
 const subjectClass = (params) => {
   const klass = Base(params)
@@ -108,6 +109,27 @@ describe('Base', () => {
     test('presence eventStartsAt in UTC', () => {
       const subject = subjectClass({eventStartsAt: '2017-03-02T09:00:00.000Z'})
       expect(subject.formatDateWith('eventStartsAt').toString()).toBe('2017-03-02T09:00:00Z')
+    })
+  })
+
+  describe('toSnakeKeys', () => {
+    const camelKeysParams = {
+      errors: [],
+      name: 'name',
+      eventStartsAt: '2017-03-04 13:00',
+      eventEndsAt: '2017-03-04 17:00'
+    }
+
+    const snakeKeysParams = {
+      errors: [],
+      name: 'name',
+      event_starts_at: '2017-03-04 13:00',
+      event_ends_at: '2017-03-04 17:00'
+    }
+
+    it('returns params with snake case keys', () => {
+      const subject = subjectClass(camelKeysParams)
+      expect(subject.toSnakeKeys()).toEqual(snakeKeysParams)
     })
   })
 })

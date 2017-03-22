@@ -11,7 +11,7 @@ export const communityListReducerMap = {
       action.payload.map((item) => {
         return communityReducerMap.CREATE_COMMUNITY.next(
           null,
-          {payload: {id: item.id, name: item.name, description: item.description}}
+          {payload: item}
         )
       })
     )

@@ -1,5 +1,6 @@
 import { Record as originRecord } from 'immutable'
 import moment from 'moment'
+import ConvertCase from '../utils/ConvertCase'
 
 export default (args = {}) => {
   const base = originRecord({errors: [], ...args})
@@ -25,6 +26,10 @@ export default (args = {}) => {
   
     formatDateWith(attribute) {
       return this.makeDateWith(attribute) ? moment(this.makeDateWith(attribute)).format() : null
+    }
+
+    toSnakeKeys(){
+      return ConvertCase.snakeKeysOf(this.toJSON())
     }
   }
 }
