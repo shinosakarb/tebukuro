@@ -1,5 +1,6 @@
 class CommunitiesController < ApplicationController
 
+  before_action :authenticate_user!, only: [:create]
   before_action :set_community, only: [:show, :update, :destroy]
 
   def index
