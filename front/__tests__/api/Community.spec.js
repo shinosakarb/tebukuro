@@ -1,58 +1,48 @@
-import nock from 'nock'
+import nock              from 'nock'
+import Community         from '../../client/models/Community'
 import * as CommunityAPI from '../../client/api/Community'
-import RequestUrls from '../../client/constants/RequestUrls'
+import RequestUrls       from '../../client/constants/RequestUrls'
+import Params            from '../factories/Community'
+import TestUtils         from '../factories/TestUtils'
 
 describe('Community', () => {
+
+  const params = new Community(Params.community1).toSnakeKeys()
+  const emptyParams = TestUtils.makeEmptyParams(params)
+
+  const attrNames = [ 'name', 'description' ]
+  const errorMessage = ['を入力してください']
+  const errorResponse = TestUtils.makeErrorResponse(attrNames, errorMessage)
+
+  const id = params.id
+
   describe('createCommunity', () => {
     describe('when valid param', () => {
-      const name = 'communityName'
-      const description = 'communityDescription'
-
       it('should return action', () => {
-        const id = 1
-        const name = 'communityName'
-        const description = 'communityDescription'
-
-        const response = {
-          id: id,
-          name: name,
-          description: description
-        }
 
         nock(Config.ApiEndPoint)
           .post(RequestUrls.communities)
-          .reply(201, response)
+          .reply(201, params)
 
-        return CommunityAPI.createCommunity(name, description)
+        return CommunityAPI.createCommunity(params.name, params.description)
           .then((payload) => {
-            expect(payload.id).toBe(response.id)
-            expect(payload.name).toBe(response.name)
-            expect(payload.description).toBe(response.description)
+            expect(payload).toEqual(params)
           })
       })
     })
 
     describe('when invalid param', () => {
       it('should return action with error', () => {
-        const nameError = ['を入力してください']
-        const descriptionError = ['を入力してください']
-
-        const response = {
-          name: nameError,
-          description: descriptionError
-        }
 
         nock(Config.ApiEndPoint)
           .post(RequestUrls.communities)
-          .reply(422, response)
+          .reply(422, errorResponse)
 
-        const name = ''
-        const description = ''
-
-        return CommunityAPI.createCommunity(name, description)
+        return CommunityAPI.createCommunity(emptyParams.name, emptyParams.description)
           .catch((payload) => {
-            expect(payload.messages[0]).toContain('name')
-            expect(payload.messages[1]).toContain('description')
+            payload.messages.map((message, index) => {
+              expect(message).toContain(attrNames[index])
+            })
           })
       })
     })
@@ -60,7 +50,7 @@ describe('Community', () => {
 
   describe('getCommunities', () => {
     test('get JSON of communities', () =>{
-      const response = [{id: 1, name: "name1", description: "description1"}, {id: 2, name: "name2", description: "description2"}]
+      const response = [ Params.community1, Params.community2 ]
 
       nock(Config.ApiEndPoint)
         .get(RequestUrls.communities)

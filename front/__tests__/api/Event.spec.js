@@ -1,45 +1,21 @@
-import nock from 'nock'
-import Event from '../../client/models/Event'
+import nock          from 'nock'
+import Event         from '../../client/models/Event'
 import * as EventAPI from '../../client/api/Event'
-import RequestUrls from '../../client/constants/RequestUrls'
+import RequestUrls   from '../../client/constants/RequestUrls'
+import Params        from '../factories/Event'
+import TestUtils     from '../factories/TestUtils'
 
 describe('Event', () => {
-  const id = 1
-  const communityId = 1
 
-  const params = {
-    id: id,
-    community_id: communityId,
-    name: 'eventName',
-    event_starts_at: '2017/03/04 13:00:00',
-    event_ends_at: '2017/03/04 13:00:00',
-    description: 'eventDescription',
-    address: 'eventAddress'
-  }
+  const params = new Event(Params.event1).toSnakeKeys()
+  const emptyParams = TestUtils.makeEmptyParams(params)
 
-  const invalidParams = {
-    id: id,
-    community_id: communityId,
-    name: '',
-    event_starts_at: '',
-    event_ends_at: '',
-    description: '',
-    address: ''
-  }
+  const attrNames = [ 'name', 'eventStartsAt', 'eventEndsAt', 'description', 'address']
+  const errorMessage = ['を入力してください']
+  const errorResponse = TestUtils.makeErrorResponse(attrNames, errorMessage)
 
-  const nameError = ['を入力してください']
-  const eventStartsAtError = ['を入力してください']
-  const eventEndsAtError = ['を入力してください']
-  const descriptionError = ['を入力してください']
-  const addressError = ['を入力してください']
-
-  const responseError = {
-    nameError: nameError,
-    eventStartsAtError: eventStartsAtError,
-    eventEndsAtError: eventEndsAtError,
-    description: descriptionError,
-    address: addressError
-  }
+  const id = params.id
+  const communityId = params.community_id
 
   describe('createEvent', () => {
     describe('when valid param', () => {
@@ -61,15 +37,13 @@ describe('Event', () => {
 
         nock(Config.ApiEndPoint)
           .post(`${RequestUrls.communityEvents(communityId)}`)
-          .reply(422, responseError)
+          .reply(422, errorResponse)
 
-        return EventAPI.createEvent(invalidParams)
+        return EventAPI.createEvent(emptyParams)
           .catch((payload) => {
-            expect(payload.messages[0]).toContain('name')
-            expect(payload.messages[1]).toContain('eventStartsAt')
-            expect(payload.messages[2]).toContain('eventEndsAt')
-            expect(payload.messages[3]).toContain('description')
-            expect(payload.messages[4]).toContain('address')
+            payload.messages.map((message, index) => {
+              expect(message).toContain(attrNames[index])
+            })
           })
       })
     })
@@ -77,26 +51,7 @@ describe('Event', () => {
 
   describe('getEvents', () => {
     test('get JSON of events', () =>{
-      const response = [
-        {
-          id: id,
-          community_id: communityId,
-          name: 'eventName1',
-          event_starts_at: '2017/03/04 13:00:00',
-          event_ends_at: '2017/03/04 17:00:00',
-          description: 'eventDescription',
-          address: 'eventAddress'
-        },
-        {
-          id: 2,
-          community_id: 2,
-          name: 'eventName2',
-          event_starts_at: '2017/05/27 10:00:00',
-          event_ends_at: '2017/05/27 18:00:00',
-          description: "eventDescription2",
-          address: "eventAddress2"
-        }
-      ]
+      const response = [ Params.event1, Params.event2 ]
 
       nock(Config.ApiEndPoint)
         .get(`${RequestUrls.communityEvents(communityId)}`)
@@ -113,7 +68,7 @@ describe('Event', () => {
     test('get JSON of a event', () =>{
 
       nock(Config.ApiEndPoint)
-        .get(`${RequestUrls.events}/${params.id}`)
+        .get(`${RequestUrls.events}/${id}`)
         .reply(200, params)
 
       return EventAPI.showEvent(id)
@@ -128,7 +83,7 @@ describe('Event', () => {
       it('should return action', () => {
   
         nock(Config.ApiEndPoint)
-          .intercept(`${RequestUrls.events}/${params.id}`, 'PATCH')
+          .intercept(`${RequestUrls.events}/${id}`, 'PATCH')
           .reply(200, params)
   
         return EventAPI.editEvent(params)
@@ -142,16 +97,14 @@ describe('Event', () => {
       it('should return action with error', () => {
 
         nock(Config.ApiEndPoint)
-          .intercept(`${RequestUrls.events}/${params.id}`, 'PATCH')
-          .reply(422, responseError)
+          .intercept(`${RequestUrls.events}/${id}`, 'PATCH')
+          .reply(422, errorResponse)
 
-        return EventAPI.editEvent(invalidParams)
+        return EventAPI.editEvent(emptyParams)
           .catch((payload) => {
-            expect(payload.messages[0]).toContain('name')
-            expect(payload.messages[1]).toContain('eventStartsAt')
-            expect(payload.messages[2]).toContain('eventEndsAt')
-            expect(payload.messages[3]).toContain('description')
-            expect(payload.messages[4]).toContain('address')
+            payload.messages.map((message, index) => {
+              expect(message).toContain(attrNames[index])
+            })
           })
       })
     })
@@ -161,7 +114,7 @@ describe('Event', () => {
     test('delete a event', () =>{
   
       nock(Config.ApiEndPoint)
-        .intercept(`${RequestUrls.events}/${params.id}`, 'DELETE')
+        .intercept(`${RequestUrls.events}/${id}`, 'DELETE')
         .reply(200)
 
       return EventAPI.deleteEvent(id)
