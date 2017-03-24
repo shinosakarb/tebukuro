@@ -10,7 +10,7 @@ class CommunitiesController < ApplicationController
 
   # paramsハッシュデータをPOSTする場合
   def create
-    @community = Community.new(community_params)
+    @community = Community.new_with_owners(community_params.to_h.merge(owners: {user: current_user}))
     if @community.save
       # resource毎に使うシリアライザーを変えたいときはeach_serializerで指定する
       render json: @community, status: :created, location: @community
