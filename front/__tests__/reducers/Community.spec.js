@@ -3,31 +3,20 @@ import CommunityReducer     from '../../client/reducers/Community'
 import ApiResponseError     from '../../client/utils/ApiResponseError'
 import Actions              from '../../client/constants/Actions'
 import CommunityModel       from '../../client/models/Community'
+import CommunityParams      from '../factories/Community'
 
-const model = (params) => {
-  return new CommunityModel(params)
-}
+const model = (params) => new CommunityModel(params)
 
 describe('Community', () => {
   describe('CREATE_COMMUNITY', () => {
     const createCommunity = createAction(Actions.Community.createCommunity)
 
     it("should handle CREATE_COMMUNITY", () => {
-      const id = 1
-      const name = 'communityName'
-      const description = 'communityDescription'
-
-      const response = {
-        id: id,
-        name: name,
-        description: description
-      }
-
+      const community = model(CommunityParams.community1)
+      const response = community.toSnakeKeys()
       const subject = CommunityReducer(model(), createCommunity(response))
 
-      expect(subject.id).toBe(response.id)
-      expect(subject.name).toBe(response.name)
-      expect(subject.description).toBe(response.description)
+      expect(subject.toSnakeKeys()).toEqual(response)
     })
 
     it("should handle CREATE_COMMUNITY error", () => {

@@ -20,7 +20,7 @@ describe('ConvertCase', () => {
   })
 
   describe('snakeKeysOf', () => {
-    it('converts snake case to camel case', () => {
+    it('converts camel case to snake case', () => {
       expect(ConvertCase.snakeKeysOf(camelKeysParams)).toEqual(snakeKeysParams)
     })
   })
