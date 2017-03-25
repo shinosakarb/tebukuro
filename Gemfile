@@ -2,9 +2,9 @@ source 'https://rubygems.org'
 
 
 # Define Ruby version
-ruby "2.4.0"
+ruby "2.4.1"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.0.beta1'
+gem 'rails', '~> 5.1.0.rc1'
 # Use PostgreSQL as the database for Active Record
 gem 'pg'
 # Use Puma as the app server
@@ -77,7 +77,7 @@ group :test do
   gem 'factory_girl_rails'
 
   # database cleaner
-  gem 'database_rewinder'
+  gem 'database_rewinder', github: 'shinosakarb/database_rewinder'
 
   # for request spec
   gem 'rspec-request_describer'
