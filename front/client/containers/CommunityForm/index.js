@@ -11,8 +11,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSubmit: (name, description) => {
-      dispatch(createCommunity(name, description))
+    onSubmit: (params) => {
+      dispatch(createCommunity(params))
     }
   }
 }
