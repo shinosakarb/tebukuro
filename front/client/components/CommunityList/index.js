@@ -1,5 +1,6 @@
 import React from 'react'
 import CommunityListModel from '../../models/CommunityList'
+import { Link } from 'react-router'
 
 const CommunityList = ({CommunityList}) => {
   return (
@@ -14,7 +15,7 @@ const CommunityList = ({CommunityList}) => {
           CommunityList.communities.map((community) => {
             return (
               <tr key={community.id}>
-                <td>{community.name}</td>
+                <td><Link to={`/communities/${community.id}`}>{community.name}</Link></td>
               </tr>
             )
           })
