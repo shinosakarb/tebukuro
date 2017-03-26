@@ -78,6 +78,9 @@ group :test do
 
   # database cleaner
   gem 'database_rewinder'
+
+  # for request spec
+  gem 'rspec-request_describer'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
