@@ -15,9 +15,11 @@ const onErrorComponent = (community) => {
 export default class CommunityForm extends Component {
   onSubmitHandler(e) {
     e.preventDefault()
-    const name = this.refs.inputName.value
-    const description = this.refs.inputDescription.value
-    this.props.onSubmit(name, description)
+    const params = {
+      name: this.refs.inputName.value,
+      description: this.refs.inputDescription.value
+    }
+    this.props.onSubmit(params)
   }
 
   render() {
