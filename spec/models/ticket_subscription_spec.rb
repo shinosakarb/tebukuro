@@ -20,4 +20,16 @@ RSpec.describe TicketSubscription, type: :model do
       it { is_expected.to validate_uniqueness_of(:user_id).scoped_to(:ticket_id) }
     end
   end
+
+  describe 'destroy' do
+    let(:user) { create(:user) }
+    let(:ticket) { create(:ticket, event: create(:event, community: create(:community))) }
+    let!(:ticket_subscription) { user.ticket_subscriptions.create(ticket: ticket, quantity: 1) }
+
+    subject { ticket_subscription.destroy }
+
+    example do
+      expect{ subject }.to change{TicketSubscription.count}.from(1).to(0)
+    end
+  end
 end
