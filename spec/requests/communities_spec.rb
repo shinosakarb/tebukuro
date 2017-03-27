@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
-  let(:auth_headers) {create(:user).create_new_auth_token}
-
   describe 'GET communities_path (communities#index)' do
 
     let!(:communities) { FactoryGirl.create_list(:community, 2) }
@@ -35,12 +33,17 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
 
 
   describe 'POST communities_path (communities#create)' do
+    let(:user) { create(:user) }
+
+    before do
+      sign_in_with(user)
+    end
 
     context '正常系' do
 
       let(:community_params) { {community: FactoryGirl.attributes_for(:community)} }
       before do
-        post communities_path, params: community_params, headers: auth_headers
+        post communities_path, params: community_params
       end
 
       example 'ステータス201を返されること' do
@@ -74,7 +77,7 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
 
         let(:community_name_blank_params) { {community: FactoryGirl.attributes_for(:community, name: nil)} }
         before do
-          post communities_path, params: community_name_blank_params, headers: auth_headers
+          post communities_path, params: community_name_blank_params
         end
 
         example 'エラーが返ってくること' do
@@ -88,7 +91,7 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
 
         let(:community_description_blank_params) { {community: FactoryGirl.attributes_for(:community, description: nil)} }
         before do
-          post communities_path, params: community_description_blank_params, headers: auth_headers
+          post communities_path, params: community_description_blank_params
         end
 
         example 'エラーが返ってくること' do
@@ -102,7 +105,7 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
 
         let(:community_blank_params) { {community: FactoryGirl.attributes_for(:community, name: nil, description: nil)} }
         before do
-          post communities_path, params: community_blank_params, headers: auth_headers
+          post communities_path, params: community_blank_params
         end
 
         example 'エラーが返ってくること' do
