@@ -7,4 +7,8 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  namespace :subscription do
+    resources :tickets, only: :destroy
+  end
 end
