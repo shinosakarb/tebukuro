@@ -72,52 +72,17 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
 
 
     context '異常系' do
-
       context 'nameが未記入' do
-
         let(:community_name_blank_params) { {community: FactoryGirl.attributes_for(:community, name: nil)} }
         before do
           post communities_path, params: community_name_blank_params
         end
 
         example 'エラーが返ってくること' do
-          result = JSON.parse(response.body)
-          expect(result).to be_has_key 'name'
+          expect(response).to have_http_status(:unprocessable_entity)
         end
-
       end
-
-      context 'descriptionが未記入' do
-
-        let(:community_description_blank_params) { {community: FactoryGirl.attributes_for(:community, description: nil)} }
-        before do
-          post communities_path, params: community_description_blank_params
-        end
-
-        example 'エラーが返ってくること' do
-          result = JSON.parse(response.body)
-          expect(result).to be_has_key 'description'
-        end
-
-      end
-
-      context 'name, descriptionが未記入' do
-
-        let(:community_blank_params) { {community: FactoryGirl.attributes_for(:community, name: nil, description: nil)} }
-        before do
-          post communities_path, params: community_blank_params
-        end
-
-        example 'エラーが返ってくること' do
-          result = JSON.parse(response.body)
-          expect(result).to be_has_key 'name'
-          expect(result).to be_has_key 'description'
-        end
-
-      end
-
     end
-
   end
 
 
@@ -170,149 +135,108 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
 
   end
 
-  describe 'PATCH community_path (communities#update)' do
+  describe 'PATCH /communities/:id' do
+    let(:user) { build_stubbed(:user) }
+    let(:community) { build_stubbed(:community) }
+    let(:owner) do
+      owner = build_stubbed(:owner)
+      owner.community = community
+      owner
+    end
+    let(:id) { community.id }
+    let(:params) { {community: attributes_for(:community, name: 'hogehoge')} }
 
-    let(:community) { FactoryGirl.create(:community) }
     before do
-      @name = community.name
-      @description = community.description
+      sign_in_with(user)
+      allow(Owner).to receive(:find_by!).and_return(owner)
     end
 
-    context '正常系' do
-
-      context '有効なパラメータ(name)の場合' do
-
-        before do
-          patch community_path(community), params: {community: attributes_for(:community, name: 'hogehoge')}
-        end
-
-        example 'ステータス200が返ってくること' do
-          expect(response.status).to eq 200
-        end
-
-        example 'データベースのユーザーが更新されること' do
-          community.reload
-          expect(community.name).to eq 'hogehoge'
-        end
-
+    context 'success' do
+      before do
+        allow(community).to receive(:update).and_return(true)
       end
 
-      context '有効なパラメータ(description)の場合' do
-
-        before do
-          patch community_path(community), params: {community: attributes_for(:community, description: 'hogehoge')}
-        end
-
-        example 'ステータス200が返ってくること' do
-          expect(response.status).to eq 200
-        end
-
-        example 'データベースのユーザーが更新されること' do
-          community.reload
-          expect(community.description).to eq 'hogehoge'
-        end
-
+      example do
+        subject
+        expect(response).to have_http_status(:ok)
       end
-
     end
 
-    context '異常系' do
-
-      context '無効なパラメータ(name)の場合' do
-
+    context 'failure' do
+      context 'community is not exists' do
         before do
-          patch community_path(community), params: {community: attributes_for(:community, name: nil)}
+          allow(Owner).to receive(:find_by!).and_raise(ActiveRecord::RecordNotFound.new(nil, 'owners'))
         end
 
-        example 'ステータス422が返ってくること' do
-          expect(response.status).to eq 422
+        example do
+          subject
+          expect(response).to have_http_status(:not_found)
         end
-
-        example 'DBのコミュニティーは更新されないこと' do
-          community.reload
-          expect(community.name).to eq @name
-        end
-
       end
 
-      context '無効なパラメータ(description)の場合' do
-
+      context 'update fails' do
         before do
-          patch community_path(community), params: {community: attributes_for(:community, description: nil)}
+          allow(community).to receive(:update).and_return(false)
         end
 
-        example 'ステータス422が返ってくること' do
-          expect(response.status).to eq 422
+        example do
+          subject
+          expect(response).to have_http_status(:unprocessable_entity)
         end
-
-        example 'DBのコミュニティーは更新されないこと' do
-          community.reload
-          expect(community.description).to eq @description
-        end
-
       end
-
-      context '要求されたコミュニティーが存在しない場合' do
-
-        before do
-          patch community_path(id: 0), params: {community: attributes_for(:community, description: 'hogehoge')}
-        end
-
-        example 'リクエストはRecordNotFoundとなること' do
-          expect(response.status).to eq 404
-        end
-
-      end
-
     end
 
   end
 
 
-  describe 'DELETE community_path (communities#destroy)' do
+  describe 'DELETE /communities/:id' do
+    let(:user) { build_stubbed(:user) }
+    let(:community) { build_stubbed(:community) }
+    let(:owner) do
+      owner = build_stubbed(:owner)
+      owner.community = community
+      owner
+    end
+    let(:id) { community.id }
 
-    context '正常系' do
-
-      let!(:community) { FactoryGirl.create(:community) }
-      subject do
-        delete community_path(community)
-      end
-
-      example 'ステータス200を返すこと' do
-        subject
-        expect(response.status).to eq 200
-      end
-
-      example 'DBから要求されたユーザーが削除されること' do
-        expect {subject}.to change(Community, :count).by(-1)
-      end
-
-      example 'JSONに含まれるキーが適切であること' do
-        subject
-        result = JSON.parse(response.body)
-        expect(result).to have_key('id')
-        expect(result).to have_key('name')
-        expect(result).to have_key('description')
-      end
-
+    before do
+      sign_in_with(user)
+      allow(Owner).to receive(:find_by!).and_return(owner)
     end
 
-    context '異常系' do
+    context 'success' do
+      before do
+        allow(community).to receive(:destroy).and_return(true)
+      end
 
-      context '要求されたコミュニティーが存在しない場合' do
+      example do
+        subject
+        expect(response).to have_http_status(:ok)
+      end
+    end
 
+    context 'failure' do
+      context 'community is not exists' do
         before do
-          delete community_path(id: 0)
+          allow(Owner).to receive(:find_by!).and_raise(ActiveRecord::RecordNotFound.new(nil, 'owners'))
         end
 
-        example 'ステータス404が返されること' do
-          expect(response.status).to eq 404
+        example do
+          subject
+          expect(response).to have_http_status(:not_found)
         end
-
       end
 
+      context 'destroy fails' do
+        before do
+          allow(community).to receive(:destroy).and_return(false)
+        end
+
+        example do
+          subject
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+      end
     end
-
   end
-
 end
