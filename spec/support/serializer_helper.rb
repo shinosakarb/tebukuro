@@ -9,3 +9,7 @@ module SerializerHelper
     serialize(resource, serialize_opts)
   end
 end
+
+RSpec.configure do |config|
+  config.include SerializerHelper, type: :serializer
+end
