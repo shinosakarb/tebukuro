@@ -24,7 +24,7 @@ describe('Community', () => {
           .post(RequestUrls.communities)
           .reply(201, params)
 
-        return CommunityAPI.createCommunity(params.name, params.description)
+        return CommunityAPI.createCommunity(params)
           .then((payload) => {
             expect(payload).toEqual(params)
           })
@@ -38,7 +38,7 @@ describe('Community', () => {
           .post(RequestUrls.communities)
           .reply(422, errorResponse)
 
-        return CommunityAPI.createCommunity(emptyParams.name, emptyParams.description)
+        return CommunityAPI.createCommunity(emptyParams)
           .catch((payload) => {
             payload.messages.map((message, index) => {
               expect(message).toContain(attrNames[index])
