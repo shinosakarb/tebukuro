@@ -1,8 +1,8 @@
 class CommunitiesController < ApplicationController
 
   before_action :authenticate_user!, only: [:create, :update, :destroy]
-  before_action :set_community, only: [:show]
-  before_action :set_community_by_current_user, only: [:update, :destroy]
+  before_action :set_community, only: [:show, :update, :destroy]
+  before_action :authorize_community, only: [:update, :destroy]
 
   def index
     @communities = Community.all
@@ -46,9 +46,4 @@ class CommunitiesController < ApplicationController
   def set_community
     @community = Community.find(params[:id])
   end
-
-  def set_community_by_current_user
-    @community = Owner.find_by!(user: current_user, community_id: params[:id]).community
-  end
-
 end

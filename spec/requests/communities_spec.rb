@@ -138,17 +138,13 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
   describe 'PATCH /communities/:id' do
     let(:user) { build_stubbed(:user) }
     let(:community) { build_stubbed(:community) }
-    let(:owner) do
-      owner = build_stubbed(:owner)
-      owner.community = community
-      owner
-    end
     let(:id) { community.id }
     let(:params) { {community: attributes_for(:community, name: 'hogehoge')} }
 
     before do
       sign_in_with(user)
-      allow(Owner).to receive(:find_by!).and_return(owner)
+      allow(Community).to receive(:find).and_return(community)
+      allow_any_instance_of(CommunityPolicy).to receive(:update?).and_return(true)
     end
 
     context 'success' do
@@ -163,26 +159,13 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
     end
 
     context 'failure' do
-      context 'community is not exists' do
-        before do
-          allow(Owner).to receive(:find_by!).and_raise(ActiveRecord::RecordNotFound.new(nil, 'owners'))
-        end
-
-        example do
-          subject
-          expect(response).to have_http_status(:not_found)
-        end
+      before do
+        allow(community).to receive(:update).and_return(false)
       end
 
-      context 'update fails' do
-        before do
-          allow(community).to receive(:update).and_return(false)
-        end
-
-        example do
-          subject
-          expect(response).to have_http_status(:unprocessable_entity)
-        end
+      example do
+        subject
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
 
@@ -192,16 +175,12 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
   describe 'DELETE /communities/:id' do
     let(:user) { build_stubbed(:user) }
     let(:community) { build_stubbed(:community) }
-    let(:owner) do
-      owner = build_stubbed(:owner)
-      owner.community = community
-      owner
-    end
     let(:id) { community.id }
 
     before do
       sign_in_with(user)
-      allow(Owner).to receive(:find_by!).and_return(owner)
+      allow(Community).to receive(:find).and_return(community)
+      allow_any_instance_of(CommunityPolicy).to receive(:destroy?).and_return(true)
     end
 
     context 'success' do
@@ -216,26 +195,13 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
     end
 
     context 'failure' do
-      context 'community is not exists' do
-        before do
-          allow(Owner).to receive(:find_by!).and_raise(ActiveRecord::RecordNotFound.new(nil, 'owners'))
-        end
-
-        example do
-          subject
-          expect(response).to have_http_status(:not_found)
-        end
+      before do
+        allow(community).to receive(:destroy).and_return(false)
       end
 
-      context 'destroy fails' do
-        before do
-          allow(community).to receive(:destroy).and_return(false)
-        end
-
-        example do
-          subject
-          expect(response).to have_http_status(:unprocessable_entity)
-        end
+      example do
+        subject
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end

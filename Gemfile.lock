@@ -187,6 +187,8 @@ GEM
       binding_of_caller (>= 0.7)
       pry (>= 0.9.11)
     puma (3.8.2)
+    pundit (1.1.0)
+      activesupport (>= 3.0.0)
     rack (2.0.1)
     rack-cors (0.4.1)
     rack-protection (1.5.3)
@@ -323,6 +325,7 @@ DEPENDENCIES
   pry-rescue
   pry-stack_explorer
   puma (~> 3.7)
+  pundit
   rack-cors
   rails (~> 5.1.0.rc1)
   rails-controller-testing
