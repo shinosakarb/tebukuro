@@ -11,4 +11,8 @@ class User < ActiveRecord::Base
   def purchases(ticket)
     ticket_subscriptions.build(ticket: ticket, quantity: 1)
   end
+
+  def owner?(community)
+    community.owners.exists?(user: self)
+  end
 end
