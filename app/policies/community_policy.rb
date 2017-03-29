@@ -1,14 +1,9 @@
 class CommunityPolicy < ApplicationPolicy
   def update?
-    owner?
+    user.owner?(record)
   end
 
   def destroy?
-    owner?
-  end
-
-  private
-  def owner?
-    record.owners.exists?(user: user)
+    user.owner?(record)
   end
 end

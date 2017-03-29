@@ -4,21 +4,17 @@ RSpec.describe CommunityPolicy do
   subject { described_class }
 
   permissions :update?, :destroy? do
-    let(:user) { create(:user) }
-    let(:user_community) do
-      community = build(:community)
-      community.owners.build(user: user)
-      community.save
-      community
-    end
-    let(:other_community) do
-      community = build(:community)
-      community.owners.build(user: create(:user))
-      community.save
-      community
+    let(:user) { build_stubbed(:user) }
+    let(:community) { build_stubbed(:community) }
+
+    context "user's community" do
+      before { allow(user).to receive(:owner?).and_return(true) }
+      it { expect(subject).to permit(user, community) }
     end
 
-    it { expect(subject).to permit(user, user_community) }
-    it { expect(subject).not_to permit(user, other_community) }
+    context 'other community' do
+      before { allow(user).to receive(:owner?).and_return(false) }
+      it { expect(subject).not_to permit(user, community) }
+    end
   end
 end
