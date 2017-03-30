@@ -1,25 +1,23 @@
 class EventsController < ApplicationController
 
-  before_action :set_community,  only: [:index, :create]
-  before_action :set_event,      only: [:show, :update, :destroy]
+  before_action :authenticate_user!, only: [:create, :update, :destroy]
+  before_action :set_community, only: [:index, :create]
+  before_action :set_event, only: [:show, :update, :destroy]
+  before_action :build_event, only: [:create]
+  before_action :authorize_event, only: [:create, :update, :destroy]
 
   def index
     @events = @community.events
     render json: @events
   end
 
-
-  # paramsハッシュデータをPOSTする場合
   def create
-    @event = @community.events.build(event_params)
     if @event.save
-      # resource毎に使うシリアライザーを変えたいときはeach_serializerで指定する
       render json: @event, status: :created, location: @event
     else
-      render json: @event.errors, status: :unprocessable_entity
+      render_error @event, :unprocessable_entity
     end
   end
-
 
   def show
     render json: @event, adapter: :json_api, include: 'tickets'
@@ -29,7 +27,7 @@ class EventsController < ApplicationController
     if @event.update(event_params)
       render json: @event, adapter: :json_api, include: 'tickets'
     else
-      render json: @event.errors, status: :unprocessable_entity
+      render_error @event, :unprocessable_entity
     end
   end
 
@@ -37,7 +35,7 @@ class EventsController < ApplicationController
     if @event.destroy
       render json: @event
     else
-      render json: @event.errors, status: :unprocessable_entity
+      render_error @event, :unprocessable_entity
     end
   end
 
@@ -49,6 +47,10 @@ class EventsController < ApplicationController
 
   def set_event
     @event = Event.find(params[:id])
+  end
+
+  def build_event
+    @event = @community.events.build(event_params)
   end
 
   def set_community
