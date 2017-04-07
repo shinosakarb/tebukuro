@@ -6,6 +6,7 @@ class ApplicationController < ActionController::API
   rescue_from Pundit::NotAuthorizedError,   with: :not_allowed
 
   def self.inherited(subclass)
+    super
     authorize_name = subclass.controller_name.singularize
     define_method("authorize_#{authorize_name}") { authorize instance_variable_get("@#{authorize_name}") }
   end
