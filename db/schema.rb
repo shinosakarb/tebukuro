@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170321233415) do
+ActiveRecord::Schema.define(version: 20170322102812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 20170321233415) do
     t.datetime "updated_at", null: false
     t.datetime "sale_starts_at", null: false
     t.datetime "sale_ends_at", null: false
+    t.boolean "purchased"
     t.index ["event_id"], name: "index_tickets_on_event_id"
   end
 

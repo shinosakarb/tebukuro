@@ -17,6 +17,7 @@ FactoryGirl.define do
     cost {generate :cost}
     quantity {generate :quantity}
     partial_ticket_detail_information
+    purchased true
   end
 
 end

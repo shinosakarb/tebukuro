@@ -42,7 +42,7 @@ class TicketsController < ApplicationController
   private
   def ticket_params
     params.require(:ticket).permit(:name, :cost, :quantity,
-                                  :sale_starts_at, :sale_ends_at)
+                                  :sale_starts_at, :sale_ends_at, :purchased)
   end
 
   def set_ticket
