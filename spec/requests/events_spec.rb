@@ -88,7 +88,6 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
       let(:event_json_parse){JSON.parse(event.to_json).except('id', 'created_at', 'updated_at')}
 
       before do
-        post event_tickets_path(tickets, event)
         get event_path(event)
       end
 
@@ -102,12 +101,17 @@ RSpec.describe 'Events(イベントAPI)', type: :request do
       end
 
       example 'JSONから適切なkeyを取得できること' do
-        json_data = change_jsonapi_format_of(subject)
-        expect(json_data.keys.sort).to include_json(event_json_parse.keys.sort)
+        is_expected.to include_json(
+          {
+            id: event.id,
+            name: event.name,
+            description: event.description
+          }
+        )
       end
 
       example 'responseのidがイベントのidと一致していること' do
-        expect(subject["data"]["id"]).to eq event.id.to_json
+        expect(subject["id"]).to eq event.id
       end
 
     end
