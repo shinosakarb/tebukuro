@@ -20,12 +20,12 @@ class EventsController < ApplicationController
   end
 
   def show
-    render json: @event, adapter: :json_api, include: 'tickets'
+    render json: @event, include: 'tickets'
   end
 
   def update
     if @event.update(event_params)
-      render json: @event, adapter: :json_api, include: 'tickets'
+      render json: @event, include: 'tickets'
     else
       render_error @event, :unprocessable_entity
     end

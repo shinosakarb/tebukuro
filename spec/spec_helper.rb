@@ -99,10 +99,3 @@ RSpec.configure do |config|
 end
 
 require 'rspec/json_expectations'
-
-def change_jsonapi_format_of(response)
-  response = response["data"]["attributes"].map do |key, value|
-    [key.gsub(/-/, "_"), value]
-  end
-  response.to_h
-end

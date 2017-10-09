@@ -30,6 +30,6 @@ class ApplicationController < ActionController::API
   end
 
   def render_error(model, status)
-    render json: model, status: status, adapter: :json_api, serializer: ActiveModel::Serializer::ErrorSerializer
+    render json: model, status: status, serializer: ActiveModel::Serializer::ErrorSerializer
   end
 end
