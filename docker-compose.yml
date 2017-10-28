@@ -26,17 +26,5 @@ services:
     image: postgres:9.6-alpine
     volumes:
       - postgresql-webapp-data:/var/lib/postgresql
-  frontend:
-    build:
-      context: ./front
-      dockerfile: Dockerfile
-    command: "yarn start"
-    volumes:
-      - ./front:/front_app
-      - /front_app/node_modules
-    ports:
-      - "4000:4000"
-    tty: true
-    stdin_open: true
 volumes:
   postgresql-webapp-data:
