@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :events
+
   namespace :subscription do
     resources :tickets, only: :destroy
   end
