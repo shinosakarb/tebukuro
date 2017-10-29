@@ -1,6 +1,6 @@
 require 'faker'
 
-FactoryGirl.define do
+FactoryBot.define do
 
   sequence(:name) {Faker::Name.name}
   sequence(:description) {Faker::Lorem.paragraph}
