@@ -4,12 +4,12 @@ require 'rails_helper'
 
 RSpec.describe 'Tickets(チケットAPI)', type: :request do
 
-  let(:community) { FactoryGirl.create(:community) }
-  let(:event) { FactoryGirl.create(:event, community: community) }
+  let(:community) { create(:community) }
+  let(:event) { create(:event, community: community) }
 
   describe 'GET event_tickets_path (tickets#index)' do
 
-    let!(:tickets) { FactoryGirl.create_list(:ticket, 5, event: event) }
+    let!(:tickets) { create_list(:ticket, 5, event: event) }
     let(:tickets_json_parse){[]}
 
     before do
@@ -47,7 +47,7 @@ RSpec.describe 'Tickets(チケットAPI)', type: :request do
 
     context '正常系' do
 
-      let(:dummy_ticket) { FactoryGirl.attributes_for(:ticket) }
+      let(:dummy_ticket) { attributes_for(:ticket) }
       let(:ticket_params) { {ticket: dummy_ticket} }
       let(:ticket_json_parse){JSON.parse(dummy_ticket.to_json)}
 
@@ -84,7 +84,7 @@ RSpec.describe 'Tickets(チケットAPI)', type: :request do
     context '異常系' do
 
       context 'nameが未記入' do
-        let(:ticket_name_blank_params) { {ticket: FactoryGirl.attributes_for(:ticket, name: nil)} }
+        let(:ticket_name_blank_params) { {ticket: attributes_for(:ticket, name: nil)} }
         before do
           post event_tickets_path(event), params: ticket_name_blank_params
         end
@@ -99,7 +99,7 @@ RSpec.describe 'Tickets(チケットAPI)', type: :request do
       end
 
       context 'costが未記入' do
-        let(:ticket_cost_blank_params) { {ticket: FactoryGirl.attributes_for(:ticket, cost: nil)} }
+        let(:ticket_cost_blank_params) { {ticket: attributes_for(:ticket, cost: nil)} }
 
         before do
           post event_tickets_path(event), params: ticket_cost_blank_params
@@ -115,7 +115,7 @@ RSpec.describe 'Tickets(チケットAPI)', type: :request do
       end
 
       context 'quantityが未記入' do
-        let(:ticket_quantity_blank_params) { {ticket: FactoryGirl.attributes_for(:ticket, quantity: nil)} }
+        let(:ticket_quantity_blank_params) { {ticket: attributes_for(:ticket, quantity: nil)} }
         before do
           post event_tickets_path(event), params: ticket_quantity_blank_params
         end
@@ -133,7 +133,7 @@ RSpec.describe 'Tickets(チケットAPI)', type: :request do
     end
 
     context 'name, cost, quantityが未記入' do
-      let(:ticket_blank_params) { {ticket: FactoryGirl.attributes_for(:ticket, name: nil, cost: nil, quantity: nil)} }
+      let(:ticket_blank_params) { {ticket: attributes_for(:ticket, name: nil, cost: nil, quantity: nil)} }
       before do
         post event_tickets_path(event), params: ticket_blank_params
       end
@@ -155,7 +155,7 @@ RSpec.describe 'Tickets(チケットAPI)', type: :request do
   describe 'GET ticket_path (tickets#show)' do
 
     context '正常系' do
-      let(:ticket) { FactoryGirl.create(:ticket, event: event) }
+      let(:ticket) { create(:ticket, event: event) }
       let(:ticket_json_parse){JSON.parse(ticket.to_json).except('created_at', 'updated_at', 'community_id')}
 
       before do
@@ -200,7 +200,7 @@ RSpec.describe 'Tickets(チケットAPI)', type: :request do
 
   describe 'PATCH ticket_path (tickets#update)' do
 
-    let(:ticket) { FactoryGirl.create(:ticket, event: event) }
+    let(:ticket) { create(:ticket, event: event) }
 
     before do
       @name = ticket.name
@@ -342,7 +342,7 @@ RSpec.describe 'Tickets(チケットAPI)', type: :request do
 
     context '正常系' do
 
-      let!(:ticket) { FactoryGirl.create(:ticket, event: event) }
+      let!(:ticket) { create(:ticket, event: event) }
 
       subject do
         delete ticket_path(ticket)

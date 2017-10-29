@@ -75,7 +75,7 @@ group :test do
   gem 'forgery_ja'
 
   # for build strategies
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
 
   # database cleaner
   gem 'database_rewinder'

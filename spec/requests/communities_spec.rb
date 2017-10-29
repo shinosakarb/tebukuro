@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
   describe 'GET communities_path (communities#index)' do
 
-    let!(:communities) { FactoryGirl.create_list(:community, 2) }
+    let!(:communities) { create_list(:community, 2) }
 
     before do
       get communities_path
@@ -41,7 +41,7 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
 
     context '正常系' do
 
-      let(:community_params) { {community: FactoryGirl.attributes_for(:community)} }
+      let(:community_params) { {community: attributes_for(:community)} }
       before do
         post communities_path, params: community_params
       end
@@ -73,7 +73,7 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
 
     context '異常系' do
       context 'nameが未記入' do
-        let(:community_name_blank_params) { {community: FactoryGirl.attributes_for(:community, name: nil)} }
+        let(:community_name_blank_params) { {community: attributes_for(:community, name: nil)} }
         before do
           post communities_path, params: community_name_blank_params
         end
@@ -90,7 +90,7 @@ RSpec.describe 'Communities(コミュニティーAPI)', type: :request do
 
     context '正常系' do
 
-      let(:community) { FactoryGirl.create(:community) }
+      let(:community) { create(:community) }
       before do
         get community_path(community)
       end

@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Events API', type: :request do
-  let(:events) { FactoryGirl.build_stubbed_list(:event, 2) }
-  let(:event) { FactoryGirl.build_stubbed(:event) }
+  let(:events) { build_stubbed_list(:event, 2) }
+  let(:event) { build_stubbed(:event) }
 
   describe 'GET /events' do
     before do
