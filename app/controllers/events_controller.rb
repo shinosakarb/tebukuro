@@ -1,13 +1,10 @@
 class EventsController < ApplicationController
 
-  before_action :authenticate_user!, only: [:create, :update, :destroy]
-  before_action :set_community, only: [:index, :create]
   before_action :set_event, only: [:show, :update, :destroy]
   before_action :build_event, only: [:create]
-  before_action :authorize_event, only: [:create, :update, :destroy]
 
   def index
-    @events = @community.events
+    @events = Event.all
     render json: @events
   end
 
@@ -50,11 +47,7 @@ class EventsController < ApplicationController
   end
 
   def build_event
-    @event = @community.events.build(event_params)
-  end
-
-  def set_community
-    @community = Community.find(params[:community_id])
+    @event = Event.new(event_params)
   end
 
 end
