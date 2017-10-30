@@ -12,6 +12,7 @@ services:
       - DATABASE_HOST=db
       - DATABASE_USERNAME=postgres
       - DATABASE_PASSWORD=""
+      - DATABASE_PORT=5432
     depends_on:
       - db
     tty: true
