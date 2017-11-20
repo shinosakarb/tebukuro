@@ -1,0 +1,44 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: tebukuro
+  labels:
+    app: tebukuro
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tebukuro
+  template:
+    metadata:
+      labels:
+        app: tebukuro
+    spec:
+      containers:
+        - image: us.gcr.io/tebukuro-182304/tebukuro_backend:latest
+          name: tebukuro
+          env:
+            - name: RAILS_ENV
+              value: "production"
+            - name: DATABASE_HOST
+              value: postgresql
+            - name: DATABASE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: tebukuro
+                  key: database_user
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: tebukuro
+                  key: database_password
+            - name: SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: tebukuro
+                  key: secret_key_base
+            - name: DATABASE_PORT
+              value: "5432"
+          ports:
+            - containerPort: 3000
+              name: tebukuro
