@@ -21,7 +21,11 @@ $ kubectl create -f kubernetes/postgresql.yml
 $ kubectl create -f kubernetes/postgresql-service.yml 
 
 # create tebukuro deployment
-$ kubectl create -f kubernetes/tebukuro.yml
+$ export TEBUKURO_IMAGE=us.gcr.io/tebukuro-182304/tebukuro_backend:latest
+$ cat kubernetes/tebukuro.yml | envsubst | kubectl create -f -
+# update tebukuro deployment 
+# $ cat kubernetes/tebukuro.yml | envsubst | kubectl apply -f -
+
 # create tebukuro service
-$ kubectl create -f kubernetes/tebukuro-service.yml 
+$ kubectl create -f kubernetes/tebukuro-service.yml
 ```

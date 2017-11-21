@@ -15,7 +15,7 @@ spec:
         app: tebukuro
     spec:
       containers:
-        - image: us.gcr.io/tebukuro-182304/tebukuro_backend:latest
+        - image: $TEBUKURO_IMAGE
           name: tebukuro
           env:
             - name: RAILS_ENV
@@ -42,3 +42,4 @@ spec:
           ports:
             - containerPort: 3000
               name: tebukuro
+          command: ["/app/script/wait.sh", "bundle", "exec", "rails", "s", "-p", "3000", "-b", "0.0.0.0"]

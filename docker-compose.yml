@@ -19,7 +19,7 @@ services:
     stdin_open: true
   spring:
     <<: *app_base
-    command: "sh /app/wait.sh bundle exec spring server"
+    command: "sh /app/script/wait.sh bundle exec spring server"
     ports: []
     tty: false
     stdin_open: false

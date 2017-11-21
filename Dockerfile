@@ -12,4 +12,3 @@ RUN bundle install --path vendor/bundle -j4 ${BUNDLE_OPTIONS}
 ADD . /app
 
 EXPOSE  3000
-CMD ["sh", "/app/wait.sh", "bundle", "exec", "rails", "s", "-p", "3000", "-b", "0.0.0.0"]
