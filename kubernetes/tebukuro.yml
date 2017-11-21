@@ -1,0 +1,45 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: tebukuro
+  labels:
+    app: tebukuro
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tebukuro
+  template:
+    metadata:
+      labels:
+        app: tebukuro
+    spec:
+      containers:
+        - image: $TEBUKURO_IMAGE
+          name: tebukuro
+          env:
+            - name: RAILS_ENV
+              value: "production"
+            - name: DATABASE_HOST
+              value: postgresql
+            - name: DATABASE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: tebukuro
+                  key: database_user
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: tebukuro
+                  key: database_password
+            - name: SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: tebukuro
+                  key: secret_key_base
+            - name: DATABASE_PORT
+              value: "5432"
+          ports:
+            - containerPort: 3000
+              name: tebukuro
+          command: ["/app/script/wait.sh", "bundle", "exec", "rails", "s", "-p", "3000", "-b", "0.0.0.0"]

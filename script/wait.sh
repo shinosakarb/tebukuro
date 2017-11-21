@@ -4,7 +4,7 @@ set -e
 
 host="$DATABASE_HOST"
 user="$DATABASE_USERNAME"
-export PGPASSWD="$DATABASE_PASSWORD"
+export PGPASSWORD="$DATABASE_PASSWORD"
 cmd="$@"
 
 echo "Waiting for psql"
