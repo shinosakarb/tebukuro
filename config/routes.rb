@@ -8,7 +8,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :events
+  resources :events do
+    resources :participants, only: :create
+  end
 
   namespace :subscription do
     resources :tickets, only: :destroy

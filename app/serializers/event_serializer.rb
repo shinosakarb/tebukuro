@@ -1,8 +1,7 @@
 class EventSerializer < ActiveModel::Serializer
-  attributes :id, :name, :description, :community_id,
-             :event_starts_at, :event_ends_at, :address
+  attributes :id, :name, :description
 
-  has_many :tickets
+  has_many :participants
 
   # TODO: communitiesモデルが作成されたら、GETのURLをattributesに加えます。
 end
