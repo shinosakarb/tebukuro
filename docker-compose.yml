@@ -2,7 +2,7 @@ version: '3'
 services:
   backend: &app_base
     build: .
-    command: "sh /app/wait.sh bundle exec rails s -p 3000 -b '0.0.0.0'"
+    command: "sh /app/script/wait.sh bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - .:/app
       - /app/vendor
