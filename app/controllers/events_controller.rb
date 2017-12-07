@@ -12,7 +12,7 @@ class EventsController < ApplicationController
     if @event.save
       render json: @event, status: :created, location: @event
     else
-      render_error @event, :unprocessable_entity
+      render json: @event.errors, status: :unprocessable_entity
     end
   end
 
@@ -24,7 +24,7 @@ class EventsController < ApplicationController
     if @event.update(event_params)
       render json: @event, include: 'tickets'
     else
-      render_error @event, :unprocessable_entity
+      render json: @event.errors, status: :unprocessable_entity
     end
   end
 
@@ -32,14 +32,14 @@ class EventsController < ApplicationController
     if @event.destroy
       render json: @event
     else
-      render_error @event, :unprocessable_entity
+      render json: @event.errors, status: :unprocessable_entity
     end
   end
 
   private
+
   def event_params
     params.require(:event).permit(:name, :description)
-                                  
   end
 
   def set_event
@@ -49,5 +49,4 @@ class EventsController < ApplicationController
   def build_event
     @event = Event.new(event_params)
   end
-
 end
