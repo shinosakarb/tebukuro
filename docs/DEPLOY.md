@@ -11,11 +11,11 @@ $ gcloud docker -- push us.gcr.io/tebukuro-182304/tebukuro_backend:latest
 
 ## Container setting
 ```bash
+# get credentials
+$ gcloud container clusters get-credentials tebukuro-cluster
+
 # create database stroge
 $ gcloud compute disks create --size 5GB postgresql-disk
-
-# get credentials
-$ gcloud container clusters get-credentials tebukuro-cluster-free
 
 # create secret
 $ kubectl create -f ~/.kube/tebukuro-secret.yml

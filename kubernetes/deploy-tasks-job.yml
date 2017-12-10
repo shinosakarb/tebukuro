@@ -15,7 +15,7 @@ spec:
       containers:
         - name: deploy-tasks-runner
           image: $TEBUKURO_IMAGE
-          command: ["./script/deploy-tasks.sh"]
+          command: ["/app/script/deploy-tasks.sh"]
           env:
             - name: RAILS_ENV
               value: "production"
