@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: deploy-tasks
+spec:
+  template:
+    metadata:
+      name: deploy-tasks
+      labels:
+        name: deploy-tasks
+    spec:
+      nodeSelector:
+        cloud.google.com/gke-nodepool: default-pool
+      restartPolicy: Never
+      containers:
+        - name: deploy-tasks-runner
+          image: $TEBUKURO_IMAGE
+          command: ["/app/script/deploy-tasks.sh"]
+          env:
+            - name: RAILS_ENV
+              value: "production"
+            - name: DATABASE_HOST
+              value: postgresql
+            - name: DATABASE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: tebukuro
+                  key: database_user
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: tebukuro
+                  key: database_password
+            - name: SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: tebukuro
+                  key: secret_key_base
+            - name: DATABASE_PORT
+              value: "5432"
