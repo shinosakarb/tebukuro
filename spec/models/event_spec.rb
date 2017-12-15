@@ -1,4 +1,6 @@
-require "rails_helper"
+# frozen_string_literal: true
+
+require 'rails_helper'
 
 describe Event, type: :model do
   describe 'association' do
@@ -11,10 +13,11 @@ describe Event, type: :model do
     end
 
     describe '#quota' do
-      it { is_expected.to validate_numericality_of(:quota).
-           is_greater_than_or_equal_to(1).
-           is_less_than_or_equal_to(1000).
-           allow_nil }
+      it {
+        is_expected.to validate_numericality_of(:quota)
+          .is_greater_than_or_equal_to(1)
+          .is_less_than_or_equal_to(1000)
+      }
     end
   end
 end
