@@ -14,6 +14,9 @@ spec:
       labels:
         app: tebukuro
     spec:
+      volumes:
+      - name: web-sock
+        emptyDir: {}
       containers:
         - image: $TEBUKURO_IMAGE
           name: tebukuro
@@ -42,4 +45,17 @@ spec:
           ports:
             - containerPort: 3000
               name: tebukuro
-          command: ["/app/script/wait.sh", "bundle", "exec", "rails", "s", "-p", "3000", "-b", "0.0.0.0"]
+          command: ["/app/script/wait.sh", "bundle", "exec", "rails", "s"]
+          volumeMounts:
+          - mountPath: /app/tmp/sockets
+            name: web-sock
+        - image: us.gcr.io/tebukuro-182304/nginx:0.0.1
+          name: nginx
+          ports:
+          - name: http-server
+            containerPort: 80
+          - name: https-server
+            containerPort: 443
+          volumeMounts:
+          - mountPath: /app/tmp/sockets
+            name: web-sock
