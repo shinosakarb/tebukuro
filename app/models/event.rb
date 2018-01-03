@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Event < ApplicationRecord
-  has_many :participants
+  has_many :participants, ->{ order :id }
   has_many :tickets
 
   validates :name, presence: true
