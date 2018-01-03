@@ -20,4 +20,29 @@ describe Event, type: :model do
       }
     end
   end
+
+  describe 'method' do
+    describe '#admitted_participant?' do
+      let(:quota) { 3 }
+      let(:event) { build_stubbed(:event, quota: quota) }
+
+      subject { event.admitted_participant?(event.participants.last.id) }
+
+      context "with admitted participant's id" do
+        before do
+          event.participants.build(attributes_for_list(:participant, quota))
+        end
+
+        it { is_expected.to eq(true) }
+      end
+
+      context "with not admitted participant's id" do
+        before do
+          event.participants.build(attributes_for_list(:participant, quota + 1))
+        end
+
+        it { is_expected.to eq(false) }
+      end
+    end
+  end
 end

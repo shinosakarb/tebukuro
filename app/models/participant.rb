@@ -4,6 +4,6 @@ class Participant < ApplicationRecord
   validates :name, presence: true
 
   def admitted
-    event.participants.take(event.quota).include?(self)
+    event.admitted_participant?(id)
   end
 end
