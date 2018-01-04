@@ -9,16 +9,25 @@ RSpec.describe Participant, type: :model do
     it { is_expected.to validate_presence_of(:name) }
   end
 
-  describe 'validation' do
+  describe 'method' do
     describe '#admitted' do
-      let(:event) { build_stubbed(:event, quota: 1) }
-      let(:participant) { build_stubbed(:participant, event: event) }
+      let(:event) { build(:event, quota: 1) }
 
-      subject { event }
+      before do
+        allow(event).to receive(:admitted_participant_ids).and_return([1, 2, 3])
+      end
 
-      it 'calls event.admitted_patricipant? once.' do
-        is_expected.to receive(:admitted_participant?).once.with(participant.id)
-        participant.admitted
+      subject { participant.admitted }
+      context 'when admitted' do
+        let(:participant) { build(:participant, event: event, id: 3) }
+
+        it { is_expected.to eq(true) }
+      end
+
+      context 'when not admitted' do
+        let(:participant) { build(:participant, event: event, id: 4) }
+
+        it { is_expected.to eq(false) }
       end
     end
   end

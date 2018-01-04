@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Event < ApplicationRecord
-  has_many :participants, ->{ order :id }
+  has_many :participants
   has_many :tickets
 
   validates :name, presence: true
@@ -11,13 +11,13 @@ class Event < ApplicationRecord
             { greater_than_or_equal_to: 1,
               less_than_or_equal_to: 1000 }
 
-  def admitted_participant?(participant_id)
-    admitted_participants.include?(participant_id)
+  def admitted_participant_ids
+    @admitted_participant_ids ||= take_admitted_participant_ids
   end
 
   private
 
-  def admitted_participants
-    @admitted_participants ||= participant_ids.sort.take(quota)
+  def take_admitted_participant_ids
+    quota ? participant_ids.sort.take(quota) : []
   end
 end

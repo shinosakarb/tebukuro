@@ -22,26 +22,31 @@ describe Event, type: :model do
   end
 
   describe 'method' do
-    describe '#admitted_participant?' do
-      let(:quota) { 3 }
-      let(:event) { build_stubbed(:event, quota: quota) }
+    describe '#admitted_participant_ids' do
+      subject { event.admitted_participant_ids }
 
-      subject { event.admitted_participant?(event.participants.last.id) }
+      context 'with valid quota' do
+        let(:quota) { 3 }
+        let(:event) {
+          build_stubbed(:event, quota: quota, participants: participants)
+        }
+        let(:participants) {
+          [*1..(quota + 1)].map { |i| build(:participant, id: i) }
+        }
+        let(:admitted_participants) { [*1..quota] }
 
-      context "with admitted participant's id" do
-        before do
-          event.participants.build(attributes_for_list(:participant, quota))
+        it { is_expected.to eq(admitted_participants) }
+
+        it 'caches admitted_participant_ids as an instance variable' do
+          subject
+          expect(event.instance_variable_get('@admitted_participant_ids'))
+            .to eq(admitted_participants)
         end
-
-        it { is_expected.to eq(true) }
       end
 
-      context "with not admitted participant's id" do
-        before do
-          event.participants.build(attributes_for_list(:participant, quota + 1))
-        end
-
-        it { is_expected.to eq(false) }
+      context 'with invalid quota' do
+        let(:event) { build(:event, quota: nil) }
+        it { is_expected.to eq([]) }
       end
     end
   end
