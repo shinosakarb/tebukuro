@@ -20,7 +20,7 @@ describe EventSerializer, type: :serializer do
         participants: [{
           event_id: event.participants[0].event_id,
           name: event.participants[0].name,
-          admitted: event.participants[0].admitted
+          on_waiting_list: event.participants[0].waitlisted?
         }]
       )
     end

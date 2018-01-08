@@ -13,7 +13,7 @@ describe ParticipantSerializer, type: :serializer do
       is_expected.to include_json(
         id: participant.id,
         event_id: participant.event_id,
-        admitted: participant.admitted
+        on_waiting_list: participant.waitlisted?
       )
     end
   end

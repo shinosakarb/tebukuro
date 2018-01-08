@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Participant, type: :model do
@@ -10,22 +12,23 @@ RSpec.describe Participant, type: :model do
   end
 
   describe 'method' do
-    describe '#admitted' do
+    describe '#waitlisted?' do
       let(:event) { build(:event, quota: 1) }
 
       before do
-        allow(event).to receive(:admitted_participant_ids).and_return([1, 2, 3])
+        allow(event).to receive(:waitlisted_participant_ids).and_return([4, 5])
       end
 
-      subject { participant.admitted }
-      context 'when admitted' do
-        let(:participant) { build(:participant, event: event, id: 3) }
+      subject { participant.waitlisted? }
+
+      context 'when waitlisted' do
+        let(:participant) { build(:participant, event: event, id: 4) }
 
         it { is_expected.to eq(true) }
       end
 
-      context 'when not admitted' do
-        let(:participant) { build(:participant, event: event, id: 4) }
+      context 'when not waitlisted' do
+        let(:participant) { build(:participant, event: event, id: 3) }
 
         it { is_expected.to eq(false) }
       end

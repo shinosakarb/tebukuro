@@ -11,13 +11,13 @@ class Event < ApplicationRecord
             { greater_than_or_equal_to: 1,
               less_than_or_equal_to: 1000 }
 
-  def admitted_participant_ids
-    @admitted_participant_ids ||= take_admitted_participant_ids
+  def waitlisted_participant_ids
+    @waitlisted_participant_ids ||= get_waitlisted_participant_ids
   end
 
   private
 
-  def take_admitted_participant_ids
-    quota ? participant_ids.sort.take(quota) : []
+  def get_waitlisted_participant_ids
+    quota ? participant_ids.sort.drop(quota) : []
   end
 end
