@@ -10,4 +10,14 @@ class Event < ApplicationRecord
             numericality:
             { greater_than_or_equal_to: 1,
               less_than_or_equal_to: 1000 }
+
+  def waitlisted_participant_ids
+    @waitlisted_participant_ids ||= get_waitlisted_participant_ids
+  end
+
+  private
+
+  def get_waitlisted_participant_ids
+    quota ? participant_ids.sort.drop(quota) : []
+  end
 end
