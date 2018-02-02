@@ -7,10 +7,11 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins '*'
+    origins 'tebukuro.shinosakarb.org', 'localhost:4000'
 
     resource '*',
       headers: :any,
+      credentials: true,
       expose: ['access-token', 'expiry', 'token-type', 'uid', 'client'],
       methods: [:get, :post, :delete, :patch]
   end
