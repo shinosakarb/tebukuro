@@ -1,14 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe 'Participants API', type: :request do
+  let(:user) { build_stubbed(:user) }
   let(:event) { build_stubbed(:event) }
-  let(:participant) { build_stubbed(:participant, event: event) }
+  let(:participant) { build_stubbed(:participant, event: event, user: user) }
 
   describe 'POST /events/:event_id/participants' do
     let(:event_id) { event.id }
     let(:params) { { participant: attributes_for(:participant) } }
 
     before do
+      sign_in_with(user)
       allow(Participant).to receive(:new).and_return(participant)
     end
 
@@ -36,6 +38,7 @@ RSpec.describe 'Participants API', type: :request do
 
     before do
       allow(Participant).to receive(:find).and_return(participant)
+      sign_in_with(user)
     end
 
     context 'success' do
