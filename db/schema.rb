@@ -47,9 +47,11 @@ ActiveRecord::Schema.define(version: 20171215005955) do
   create_table "participants", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "event_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_participants_on_event_id"
+    t.index ["user_id"], name: "index_participants_on_user_id"
   end
 
   create_table "ticket_subscriptions", force: :cascade do |t|
@@ -106,6 +108,7 @@ ActiveRecord::Schema.define(version: 20171215005955) do
   add_foreign_key "owners", "communities"
   add_foreign_key "owners", "users"
   add_foreign_key "participants", "events"
+  add_foreign_key "participants", "users"
   add_foreign_key "ticket_subscriptions", "tickets"
   add_foreign_key "ticket_subscriptions", "users"
   add_foreign_key "tickets", "events"
