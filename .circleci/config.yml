@@ -1,9 +1,29 @@
-version: 2
-jobs:
-  build:
+referecnes:
+  defaults: &defaults
     docker:
       - image: google/cloud-sdk:alpine
     working_directory: ~/tebukuro
+  setup:
+    install_dependencies: &install_dependencies
+      name: Install dependencies
+      command: |
+        apk add --no-cache py-pip gettext
+        pip install docker-compose==1.18.0
+        gcloud components install kubectl
+    install_docker_client: &install_docker_client
+      name: Install Docker client
+      command: |
+        apk update
+        apk add docker
+    check_docker_version: &check_docker_version
+      name: Check docker version
+      command: |
+        docker version
+
+version: 2
+jobs:
+  build:
+    <<: *defaults
     steps:
       - checkout
       - setup_remote_docker
@@ -12,21 +32,9 @@ jobs:
             - v1-{{ .Branch }}
           paths:
             - /caches/tebukuro.tar
-      - run:
-          name: Install dependencies
-          command: |
-            apk add --no-cache py-pip gettext
-            pip install docker-compose==1.18.0
-            gcloud components install kubectl
-      - run:
-          name: Install Docker client
-          command: |
-            apk update
-            apk add docker
-      - run:
-          name: Check docker version
-          command: |
-            docker version
+      - run: *install_dependencies
+      - run: *install_docker_client
+      - run: *check_docker_version
       - run:
           name: Build application Docker image
           command: |
@@ -41,19 +49,87 @@ jobs:
           key: v1-{{ .Branch }}-{{ epoch }}
           paths:
             - /caches/tebukuro.tar
+  test:
+    docker:
+      - image: circleci/ruby:2.4-node
+        environment:
+          BUNDLE_JOBS: 3
+          BUNDLE_RETRY: 3
+          BUNDLE_PATH: vendor/bundle
+          DATABASE_HOST: localhost
+          DATABASE_USERNAME: postgres
+          DATABASE_PASSWORD: ""
+          DATABASE_PORT: 5432
+          RAILS_ENV: test
+      - image: circleci/postgres:9.6-alpine
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: ""
+    working_directory: ~/tebukuro
+    steps:
+      - checkout
+      - run:
+          name: Bundler version
+          command: bundle -v
+      - restore_cache:
+          keys:
+            - v1-bundle-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+            - v1-bundle-{{ .Branch }}-
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install
+      - save_cache:
+          key: v1-bundle-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run:
+          name: Database setup
+          command: |
+            bin/rails db:create
+            bin/rails db:schema:load --trace
+      - run:
+          name: Run RSpec
+          command: bundle exec rspec
+  deploy:
+    <<: *defaults
+    steps:
+      - checkout
+      - setup_remote_docker
+      - restore_cache:
+          keys:
+            - v1-{{ .Branch }}
+      - run: *install_dependencies
+      - run: *install_docker_client
+      - run: *check_docker_version
       - run:
           name: Deploy application Docker image
           command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              echo $ACCT_AUTH | base64 -d > ${HOME}/account-auth.json
-              export TEBUKURO_IMAGE=us.gcr.io/${PROJECT_NAME}/tebukuro_backend:$CIRCLE_SHA1
-              docker tag tebukuro_backend $TEBUKURO_IMAGE
-              gcloud auth activate-service-account --key-file ${HOME}/account-auth.json
-              gcloud config set project $PROJECT_NAME
-              gcloud --quiet config set container/cluster $CLUSTER_NAME
-              gcloud config set compute/zone ${CLOUDSDK_COMPUTE_ZONE}
-              gcloud --quiet container clusters get-credentials $CLUSTER_NAME
-              gcloud config set container/use_client_certificate True
-              gcloud docker -- push $TEBUKURO_IMAGE
-              ./script/deploy.sh
-            fi
+            echo $ACCT_AUTH | base64 -d > ${HOME}/account-auth.json
+            export TEBUKURO_IMAGE=us.gcr.io/${PROJECT_NAME}/tebukuro_backend:$CIRCLE_SHA1
+            docker tag tebukuro_backend $TEBUKURO_IMAGE
+            gcloud auth activate-service-account --key-file ${HOME}/account-auth.json
+            gcloud config set project $PROJECT_NAME
+            gcloud --quiet config set container/cluster $CLUSTER_NAME
+            gcloud config set compute/zone ${CLOUDSDK_COMPUTE_ZONE}
+            gcloud --quiet container clusters get-credentials $CLUSTER_NAME
+            gcloud config set container/use_client_certificate True
+            gcloud docker -- push $TEBUKURO_IMAGE
+            ./script/deploy.sh
+
+workflows:
+  version: 2
+  build-test-and-deploy:
+    jobs:
+      - build
+      - test
+      - deploy:
+          filters:
+            branches:
+              only: master
+          requires:
+            - build
+            - test
+
