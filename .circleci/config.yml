@@ -19,6 +19,10 @@ referecnes:
       name: Check docker version
       command: |
         docker version
+    load_docker_image_from_cache: &load_docker_image_from_cache
+      name: Load Docker image
+      command: |
+        docker load -i /caches/tebukuro.tar
 
 version: 2
 jobs:
@@ -35,6 +39,7 @@ jobs:
       - run: *install_dependencies
       - run: *install_docker_client
       - run: *check_docker_version
+      - run: *load_docker_image_from_cache
       - run:
           name: Build application Docker image
           command: |
@@ -46,7 +51,7 @@ jobs:
             docker images
             docker save -o /caches/tebukuro.tar tebukuro_backend:latest
       - save_cache:
-          key: v1-{{ .Branch }}-{{ epoch }}
+          key: v1-{{ .Branch }}
           paths:
             - /caches/tebukuro.tar
   test:
@@ -104,6 +109,7 @@ jobs:
       - run: *install_dependencies
       - run: *install_docker_client
       - run: *check_docker_version
+      - run: *load_docker_image_from_cache
       - run:
           name: Deploy application Docker image
           command: |
@@ -132,4 +138,3 @@ workflows:
           requires:
             - build
             - test
-
