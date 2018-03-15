@@ -27,7 +27,7 @@ class ParticipantsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def participant_params
-    params.require(:participant).permit(:name, :event_id)
+    params.require(:participant).permit(:event_id)
   end
 
   def set_participant

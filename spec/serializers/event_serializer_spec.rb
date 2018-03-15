@@ -3,11 +3,14 @@
 require 'rails_helper'
 
 describe EventSerializer, type: :serializer do
+  let(:user) { build_stubbed(:user) }
   let(:event) { build_stubbed(:event) }
 
   describe 'data' do
     before do
-      event.participants.build(attributes_for(:participant, event: event))
+      event.participants.build(
+        attributes_for(:participant, event: event, user: user)
+      )
     end
 
     subject { serialize(event) }
@@ -19,7 +22,7 @@ describe EventSerializer, type: :serializer do
         quota: event.quota,
         participants: [{
           event_id: event.participants[0].event_id,
-          name: event.participants[0].name,
+          name: event.participants[0].user.name,
           on_waiting_list: event.participants[0].waitlisted?
         }]
       )
