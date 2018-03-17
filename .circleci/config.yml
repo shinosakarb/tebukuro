@@ -19,10 +19,10 @@ referecnes:
       name: Check docker version
       command: |
         docker version
-    load_docker_image_from_cache: &load_docker_image_from_cache
+    load_docker_image_from_workspace: &load_docker_image_from_workspace
       name: Load Docker image
       command: |
-        docker load -i /caches/tebukuro.tar
+        docker load -i /tmp/workspace/images/tebukuro.tar
 
 version: 2
 jobs:
@@ -31,15 +31,9 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - restore_cache:
-          keys:
-            - v1-{{ .Branch }}
-          paths:
-            - /caches/tebukuro.tar
       - run: *install_dependencies
       - run: *install_docker_client
       - run: *check_docker_version
-      - run: *load_docker_image_from_cache
       - run:
           name: Build application Docker image
           command: |
@@ -47,13 +41,13 @@ jobs:
       - run:
           name: Save Docker image layer cache
           command: |
-            mkdir -p /caches
+            mkdir -p /tmp/workspace/images
             docker images
-            docker save -o /caches/tebukuro.tar tebukuro_backend:latest
-      - save_cache:
-          key: v1-{{ .Branch }}
+            docker save -o /tmp/workspace/images/tebukuro.tar tebukuro_backend:latest
+      - persist_to_workspace:
+          root: /tmp/workspace
           paths:
-            - /caches/tebukuro.tar
+            - images
   test:
     docker:
       - image: circleci/ruby:2.4-node
@@ -101,15 +95,14 @@ jobs:
   deploy:
     <<: *defaults
     steps:
+      - attach_workspace:
+          at: /tmp/workspace
       - checkout
       - setup_remote_docker
-      - restore_cache:
-          keys:
-            - v1-{{ .Branch }}
       - run: *install_dependencies
       - run: *install_docker_client
       - run: *check_docker_version
-      - run: *load_docker_image_from_cache
+      - run: *load_docker_image_from_workspace
       - run:
           name: Deploy application Docker image
           command: |
