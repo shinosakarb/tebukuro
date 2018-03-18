@@ -23,6 +23,7 @@
 
 # node.js dependencies
 /front/node_modules
+/node_modules
 
 /vendor/bundle
 .DS_Store
