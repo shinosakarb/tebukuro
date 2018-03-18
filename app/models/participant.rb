@@ -4,7 +4,9 @@ class Participant < ApplicationRecord
   belongs_to :user
   belongs_to :event
 
-  validates :name, presence: true
+  def name
+    user.name
+  end
 
   def waitlisted?
     event.waitlisted_participant_ids.include?(id)

@@ -5,15 +5,20 @@ require 'rails_helper'
 RSpec.describe Participant, type: :model do
   describe 'association' do
     it { is_expected.to belong_to(:event) }
-  end
-
-  describe 'validation' do
-    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to belong_to(:user) }
   end
 
   describe 'method' do
+    let(:user) { build(:user) }
+    let(:event) { build(:event, quota: 1) }
+
+    describe '#name' do
+      let(:participant) { build(:participant, event: event, user: user) }
+      subject { participant.name }
+      it { is_expected.to eq(user.name) }
+    end
+
     describe '#waitlisted?' do
-      let(:event) { build(:event, quota: 1) }
 
       before do
         allow(event).to receive(:waitlisted_participant_ids).and_return([4, 5])
