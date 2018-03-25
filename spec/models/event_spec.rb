@@ -60,5 +60,33 @@ describe Event, type: :model do
         it { is_expected.to eq([]) }
       end
     end
+
+    describe '#user_registered?' do
+      let(:user) { build_stubbed(:user) }
+      let(:event) { build_stubbed(:event) }
+
+      context 'when user logged in' do
+        subject { event.user_registered?(user) }
+
+        context 'with registered user' do
+          before do
+            event.participants.build(
+              attributes_for(:participant, event: event, user: user)
+            )
+          end
+          it { is_expected.to eq(true) }
+        end
+
+        context 'with NOT registered user' do
+          it { is_expected.to eq(false) }
+        end
+      end
+
+      context 'when user NOT logged in' do
+        subject { event.user_registered?(nil) }
+
+        it { is_expected.to eq(false) }
+      end
+    end
   end
 end

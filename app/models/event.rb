@@ -15,6 +15,10 @@ class Event < ApplicationRecord
     @waitlisted_participant_ids ||= get_waitlisted_participant_ids
   end
 
+  def user_registered?(user)
+    user ? participants.map(&:user_id).include?(user.id) : false
+  end
+
   private
 
   def get_waitlisted_participant_ids

@@ -8,6 +8,7 @@ describe EventSerializer, type: :serializer do
 
   describe 'data' do
     before do
+      allow_any_instance_of(EventSerializer).to receive(:scope).and_return(user)
       event.participants.build(
         attributes_for(:participant, event: event, user: user)
       )
@@ -20,6 +21,7 @@ describe EventSerializer, type: :serializer do
         name: event.name,
         description: event.description,
         quota: event.quota,
+        registered: event.user_registered?(user),
         participants: [{
           event_id: event.participants[0].event_id,
           name: event.participants[0].user.name,
