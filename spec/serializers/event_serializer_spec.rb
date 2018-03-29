@@ -13,13 +13,14 @@ describe EventSerializer, type: :serializer do
       )
     end
 
-    subject { serialize(event) }
+    subject { serialize(event, scope: user, scope_name: :current_user) }
 
     it do
       is_expected.to include_json(
         name: event.name,
         description: event.description,
         quota: event.quota,
+        registered: event.user_registered?(user),
         participants: [{
           event_id: event.participants[0].event_id,
           name: event.participants[0].user.name,
