@@ -4,7 +4,7 @@ class EventSerializer < ActiveModel::Serializer
   has_many :participants
 
   def registered
-    object.user_registered?(scope)
+    object.user_registered?(current_user)
   end
 
   # TODO: communitiesモデルが作成されたら、GETのURLをattributesに加えます。

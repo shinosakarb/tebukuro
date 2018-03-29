@@ -8,13 +8,12 @@ describe EventSerializer, type: :serializer do
 
   describe 'data' do
     before do
-      allow_any_instance_of(EventSerializer).to receive(:scope).and_return(user)
       event.participants.build(
         attributes_for(:participant, event: event, user: user)
       )
     end
 
-    subject { serialize(event) }
+    subject { serialize(event, scope: user, scope_name: :current_user) }
 
     it do
       is_expected.to include_json(
