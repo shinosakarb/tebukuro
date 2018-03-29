@@ -1,0 +1,14 @@
+{
+  "name": "tebukuro",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "api-doc": "aglio -i ./api/index.md --server --port 5000 -h 0.0.0.0",
+    "api-html": "aglio -i ./api/index.md --output ./api/index.html",
+    "api-mock": "drakov -f api/index.md --watch"
+  },
+  "devDependencies": {
+    "aglio": "^2.3.0",
+    "drakov": "^1.0.4"
+  }
+}
