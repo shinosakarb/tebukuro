@@ -23,6 +23,11 @@ services:
     ports: []
     tty: false
     stdin_open: false
+  document:
+    build: ./doc
+    command: "npm run api-doc"
+    ports:
+      - "5000:5000"
   db:
     image: postgres:9.6-alpine
     volumes:
