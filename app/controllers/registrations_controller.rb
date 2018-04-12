@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RegistrationsController < ApplicationController
   before_action :authenticate_user!, only: [:destroy]
   before_action :set_participant, only: [:destroy]
@@ -15,7 +17,6 @@ class RegistrationsController < ApplicationController
 
   def set_participant
     @participant =
-      Participant.find_by(event_id: params[:event_id], user_id: current_user.id)
-    authorize @participant
+      policy_scope(Participant).where(event_id: params[:event_id]).first
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Registrations API', type: :request do
@@ -9,7 +11,9 @@ RSpec.describe 'Registrations API', type: :request do
     let(:id) { event.id }
 
     before do
-      allow(Participant).to receive(:find_by).and_return(participant)
+      allow(Participant)
+        .to receive_message_chain(:where, :where, :first)
+        .and_return(participant)
       sign_in_with(user)
     end
 
