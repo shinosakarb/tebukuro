@@ -17,6 +17,10 @@ class RegistrationsController < ApplicationController
 
   def set_participant
     @participant =
-      policy_scope(Participant).where(event_id: params[:event_id]).first
+      ParticipantPolicy::Scope.new(current_user, Participant).resolve(scope_query)
+  end
+
+  def scope_query
+    { event_id: params[:event_id] }
   end
 end

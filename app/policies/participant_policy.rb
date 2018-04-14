@@ -6,8 +6,8 @@ class ParticipantPolicy < ApplicationPolicy
   end
 
   class Scope < Scope
-    def resolve
-      scope.where(user_id: user.id)
+    def resolve(query = {})
+      scope.find_by(query.merge(user_id: user.id))
     end
   end
 end
