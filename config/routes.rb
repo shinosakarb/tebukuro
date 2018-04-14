@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   resources :events do
     resources :participants, only: %i[create destroy]
+    delete 'registrations', to: 'registrations#destroy'
   end
 
   namespace :subscription do
