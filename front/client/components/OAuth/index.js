@@ -4,10 +4,12 @@ import Avatar from '../Avatar'
 
 const OAuth = ({auth}) => {
   const button = auth.getIn(["user", "isSignedIn"]) ? <SignOutButton /> : <OAuthSignInButton provider="github" />
+  const nickname = auth.getIn(["user", "attributes", "nickname"])
 
   return (
     <div>
       <Avatar src={auth.getIn(["user", "attributes", "image"])} />
+      {nickname}
       {button}
     </div>
   )
