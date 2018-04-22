@@ -19,6 +19,36 @@ describe Event, type: :model do
           .is_less_than_or_equal_to(1000)
       }
     end
+
+    describe '#event_starts_at' do
+      it { is_expected.to validate_presence_of(:event_starts_at) }
+    end
+
+    describe '#event_ends_at' do
+      it { is_expected.to validate_presence_of(:event_ends_at) }
+    end
+
+    describe '#start_after_end?' do
+      let(:event) do
+        build_stubbed(
+          :event,
+          event_starts_at: date,
+          event_ends_at: Time.zone.parse('2018-03-01T09:00:00Z')
+        )
+      end
+
+      subject { event.valid? }
+
+      context 'with starts before ends' do
+        let(:date) { Time.zone.parse('2018-03-01T08:59:00Z') }
+        it { is_expected.to be_truthy }
+      end
+
+      context 'with starts after ends' do
+        let(:date) { Time.zone.parse('2018-03-01T09:00:00Z') }
+        it { is_expected.to be_falsey }
+      end
+    end
   end
 
   describe 'method' do
@@ -86,6 +116,24 @@ describe Event, type: :model do
         subject { event.user_registered?(nil) }
 
         it { is_expected.to eq(false) }
+      end
+    end
+
+    describe '#within_deadline?' do
+      let(:start_date) { Time.zone.parse('2018-03-01T09:00:00Z') }
+      let(:event) { build_stubbed(:event, event_starts_at: start_date) }
+      subject { event.within_deadline? }
+
+      before { allow(Time).to receive(:current).and_return(current_date) }
+
+      context 'with date whithin the deadline' do
+        let(:current_date) { Time.zone.parse('2018-03-01T08:59:59Z') }
+        it { is_expected.to be_truthy }
+      end
+
+      context 'with date over the deadline' do
+        let(:current_date) { Time.zone.parse('2018-03-01T09:00:00Z') }
+        it { is_expected.to be_falsey }
       end
     end
   end

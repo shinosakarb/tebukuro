@@ -14,3 +14,10 @@ ja:
         event_starts_at: Start time of Event
         event_ends_at: End time of Event
         address: Address
+        quota: Quota
+ja:
+  activerecord:
+    errors:
+      messages:
+        exceeds_end_time: exceeds end time of the event
+
