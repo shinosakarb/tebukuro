@@ -22,32 +22,18 @@ describe Event, type: :model do
 
     describe '#event_starts_at' do
       it { is_expected.to validate_presence_of(:event_starts_at) }
+      it {
+        is_expected.to validate_datetime_less_of(:event_starts_at)
+          .is_less_than_or_equal_to(:event_ends_at)
+      }
     end
 
     describe '#event_ends_at' do
       it { is_expected.to validate_presence_of(:event_ends_at) }
-    end
-
-    describe '#start_after_end?' do
-      let(:event) do
-        build_stubbed(
-          :event,
-          event_starts_at: date,
-          event_ends_at: Time.zone.parse('2018-03-01T09:00:00Z')
-        )
-      end
-
-      subject { event.valid? }
-
-      context 'with starts before ends' do
-        let(:date) { Time.zone.parse('2018-03-01T08:59:00Z') }
-        it { is_expected.to be_truthy }
-      end
-
-      context 'with starts after ends' do
-        let(:date) { Time.zone.parse('2018-03-01T09:00:00Z') }
-        it { is_expected.to be_falsey }
-      end
+      it {
+        is_expected.to validate_datetime_less_of(:event_ends_at)
+          .is_greater_than_or_equal_to(:event_starts_at)
+      }
     end
   end
 
