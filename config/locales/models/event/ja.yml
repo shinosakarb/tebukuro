@@ -14,3 +14,10 @@ ja:
         event_starts_at: イベント開始時間
         event_ends_at: イベント終了時間
         address: アドレス
+        quota: 定員
+ja:
+  activerecord:
+    errors:
+      messages:
+        exceeds_end_time: が終了時間を超えています。
+
