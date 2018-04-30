@@ -21,6 +21,8 @@ describe EventSerializer, type: :serializer do
         description: event.description,
         quota: event.quota,
         registered: event.user_registered?(user),
+        event_starts_at: event.event_starts_at,
+        event_ends_at: event.event_ends_at,
         participants: [{
           event_id: event.participants[0].event_id,
           name: event.participants[0].user.name,

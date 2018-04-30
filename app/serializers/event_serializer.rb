@@ -1,5 +1,6 @@
 class EventSerializer < ActiveModel::Serializer
-  attributes :id, :name, :description, :quota, :registered
+  attributes :id, :name, :description, :quota, :registered,
+    :event_starts_at, :event_ends_at
 
   has_many :participants
 
