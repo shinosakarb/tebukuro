@@ -39,4 +39,22 @@ RSpec.describe Participant, type: :model do
       end
     end
   end
+
+  describe 'validation' do
+    let(:user) { build(:user) }
+    let(:event) { build(:event, quota: 1) }
+
+    context 'event' do
+      before do
+        allow(event).to receive(:within_deadline?).and_return(false)
+      end
+
+      example 'Can not join' do
+        participant = event.participants.new
+        participant.valid?
+        expect(participant).not_to be_valid
+        expect(participant.errors.messages[:event_id]).to include('参加できません')
+      end
+    end
+  end
 end
