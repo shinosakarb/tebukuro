@@ -1,0 +1,15 @@
+# モデル名
+ja:
+  activerecord:
+    models:
+      participant: 参加者
+
+# モデルの属性名
+ja:
+  activerecord:
+    errors:
+      models:
+        participant:
+          attributes:
+            event_id:
+              cannot_join: 参加できません
