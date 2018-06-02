@@ -81,7 +81,7 @@ group :test do
   gem 'database_rewinder'
 
   # for request spec
-  gem 'rspec-request_describer'
+  gem 'rspec_api_documentation'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

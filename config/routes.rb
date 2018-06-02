@@ -11,7 +11,6 @@ Rails.application.routes.draw do
   end
 
   resources :events do
-    resources :participants, only: %i[create destroy]
     member do
       resource 'registrations',
                controller: :registrations,

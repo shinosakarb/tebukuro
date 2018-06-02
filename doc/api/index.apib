@@ -1,0 +1,498 @@
+FORMAT: A1
+
+# Group Event
+
+## Events Collection [/events]
+
++ Parameters
+  + name - Event name
+  + description - Event description
+  + event_starts_at - Event starts at
+  + event_ends_at - Event ends at
+  + address - Event address
+  + quota - Event quota
+
+### Create event [POST]
+
++ Request Createing event is failure (application/json)
+
+    + Headers
+
+        Accept: application/json
+        Content-Type: application/json
+        Host: example.org
+        Cookie: 
+
+    + Body
+
+        {
+          "event": {
+            "name": "イベント 6",
+            "description": "Reprehenderit quia corrupti. Quia aliquid praesentium vel cupiditate voluptas. Dolorem a optio eum ipsa. Quaerat inventore possimus odit. Ullam et cum qui voluptatem exercitationem.",
+            "quota": 513
+          }
+        }
+
++ Response 422 (application/json)
+
+    + Headers
+
+        Content-Type: application/json
+        Cache-Control: no-cache
+        X-Request-Id: 06d35e3c-624f-41d5-90b2-17c04687e11c
+        X-Runtime: 0.002672
+        Vary: Origin
+        Content-Length: 2
+
+    + Body
+
+        {
+        }
+
++ Request Creating event is success (application/json)
+
+    + Headers
+
+        Accept: application/json
+        Content-Type: application/json
+        Host: example.org
+        Cookie: 
+
+    + Body
+
+        {
+          "event": {
+            "name": "イベント 4",
+            "description": "Voluptas perspiciatis dignissimos quis. Eum enim deserunt doloribus. Et temporibus laborum. Maiores distinctio in sapiente officiis voluptatem. Velit et aut sed eum atque et aut.",
+            "quota": 513
+          }
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+        Location: http://example.org/events/1030
+        Content-Type: application/json
+        ETag: W/"db4ae2889ca99ceb217660062d308fda"
+        Cache-Control: max-age=0, private, must-revalidate
+        X-Request-Id: 47269e27-95cb-41f9-97a4-ddd0720564cf
+        X-Runtime: 0.004948
+        Vary: Origin
+        Content-Length: 329
+
+    + Body
+
+        {
+          "id": 1030,
+          "name": "イベント 3",
+          "description": "Similique odit exercitationem eos adipisci. Tempore est quam. Hic impedit dolores qui. Non et itaque sed asperiores recusandae laudantium. Temporibus quam est dolorem molestias libero.",
+          "quota": 513,
+          "registered": false,
+          "event_starts_at": null,
+          "event_ends_at": null,
+          "participants": [
+        
+          ]
+        }
+
+### Returns all events [GET]
+
++ Request Getting all events (application/json)
+
+    + Headers
+
+        Accept: application/json
+        Content-Type: application/json
+        Host: example.org
+        Cookie: 
+
++ Response 200 (application/json)
+
+    + Headers
+
+        Content-Type: application/json
+        ETag: W/"312a3c45817b20f3b2d0dc017e8fa55e"
+        Cache-Control: max-age=0, private, must-revalidate
+        X-Request-Id: 5175b86f-741b-45dd-8b62-f010721feade
+        X-Runtime: 0.013659
+        Vary: Origin
+        Content-Length: 519
+
+    + Body
+
+        [
+          {
+            "id": 1028,
+            "name": "イベント 1",
+            "description": "Perferendis eos ut expedita. Neque rerum eaque asperiores dolore in. Et maiores et impedit quam aut suscipit.",
+            "quota": 513,
+            "registered": false,
+            "event_starts_at": null,
+            "event_ends_at": null,
+            "participants": [
+        
+            ]
+          },
+          {
+            "id": 1029,
+            "name": "イベント 2",
+            "description": "Omnis harum est quis aperiam impedit id. Autem neque voluptatem nam soluta architecto ut. Libero voluptas esse dicta.",
+            "quota": 513,
+            "registered": false,
+            "event_starts_at": null,
+            "event_ends_at": null,
+            "participants": [
+        
+            ]
+          }
+        ]
+
+## Event [/events/:id]
+
++ Parameters
+  + name - Event name
+  + description - Event description
+  + event_starts_at - Event starts at
+  + event_ends_at - Event ends at
+  + address - Event address
+  + quota - Event quota
+
+### Delete event [DELETE]
+
++ Request Deleting event is failure (application/json)
+
+    + Headers
+
+        Accept: application/json
+        Content-Type: application/json
+        Host: example.org
+        Cookie: 
+
++ Response 422 (application/json)
+
+    + Headers
+
+        Content-Type: application/json
+        Cache-Control: no-cache
+        X-Request-Id: f78f2d17-026b-45d3-960f-4958c7860dfd
+        X-Runtime: 0.002395
+        Vary: Origin
+        Content-Length: 2
+
+    + Body
+
+        {
+        }
+
++ Request Deleting event is success (application/json)
+
+    + Headers
+
+        Accept: application/json
+        Content-Type: application/json
+        Host: example.org
+        Cookie: 
+
++ Response 200 (application/json)
+
+    + Headers
+
+        Content-Type: application/json
+        ETag: W/"27d698ab8d39b674e3c70b8db2a5a048"
+        Cache-Control: max-age=0, private, must-revalidate
+        X-Request-Id: 3a04d57f-2172-4fa9-ad64-4483aeb181c0
+        X-Runtime: 0.004236
+        Vary: Origin
+        Content-Length: 351
+
+    + Body
+
+        {
+          "id": 1032,
+          "name": "イベント 7",
+          "description": "Eum similique autem sint. Debitis maiores voluptate omnis sunt dolorem est dicta. Nam quam reprehenderit voluptatem delectus voluptatem. Aut aspernatur eveniet suscipit voluptates voluptatem. Iste qui quae.",
+          "quota": 513,
+          "registered": false,
+          "event_starts_at": null,
+          "event_ends_at": null,
+          "participants": [
+        
+          ]
+        }
+
+### Return event [GET]
+
++ Request Getting event is failure (application/json)
+
+    + Headers
+
+        Accept: application/json
+        Content-Type: application/json
+        Host: example.org
+        Cookie: 
+
++ Response 404 (application/json)
+
+    + Headers
+
+        Content-Type: application/json
+        Cache-Control: no-cache
+        X-Request-Id: d3916ad0-1ee0-42ba-bfef-b7f9b2a81dfa
+        X-Runtime: 0.002872
+        Vary: Origin
+        Content-Length: 2
+
+    + Body
+
+        {
+        }
+
++ Request Getting event is success (application/json)
+
+    + Headers
+
+        Accept: application/json
+        Content-Type: application/json
+        Host: example.org
+        Cookie: 
+
++ Response 200 (application/json)
+
+    + Headers
+
+        Content-Type: application/json
+        ETag: W/"270aa632d78caa459889bc6a52ab13d5"
+        Cache-Control: max-age=0, private, must-revalidate
+        X-Request-Id: f53899bb-4319-4d8c-ba19-0a8c70922666
+        X-Runtime: 0.003926
+        Vary: Origin
+        Content-Length: 338
+
+    + Body
+
+        {
+          "id": 1034,
+          "name": "イベント 9",
+          "description": "Ut libero consectetur. Nisi consequatur consequatur explicabo dolorem distinctio. Ipsa tenetur tempora. Laborum veniam error consequuntur iusto quia. Autem natus et odio itaque quo quis soluta.",
+          "quota": 513,
+          "registered": false,
+          "event_starts_at": null,
+          "event_ends_at": null,
+          "participants": [
+        
+          ]
+        }
+
+### Update event [PATCH]
+
++ Request Updating event is failure (application/json)
+
+    + Headers
+
+        Accept: application/json
+        Content-Type: application/json
+        Host: example.org
+        Cookie: 
+
+    + Body
+
+        {
+          "event": {
+            "name": "hogehoge",
+            "description": "Consequatur distinctio voluptatum enim qui. Enim aut ad ex ut. Neque fugiat vel animi ab. Unde et cum nesciunt.",
+            "quota": 513
+          }
+        }
+
++ Response 422 (application/json)
+
+    + Headers
+
+        Content-Type: application/json
+        Cache-Control: no-cache
+        X-Request-Id: a8fc94fa-8f1d-45a5-9e4a-6bd8dec49eb5
+        X-Runtime: 0.002470
+        Vary: Origin
+        Content-Length: 2
+
+    + Body
+
+        {
+        }
+
++ Request Updating event is success (application/json)
+
+    + Headers
+
+        Accept: application/json
+        Content-Type: application/json
+        Host: example.org
+        Cookie: 
+
+    + Body
+
+        {
+          "event": {
+            "name": "hogehoge",
+            "description": "Odit omnis qui fuga amet quo quas a. Enim laudantium ut non totam. Repellendus facilis et tempora. Velit qui tempore architecto enim et nihil nihil. Distinctio eveniet voluptatem expedita quos beatae ut.",
+            "quota": 513
+          }
+        }
+
++ Response 200 (application/json)
+
+    + Headers
+
+        Content-Type: application/json
+        ETag: W/"05bd88be1f09e6502c6005451ea26560"
+        Cache-Control: max-age=0, private, must-revalidate
+        X-Request-Id: 5ab70469-02cd-4ce5-865c-db488083c2ce
+        X-Runtime: 0.004172
+        Vary: Origin
+        Content-Length: 341
+
+    + Body
+
+        {
+          "id": 1035,
+          "name": "イベント 10",
+          "description": "Ipsam adipisci voluptates quis laudantium quia. Aut sed doloribus possimus sed. Occaecati nisi est expedita laudantium deleniti. Et doloremque quam in dolorem illum voluptatem. Adipisci earum ea.",
+          "quota": 513,
+          "registered": false,
+          "event_starts_at": null,
+          "event_ends_at": null,
+          "participants": [
+        
+          ]
+        }
+
+# Group Registrations
+
+## Registrations Collection [/events/:event_id/registrations]
+
+### Create Registration [POST]
+
++ Request Creating registration is failure (application/json)
+
+    + Headers
+
+        Accept: application/json
+        Content-Type: application/json
+        Host: example.org
+        Cookie: 
+
++ Response 422 (application/json)
+
+    + Headers
+
+        Content-Type: application/json
+        Cache-Control: no-cache
+        X-Request-Id: 1510000d-3a5b-4b62-9203-cc2908a2070a
+        X-Runtime: 0.005977
+        Vary: Origin
+        Content-Length: 2
+
+    + Body
+
+        {
+        }
+
++ Request Creating registration is success (application/json)
+
+    + Headers
+
+        Accept: application/json
+        Content-Type: application/json
+        Host: example.org
+        Cookie: 
+
++ Response 200 (application/json)
+
+    + Headers
+
+        Content-Type: application/json
+        ETag: W/"d380a35f724c5cde9ff53f9db3797355"
+        Cache-Control: max-age=0, private, must-revalidate
+        X-Request-Id: c58a3060-04d1-484d-b950-86246d7b889c
+        X-Runtime: 0.029898
+        Vary: Origin
+        Content-Length: 248
+
+    + Body
+
+        {
+          "id": 1014,
+          "name": "イベント 1",
+          "description": "Hic dolores illo vitae. Fugiat vel quos esse. Perspiciatis magnam sunt nihil. Aperiam qui illum soluta.",
+          "quota": 117,
+          "registered": false,
+          "event_starts_at": null,
+          "event_ends_at": null,
+          "participants": [
+        
+          ]
+        }
+
+### Delete Registration [DELETE]
+
++ Request Deleting registration is failure (application/json)
+
+    + Headers
+
+        Accept: application/json
+        Content-Type: application/json
+        Host: example.org
+        Cookie: 
+
++ Response 422 (application/json)
+
+    + Headers
+
+        Content-Type: application/json
+        Cache-Control: no-cache
+        X-Request-Id: 5de71679-4af9-4e8e-abea-639a8a19d47a
+        X-Runtime: 0.003836
+        Vary: Origin
+        Content-Length: 2
+
+    + Body
+
+        {
+        }
+
++ Request Deleting registration is success (application/json)
+
+    + Headers
+
+        Accept: application/json
+        Content-Type: application/json
+        Host: example.org
+        Cookie: 
+
++ Response 200 (application/json)
+
+    + Headers
+
+        Content-Type: application/json
+        ETag: W/"783dda165e2c0d6111bf72616e5a68e2"
+        Cache-Control: max-age=0, private, must-revalidate
+        X-Request-Id: 31f4178c-89f5-437f-9d33-a81e3107652b
+        X-Runtime: 0.005175
+        Vary: Origin
+        Content-Length: 267
+
+    + Body
+
+        {
+          "id": 1023,
+          "name": "イベント 4",
+          "description": "Dicta aspernatur nemo. Et deserunt voluptas quo consequuntur et qui corrupti. Rem esse quo. Enim in ut qui et mollitia ut.",
+          "quota": 117,
+          "registered": false,
+          "event_starts_at": null,
+          "event_ends_at": null,
+          "participants": [
+        
+          ]
+        }

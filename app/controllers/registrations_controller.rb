@@ -2,13 +2,11 @@
 
 class RegistrationsController < ApplicationController
   before_action :authenticate_user!, only: %i[create destroy]
+  before_action :build_participant, only: %i[create]
   before_action :set_participant, only: %i[destroy]
 
   # POST /events/:id/registrations
   def create
-    @participant =
-      Participant.new(event_id: params[:id], user_id: current_user.id)
-
     if @participant.save
       render json: @participant.event
     else
@@ -26,6 +24,9 @@ class RegistrationsController < ApplicationController
   end
 
   private
+  def build_participant
+    @participant = Participant.new(event_id: params[:id], user_id: current_user.id)
+  end
 
   def set_participant
     @participant =

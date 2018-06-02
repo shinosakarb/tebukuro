@@ -130,6 +130,7 @@ GEM
     multi_json (1.12.2)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
+    mustache (1.0.5)
     nenv (0.3.0)
     nio4r (2.1.0)
     nokogiri (1.8.2)
@@ -251,9 +252,11 @@ GEM
       rspec-expectations (~> 3.7.0)
       rspec-mocks (~> 3.7.0)
       rspec-support (~> 3.7.0)
-    rspec-request_describer (0.2.1)
-      actionpack (>= 5.0.0)
     rspec-support (3.7.0)
+    rspec_api_documentation (5.1.0)
+      activesupport (>= 3.0.0)
+      mustache (~> 1.0, >= 0.99.4)
+      rspec (~> 3.0)
     rubocop (0.51.0)
       parallel (~> 1.10)
       parser (>= 2.3.3.1, < 3.0)
@@ -331,7 +334,7 @@ DEPENDENCIES
   rails-controller-testing
   rspec-json_expectations
   rspec-rails (~> 3.5)
-  rspec-request_describer
+  rspec_api_documentation
   rubocop
   settingslogic
   shoulda-matchers
