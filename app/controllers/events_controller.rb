@@ -17,7 +17,7 @@ class EventsController < ApplicationController
   end
 
   def show
-    render json: @event, include: 'participants'
+    render json: @event, include: %w[user_participation participants]
   end
 
   def update

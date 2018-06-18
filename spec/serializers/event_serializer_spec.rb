@@ -11,6 +11,7 @@ describe EventSerializer, type: :serializer do
       event.participants.build(
         attributes_for(:participant, event: event, user: user)
       )
+      allow(Participant).to receive(:find_by).and_return(event.participants.first)
     end
 
     subject { serialize(event, scope: user, scope_name: :current_user) }
@@ -20,7 +21,10 @@ describe EventSerializer, type: :serializer do
         name: event.name,
         description: event.description,
         quota: event.quota,
-        registered: event.user_registered?(user),
+        user_participation: {
+          registered: event.user_registered?(user),
+          on_waiting_list: false
+        },
         event_starts_at: event.event_starts_at,
         event_ends_at: event.event_ends_at,
         participants: [{
