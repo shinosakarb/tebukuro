@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe EventSerializer, type: :serializer do
   let(:user) { build_stubbed(:user) }
-  let(:event) { build_stubbed(:event) }
+  let(:event) { build_stubbed(:event, :partial_event_detail_information) }
 
   describe 'data' do
     before do
@@ -21,17 +21,18 @@ describe EventSerializer, type: :serializer do
         name: event.name,
         description: event.description,
         quota: event.quota,
-        user_participation: {
-          registered: event.user_registered?(user),
-          on_waiting_list: false
-        },
-        event_starts_at: event.event_starts_at,
-        event_ends_at: event.event_ends_at,
+        event_starts_at: event.event_starts_at.iso8601(3),
+        event_ends_at: event.event_ends_at.iso8601(3),
+        within_deadline: event.within_deadline?,
         participants: [{
           event_id: event.participants[0].event_id,
           name: event.participants[0].user.name,
           on_waiting_list: event.participants[0].waitlisted?
-        }]
+        }],
+        user_participation: {
+          registered: event.user_registered?(user),
+          on_waiting_list: false
+        }
       )
     end
   end

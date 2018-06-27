@@ -3,11 +3,11 @@
 require 'acceptance_helper'
 
 resource 'Registrations', type: :request do
-  header "Accept", "application/json"
-  header "Content-Type", "application/json"
+  header 'Accept', 'application/json'
+  header 'Content-Type', 'application/json'
 
   let(:user) { build_stubbed(:user) }
-  let(:event) { build_stubbed(:event) }
+  let(:event) { build_stubbed(:event, :partial_event_detail_information) }
   let(:participant) { build_stubbed(:participant, user: user, event: event) }
 
   response_field :id, 'Event id'
