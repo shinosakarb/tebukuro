@@ -3,9 +3,9 @@
 require 'acceptance_helper'
 
 def document_event_params
-  with_options :scope => :event do
-    parameter :name, "Event name"
-    parameter :description, "Event description"
+  with_options scope: :event do
+    parameter :name, 'Event name'
+    parameter :description, 'Event description'
     parameter :event_starts_at, 'Event starts at'
     parameter :event_ends_at, 'Event ends at'
     parameter :address, 'Event address'
@@ -14,12 +14,12 @@ def document_event_params
 end
 
 resource 'Event' do
-  header "Accept", "application/json"
-  header "Content-Type", "application/json"
+  header 'Accept', 'application/json'
+  header 'Content-Type', 'application/json'
 
-  let(:events) { build_stubbed_list(:event, 2) }
-  let(:event) { build_stubbed(:event) }
-  
+  let(:events) { build_stubbed_list(:event, 2, :partial_event_detail_information) }
+  let(:event) { build_stubbed(:event, :partial_event_detail_information) }
+
   response_field :id, 'Event id'
   response_field :name, 'Event name'
   response_field :description, 'Event description'
@@ -28,7 +28,7 @@ resource 'Event' do
   response_field :event_starts_at, 'Event starts at'
   response_field :event_ends_at, 'Event ends at'
   response_field :participants, 'Participants Collection'
-  
+
   route '/events', 'Events Collection' do
     get 'Returns all events' do
       before do
@@ -42,7 +42,7 @@ resource 'Event' do
 
     post 'Create event' do
       document_event_params
-      let(:params) { {event: attributes_for(:event)} }
+      let(:params) { { event: attributes_for(:event) } }
       let(:raw_post) { params.to_json }
 
       before do
@@ -63,7 +63,7 @@ resource 'Event' do
         before do
           allow(event).to receive(:save).and_return(false)
         end
-  
+
         example_request 'Createing event is failure' do
           expect(response_status).to eq 422
         end
@@ -98,7 +98,7 @@ resource 'Event' do
 
     patch 'Update event' do
       document_event_params
-      let(:params) { {event: attributes_for(:event, name: 'hogehoge')} }
+      let(:params) { { event: attributes_for(:event, name: 'hogehoge') } }
       let(:raw_post) { params.to_json }
 
       before do
