@@ -64,7 +64,7 @@ resource 'Event' do
           allow(event).to receive(:save).and_return(false)
         end
 
-        example_request 'Createing event is failure' do
+        example_request 'Creating event is failure' do
           expect(response_status).to eq 422
         end
       end
