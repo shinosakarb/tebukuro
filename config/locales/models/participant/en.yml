@@ -1,0 +1,15 @@
+# model name
+en:
+  activerecord:
+    models:
+      participant: Participant
+
+# model attributes name
+en:
+  activerecord:
+    errors:
+      models:
+        participant:
+          attributes:
+            event_id:
+              cannot_join: Cannot join
