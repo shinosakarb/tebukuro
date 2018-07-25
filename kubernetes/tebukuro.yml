@@ -42,6 +42,16 @@ spec:
                   key: secret_key_base
             - name: DATABASE_PORT
               value: "5432"
+            - name: GITHUB_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: tebukuro
+                  key: github_key
+            - name: GITHUB_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: tebukuro
+                  key: github_secret
           ports:
             - containerPort: 3000
               name: tebukuro
