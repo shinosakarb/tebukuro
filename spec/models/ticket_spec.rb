@@ -2,21 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Ticket, type: :model do
   describe 'association' do
-    describe 'belongs to event' do
-      it { is_expected.to belong_to(:event) }
-    end
-
-    describe 'has one community through event' do
-      it { is_expected.to have_one(:community) }
-    end
-
-    describe 'has many ticket subscriptions' do
-      it { is_expected.to have_many(:ticket_subscriptions) }
-    end
-
-    describe 'has many users through ticket subscriptions' do
-      it { is_expected.to have_many(:users).through(:ticket_subscriptions) }
-    end
+    it { is_expected.to belong_to(:event) }
+    it { is_expected.to have_one(:community) }
+    it { is_expected.to have_many(:ticket_subscriptions) }
+    it { is_expected.to have_many(:users).through(:ticket_subscriptions) }
   end
 
   describe 'validations' do
