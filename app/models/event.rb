@@ -3,6 +3,7 @@
 class Event < ApplicationRecord
   has_many :participants
   has_many :tickets
+  belongs_to :community
 
   validates :name, presence: true
   validates :quota,

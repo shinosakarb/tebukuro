@@ -5,6 +5,8 @@ require 'rails_helper'
 describe Event, type: :model do
   describe 'association' do
     it { is_expected.to have_many(:participants) }
+    it { is_expected.to have_many(:tickets) }
+    it { is_expected.to belong_to(:community) }
   end
 
   describe 'validation' do
@@ -13,6 +15,7 @@ describe Event, type: :model do
     end
 
     describe '#quota' do
+      it { is_expected.to validate_presence_of(:quota) }
       it {
         is_expected.to validate_numericality_of(:quota)
           .is_greater_than_or_equal_to(1)
