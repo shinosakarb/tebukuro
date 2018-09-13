@@ -13,3 +13,4 @@ ja:
           attributes:
             event_id:
               cannot_join: 参加できません
+              registered: 登録済みです

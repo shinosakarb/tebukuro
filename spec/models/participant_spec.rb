@@ -45,15 +45,23 @@ RSpec.describe Participant, type: :model do
     let(:event) { build(:event, quota: 1) }
 
     context 'event' do
+      let(:participant) { event.participants.new(user: user) }
+
       before do
         allow(event).to receive(:within_deadline?).and_return(false)
+        allow(event).to receive(:user_registered?).with(user).and_return(true)
       end
 
       example 'Can not join' do
-        participant = event.participants.new
         participant.valid?
         expect(participant).not_to be_valid
         expect(participant.errors.messages[:event_id]).to include('参加できません')
+      end
+
+      example 'User already registered' do
+        participant.valid?
+        expect(participant).not_to be_valid
+        expect(participant.errors.messages[:event_id]).to include('登録済みです')
       end
     end
   end

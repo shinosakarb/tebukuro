@@ -13,3 +13,4 @@ en:
           attributes:
             event_id:
               cannot_join: Cannot join
+              registered: Already registered 
