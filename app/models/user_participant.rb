@@ -5,7 +5,7 @@ class UserParticipant
   end
 
   def registered?
-    @event.user_registered?(@user)
+    user_participant.present?
   end
 
   def on_waiting_list?

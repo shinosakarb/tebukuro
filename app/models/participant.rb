@@ -14,7 +14,7 @@ class Participant < ApplicationRecord
   end
 
   def registered
-    if event.user_registered?(user)
+    if registered?(user)
       errors.add(:event_id, :registered)
     end
   end
@@ -25,5 +25,11 @@ class Participant < ApplicationRecord
 
   def waitlisted?
     event.waitlisted_participant_ids.include?(id)
+  end
+
+  private
+
+  def registered?(user)
+    UserParticipant.new(event: event, current_user: user).registered?
   end
 end
