@@ -24,6 +24,7 @@ resource 'Registrations', type: :request do
 
       before do
         allow(Participant).to receive(:new).and_return(participant)
+        allow(Event).to receive(:find).and_return(event)
         sign_in_with(user)
       end
 
@@ -53,6 +54,7 @@ resource 'Registrations', type: :request do
 
       before do
         allow(Participant).to receive(:find_by).and_return(participant)
+        allow(Event).to receive(:find).and_return(event)
         sign_in_with(user)
       end
 
