@@ -30,7 +30,7 @@ describe EventSerializer, type: :serializer do
           on_waiting_list: event.participants[0].waitlisted?
         }],
         user_participation: {
-          registered: event.user_registered?(user),
+          registered: true,
           on_waiting_list: false
         }
       )

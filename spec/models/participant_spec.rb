@@ -49,7 +49,7 @@ RSpec.describe Participant, type: :model do
 
       before do
         allow(event).to receive(:within_deadline?).and_return(false)
-        allow(event).to receive(:user_registered?).with(user).and_return(true)
+        allow_any_instance_of(UserParticipant).to receive(:registered?).and_return(true)
       end
 
       example 'Can not join' do
