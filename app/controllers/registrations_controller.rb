@@ -8,7 +8,7 @@ class RegistrationsController < ApplicationController
   # POST /events/:id/registrations
   def create
     if @participant.save
-      render json: @participant.event
+      render json: participated_event
     else
       render json: @participant.errors, status: :unprocessable_entity
     end
@@ -17,7 +17,7 @@ class RegistrationsController < ApplicationController
   # DELETE /events/:id/registrations
   def destroy
     if @participant.destroy
-      render json: @participant.event
+      render json: participated_event
     else
       render json: @participant.errors, status: :unprocessable_entity
     end
@@ -31,6 +31,10 @@ class RegistrationsController < ApplicationController
   def set_participant
     @participant =
       ParticipantPolicy::Scope.new(current_user, Participant).resolve(scope_query)
+  end
+
+  def participated_event
+    Event.find(params[:id])
   end
 
   def scope_query
