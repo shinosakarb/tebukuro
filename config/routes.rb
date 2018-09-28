@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  health_check_routes
   mount_devise_token_auth_for 'User', at: 'auth'
   resources :communities, shallow: true, defaults: { format: 'json' } do
     resources :events do
