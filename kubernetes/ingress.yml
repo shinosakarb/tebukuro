@@ -3,6 +3,8 @@ kind: Ingress
 metadata:
   name: tebukuro-ingress
 spec:
+  tls:
+  - secretName: tebukuro-api-shinosakarb-org-certificate
   backend:
     serviceName: tebukuro
     servicePort: 3000
