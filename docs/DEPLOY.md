@@ -42,7 +42,9 @@ $ kubectl create -f kubernetes/postgresql-service.yml
 $ export TEBUKURO_IMAGE=us.gcr.io/tebukuro-182304/tebukuro_backend:latest
 $ cat kubernetes/tebukuro.yml | envsubst | kubectl create -f -
 # create tebukuro service
-$ kubectl create -f kubernetes/nginx-service.yml
+$ kubectl create -f kubernetes/tebukuro-service.yml
+# create tebukuro ingress
+$ kubectl create -f kubernetes/ingress.yml
 ```
 
 ## Deploy(migrate) task

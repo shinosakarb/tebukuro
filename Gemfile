@@ -18,6 +18,8 @@ gem 'puma', '~> 3.7'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+# health check of Rails app
+gem "health_check"
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
