@@ -56,10 +56,10 @@ spec:
             httpGet:
               path: /health_check.json
               port: 3000
-          command: ["/app/script/wait.sh", "bundle", "exec", "rails", "s"]
+          command: ["bundle", "exec", "rails", "s"]
         - image: gcr.io/cloudsql-docker/gce-proxy:1.12
           name: cloudsql-proxy
-          command: ["/cloud_sql_proxy"
+          command: ["/cloud_sql_proxy",
                     "-instances=$INSTANCE_CONNECTION_NAME=tcp:5432",
                     "-credential_file=/secrets/cloudsql/credentials.json"]
           volumeMounts:
