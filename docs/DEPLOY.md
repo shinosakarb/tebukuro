@@ -1,13 +1,5 @@
 # Deployment method
 
-## Nginx container build and push
-```bash
-# docker build
-$ docker build -t us.gcr.io/tebukuro-182304/nginx:0.0.1 kubernetes/nginx/.
-# docker push
-$ gcloud docker -- push us.gcr.io/tebukuro-182304/nginx:0.0.1
-```
-
 ## Rails container build and push
 ```bash
 # docker build
@@ -22,18 +14,8 @@ $ gcloud docker -- push us.gcr.io/tebukuro-182304/tebukuro_backend:latest
 ```bash
 # get credentials
 $ gcloud container clusters get-credentials tebukuro-cluster
-# create database stroge
-$ gcloud compute disks create --size 5GB postgresql-disk
 # create secret
 $ kubectl create -f ~/.kube/tebukuro-secret.yml
-```
-
-## Create database container
-```bash
-# create postgreSQL deployment
-$ kubectl create -f kubernetes/postgresql.yml
-# create postgreSQL service
-$ kubectl create -f kubernetes/postgresql-service.yml
 ```
 
 ## Create application container
