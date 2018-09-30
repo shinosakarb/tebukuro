@@ -21,7 +21,7 @@ spec:
             - name: RAILS_ENV
               value: "production"
             - name: DATABASE_HOST
-              value: postgresql
+              value: 127.0.0.1
             - name: DATABASE_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -57,3 +57,21 @@ spec:
               path: /health_check.json
               port: 3000
           command: ["/app/script/wait.sh", "bundle", "exec", "rails", "s"]
+        - image: gcr.io/cloudsql-docker/gce-proxy:1.12
+          name: cloudsql-proxy
+          command: ["/cloud_sql_proxy"
+                    "-instances=$INSTANCE_CONNECTION_NAME=tcp:5432",
+                    "-credential_file=/secrets/cloudsql/credentials.json"]
+          volumeMounts:
+            - name: cloudsql-instance-credentials
+              mountPath: /secrets/cloudsql
+              readOnly: true
+            - name: ssl-certs
+              mountPath: /etc/ssl/certs
+      volumes:
+        - name: cloudsql-instance-credentials
+          secret:
+            secretName: cloudsql-instance-credentials
+        - name: ssl-certs
+          hostPath:
+            path: /etc/ssl/certs

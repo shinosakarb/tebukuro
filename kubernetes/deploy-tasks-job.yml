@@ -15,12 +15,16 @@ spec:
       containers:
         - name: deploy-tasks-runner
           image: $TEBUKURO_IMAGE
-          command: ["/app/script/deploy-tasks.sh"]
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              trap "touch /tmp/pod/main-terminated" EXIT
+              /app/script/deploy-tasks.sh
           env:
             - name: RAILS_ENV
               value: "production"
             - name: DATABASE_HOST
-              value: postgresql
+              value: 127.0.0.1
             - name: DATABASE_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -38,3 +42,34 @@ spec:
                   key: secret_key_base
             - name: DATABASE_PORT
               value: "5432"
+          volumeMounts:
+            - mountPath: /tmp/pod
+              name: tmp-pod
+        - image: gcr.io/cloudsql-docker/gce-proxy:1.12
+          name: cloudsql-proxy
+          command:  ["/bin/sh", "-c"]
+          args:
+            - |
+              /cloud_sql_proxy -instances=$INSTANCE_CONNECTION_NAME=tcp:5432 -credential_file=/secrets/cloudsql/credentials.json &
+              CHILD_PID=$!
+              while true; do if [[ -f "/tmp/pod/main-terminated" ]]; then kill $CHILD_PID; echo "Killed $CHILD_PID as the main container terminated."; break; fi; sleep 1; done
+              echo "Job completed. Exiting..."; exit 0
+          volumeMounts:
+            - name: cloudsql-instance-credentials
+              mountPath: /secrets/cloudsql
+              readOnly: true
+            - name: ssl-certs
+              mountPath: /etc/ssl/certs
+            - mountPath: /tmp/pod
+              name: tmp-pod
+              readOnly: true
+      volumes:
+        - name: cloudsql-instance-credentials
+          secret:
+            secretName: cloudsql-instance-credentials
+        - name: ssl-certs
+          hostPath:
+            path: /etc/ssl/certs
+        - name: tmp-pod
+          emptyDir: {}
+  backoffLimit: 1
