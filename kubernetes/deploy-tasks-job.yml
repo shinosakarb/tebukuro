@@ -9,8 +9,11 @@ spec:
       labels:
         name: deploy-tasks
     spec:
-      nodeSelector:
-        cloud.google.com/gke-nodepool: default-pool
+      tolerations:
+        - key: gke-preemptible
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
       restartPolicy: Never
       containers:
         - name: deploy-tasks-runner
