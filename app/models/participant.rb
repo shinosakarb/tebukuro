@@ -4,8 +4,10 @@ class Participant < ApplicationRecord
   belongs_to :user
   belongs_to :event
 
-  validate :cannot_join
-  validate :registered
+  validate :cannot_join, on: :create
+  validate :registered, on: :create
+
+  enum status: %i[not_checked_in checked_in]
 
   def cannot_join
     unless event.within_deadline?
@@ -25,5 +27,9 @@ class Participant < ApplicationRecord
 
   def waitlisted?
     event.waitlisted_participant_ids.include?(id)
+  end
+
+  def toggle_status
+    checked_in? ? not_checked_in! : checked_in!
   end
 end
