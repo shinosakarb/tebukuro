@@ -1,4 +1,4 @@
-FROM ruby:2.4.4-alpine3.7
+FROM ruby:2.4.5-alpine3.7
 
 ENV LANG C.UTF-8
 ENV BUNDLE_FORCE_RUBY_PLATFORM 1
