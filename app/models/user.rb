@@ -15,4 +15,8 @@ class User < ActiveRecord::Base
   def owner?(community)
     community.owners.exists?(user: self)
   end
+
+  def organizer?(event)
+    event.organizer_id == id
+  end
 end

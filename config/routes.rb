@@ -3,13 +3,6 @@
 Rails.application.routes.draw do
   health_check_routes
   mount_devise_token_auth_for 'User', at: 'auth'
-  resources :communities, shallow: true, defaults: { format: 'json' } do
-    resources :events do
-      resources :tickets do
-        resources :subscriptions, only: :create
-      end
-    end
-  end
 
   resources :events do
     member do
@@ -19,7 +12,11 @@ Rails.application.routes.draw do
     end
   end
 
-  namespace :subscription do
-    resources :tickets, only: :destroy
+  resources :participants, only: [] do
+    member do
+      resource 'attendances',
+               controller: :attendances,
+               only: %i[update]
+    end
   end
 end

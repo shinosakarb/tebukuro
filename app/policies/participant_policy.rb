@@ -5,6 +5,10 @@ class ParticipantPolicy < ApplicationPolicy
     user.id == record.user_id
   end
 
+  def toggle_status?
+    user.organizer?(record.event)
+  end
+
   class Scope < Scope
     def resolve(query = {})
       scope.find_by(query.merge(user_id: user.id))

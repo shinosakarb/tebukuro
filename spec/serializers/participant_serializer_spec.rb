@@ -15,7 +15,8 @@ describe ParticipantSerializer, type: :serializer do
         id: participant.id,
         event_id: participant.event_id,
         name: participant.user.name,
-        on_waiting_list: participant.waitlisted?
+        on_waiting_list: participant.waitlisted?,
+        checked_in: false
       )
     end
   end
