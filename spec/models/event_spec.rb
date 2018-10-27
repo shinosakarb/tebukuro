@@ -12,6 +12,10 @@ describe Event, type: :model do
       it { is_expected.to validate_presence_of(:name) }
     end
 
+    describe '#organizer' do
+      it { is_expected.to validate_presence_of(:organizer) }
+    end
+
     describe '#quota' do
       it {
         is_expected.to validate_numericality_of(:quota)

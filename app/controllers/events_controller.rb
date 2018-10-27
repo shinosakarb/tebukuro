@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
-
-  before_action :set_event, only: [:show, :update, :destroy]
-  before_action :build_event, only: [:create]
+  before_action :authenticate_user!, only: %i[create update destroy]
+  before_action :set_event, only: %i[show update destroy]
+  before_action :build_event, only: :create
 
   def index
     @events = Event.all
@@ -49,6 +49,6 @@ class EventsController < ApplicationController
   end
 
   def build_event
-    @event = Event.new(event_params)
+    @event = Event.new(event_params.merge(organizer: current_user))
   end
 end

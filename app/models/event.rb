@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
 class Event < ApplicationRecord
+  belongs_to :organizer, class_name: 'User'
+
   has_many :participants
   has_many :tickets
 
   validates :name, presence: true
+  validates :organizer, presence: true
   validates :quota,
             presence: true,
             numericality:

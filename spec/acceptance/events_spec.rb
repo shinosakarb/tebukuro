@@ -13,10 +13,11 @@ def document_event_params
   end
 end
 
-resource 'Event' do
+resource 'Event', type: :request do
   header 'Accept', 'application/json'
   header 'Content-Type', 'application/json'
 
+  let(:user) { build_stubbed(:user) }
   let(:events) { build_stubbed_list(:event, 2, :partial_event_detail_information) }
   let(:event) { build_stubbed(:event, :partial_event_detail_information) }
 
@@ -47,6 +48,7 @@ resource 'Event' do
 
       before do
         allow(Event).to receive(:new).and_return(event)
+        sign_in_with(user)
       end
 
       context 'When saving is successful' do
@@ -103,6 +105,7 @@ resource 'Event' do
 
       before do
         allow(Event).to receive(:find).and_return(event)
+        sign_in_with(user)
       end
 
       context 'When the update successful' do
@@ -129,6 +132,7 @@ resource 'Event' do
     delete 'Delete event' do
       before do
         allow(Event).to receive(:find).and_return(event)
+        sign_in_with(user)
       end
 
       context 'When the delete successful' do
