@@ -48,7 +48,7 @@ RSpec.describe Participant, type: :model do
       end
     end
 
-    describe '#toggle_status' do
+    describe '#toggle_status!' do
       # Validations are executed for unpersisted models,
       # so mocking methods to pass these unexpected validation.
       before do
