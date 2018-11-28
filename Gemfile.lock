@@ -57,7 +57,7 @@ GEM
     concurrent-ruby (1.1.3)
     connection_pool (2.2.1)
     crass (1.0.4)
-    database_rewinder (0.8.2)
+    database_rewinder (0.9.0)
     debug_inspector (0.0.3)
     devise (4.3.0)
       bcrypt (~> 3.0)
